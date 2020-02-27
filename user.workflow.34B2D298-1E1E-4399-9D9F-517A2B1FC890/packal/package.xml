@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>iOS Simulator</name>
+  <version>1.0</version>
+  <bundle>com.bkiefer.iossimulator</bundle>
+  <updated>1566936539</updated>
+  <file>ios_simulator.alfredworkflow</file>
+</workflow>

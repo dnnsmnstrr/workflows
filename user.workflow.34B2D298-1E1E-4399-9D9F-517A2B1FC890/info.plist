@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.bkiefer.iossimulator</string>
+	<key>connections</key>
+	<dict>
+		<key>C8615B14-D843-4415-A913-A59C80350B60</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E9219624-0F28-47E0-94F2-E284E6E9BB71</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>E9219624-0F28-47E0-94F2-E284E6E9BB71</key>
+		<array/>
+	</dict>
+	<key>createdby</key>
+	<string>Brandon Kiefer</string>
+	<key>description</key>
+	<string>Start iOS simulators</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>iOS Simulator</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+open -a Simulator --args -CurrentDeviceUDID $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E9219624-0F28-47E0-94F2-E284E6E9BB71</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>ios</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>jsonFile=$(xcrun simctl list -j devices)
+
+/usr/local/bin/node &lt;&lt;EOF
+
+var data = ${jsonFile}.devices["$deviceKey"];
+var newData = {"items": []};
+for (var i=0;i&lt;data.length;i++){
+	newData.items[i] = {
+		"uid": data[i].udid,
+		"title": data[i].name,
+		"valid": true,
+		"arg": data[i].udid
+	}
+}
+
+console.log(JSON.stringify(newData));
+
+EOF</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>type</key>
+				<integer>5</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>C8615B14-D843-4415-A913-A59C80350B60</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Launch a variety of devices directly from Alfred. 
+
+Defaulted iOS version is 13.
+
+To determine your deviceKey environement variable, launch terminal and type "xcrun simctl list runtimes". Copy the entire string starting with "com".</string>
+	<key>uidata</key>
+	<dict>
+		<key>C8615B14-D843-4415-A913-A59C80350B60</key>
+		<dict>
+			<key>xpos</key>
+			<integer>200</integer>
+			<key>ypos</key>
+			<integer>75</integer>
+		</dict>
+		<key>E9219624-0F28-47E0-94F2-E284E6E9BB71</key>
+		<dict>
+			<key>xpos</key>
+			<integer>435</integer>
+			<key>ypos</key>
+			<integer>70</integer>
+		</dict>
+	</dict>
+	<key>variables</key>
+	<dict>
+		<key>deviceKey</key>
+		<string>com.apple.CoreSimulator.SimRuntime.iOS-13-3</string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/bskiefer</string>
+</dict>
+</plist>
