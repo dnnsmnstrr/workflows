@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Gist</name>
-  <version>0.2</version>
-  <bundle>com.danielecook.gist</bundle>
-  <updated>1442430383</updated>
-  <file>gist.alfredworkflow</file>
-</workflow>

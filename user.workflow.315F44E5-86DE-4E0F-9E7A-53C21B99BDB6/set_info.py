@@ -2,27 +2,18 @@
 # encoding: utf-8
 
 import sys
+from gist import create_workflow, set_github_token
 from workflow import Workflow, web
-from collections import Counter
 from workflow.background import run_in_background, is_running
 
 
-wf = Workflow()
+def main(wf):
+    arg = wf.args[0]
+    if len(arg) > 0:
+        token = wf.args[0]
+        set_github_token(wf, token)
 
 
-
-arg = wf.args[0]
-#arg = wf.args[0]
-
-
-if arg.startswith("Username:"):
-    username = arg.split(":")[1]
-    wf.store_data("Username", username)
-    arg = "Saved " + arg
-elif arg.startswith("Token:"):
-    token = arg.split(":")[1]
-    wf.save_password('Token',token)
-
-wf.send_feedback()
-
-
+if __name__ == '__main__':
+    wf = create_workflow()
+    sys.exit(wf.run(main))

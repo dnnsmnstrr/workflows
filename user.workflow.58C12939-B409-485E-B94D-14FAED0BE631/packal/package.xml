@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>dropbox paper finder</name>
-  <version>v1.1</version>
-  <bundle>me.tomoyukikashiro.dropbox-paper-finder</bundle>
-  <updated>1547039116</updated>
-  <file>dropbox_paper_finder.alfredworkflow</file>
-</workflow>
