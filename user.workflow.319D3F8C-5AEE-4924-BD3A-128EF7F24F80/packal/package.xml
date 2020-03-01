@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Bash profile commands</name>
-  <version>1.0</version>
-  <bundle>bash.profile.commands</bundle>
-  <updated>1578144633</updated>
-  <file>bash_profile_commands.alfredworkflow</file>
-</workflow>
