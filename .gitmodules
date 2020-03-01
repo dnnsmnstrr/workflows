@@ -7,3 +7,6 @@
 [submodule "genius-alfred-workflow"]
 	path = genius-alfred-workflow
 	url = https://github.com/likewinter/genius-alfred-workflow.git
+[submodule "gist-alfred"]
+	path = gist-alfred
+	url = https://github.com/danielecook/gist-alfred.git
