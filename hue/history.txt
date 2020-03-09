@@ -1,0 +1,43 @@
+Success! You can now control your lights by using the "hue" keyword.
+
+
+Action completed! <lights:13:rename:Cei>
+
+Action completed! <lights:13:rename:Ceiling>
+
+Action completed! <lights:13:rename:Blah>
+
+
+
+
+
+Action completed!
+
+
+
+
+Action completed! <lights:13:rename:Ceiling>
+
+Action completed! <\u2019\u2019>
+
+Action completed! <\u2019\u2019>
+
+Action completed! <lights:13:rename:ÑÑÑ>
+
+Action completed! <lights:13:rename:Ceiling>
+
+Action completed! <lights:13:off>
+
+Action completed! <lights:13:rename:ÑÑ>
+
+Action completed! <lights:13:rename:Ceiling>
+
+Action completed! <groups:0:on>
+
+No bridges found on your network. Try specifying the IP address.
+
+No bridges found on your network. Try specifying the IP address.
+
+Setup Error: link button not pressed
+
+Success! You can now control your lights by using the "hue" keyword.
