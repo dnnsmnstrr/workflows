@@ -10,3 +10,6 @@
 [submodule "gist-alfred"]
 	path = gist-alfred
 	url = https://github.com/danielecook/gist-alfred.git
+[submodule "adb-alfred"]
+	path = adb-alfred
+	url = https://github.com/zjn0505/adb-alfred.git
