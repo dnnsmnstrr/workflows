@@ -13,3 +13,6 @@
 [submodule "adb-alfred"]
 	path = adb-alfred
 	url = https://github.com/zjn0505/adb-alfred.git
+[submodule "xkcd-alfred"]
+	path = xkcd-alfred
+	url = https://github.com/zjn0505/xkcd-alfred.git

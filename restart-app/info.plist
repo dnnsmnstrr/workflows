@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.sulaiman.restartapp</string>
+	<key>connections</key>
+	<dict>
+		<key>8B3BDAAA-37A7-4A66-B909-E13B8B96E8CD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EA6F2542-5522-4794-AFAE-55A28D6B5EBD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>7EA1997E-70E0-4900-ACD2-60BF237B13D6</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Quit app</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>EA6F2542-5522-4794-AFAE-55A28D6B5EBD</key>
+		<array/>
+		<key>FB6ACD5D-32A8-423B-953B-D65E882701C2</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EA6F2542-5522-4794-AFAE-55A28D6B5EBD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>7EA1997E-70E0-4900-ACD2-60BF237B13D6</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Quit app</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Sulaiman Kuthubdeen</string>
+	<key>description</key>
+	<string>Restart or Quit an App without using Dock or Activity Monitor. Inspired by Bedartha's Relaunch App Workflow</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Restart App</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+  tell application q	quitend telldelay 3 -- Wait for app "q" to closetell application q to activate
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>EA6F2542-5522-4794-AFAE-55A28D6B5EBD</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
+				<string>restart</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading</string>
+				<key>script</key>
+				<string>apps = `osascript -e 'tell application "System Events" to get the file of every process whose background only is false'`
+apps = apps.strip.split(",").collect {|line| line.strip.gsub(/^alias Macintosh HD/, '').gsub(/:/, '/')[0..-2]}.sort
+
+puts "&lt;items&gt;"
+apps.each do |line|
+  app_path = line
+  app_name = File.basename(app_path, ".app")
+  query = "{query}"
+  if ! app_name.downcase[query]
+    next
+  end
+  if !(app_path =~ /^\/System\//) &amp;&amp; !(app_path =~ /^\/Library\//)
+  puts &lt;&lt;ENDS_HERE
+  &lt;item uid="status" arg="#{app_name}"&gt;
+	&lt;title&gt;#{app_name}&lt;/title&gt;
+	&lt;subtitle&gt;Press Enter to restart #{app_path}&lt;/subtitle&gt;
+	&lt;icon type="fileicon"&gt;#{app_path}&lt;/icon&gt;
+  &lt;/item&gt;
+ENDS_HERE
+  end
+end
+puts "&lt;/items&gt;"
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Press Enter to list all running applications</string>
+				<key>title</key>
+				<string>Restart App</string>
+				<key>type</key>
+				<integer>2</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>8B3BDAAA-37A7-4A66-B909-E13B8B96E8CD</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
+				<string>relaunch</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading</string>
+				<key>script</key>
+				<string>apps = `osascript -e 'tell application "System Events" to get the file of every process whose background only is false'`
+apps = apps.strip.split(",").collect {|line| line.strip.gsub(/^alias Macintosh HD/, '').gsub(/:/, '/')[0..-2]}.sort
+
+puts "&lt;items&gt;"
+apps.each do |line|
+  app_path = line
+  app_name = File.basename(app_path, ".app")
+  query = "{query}"
+  if ! app_name.downcase[query]
+    next
+  end
+  if !(app_path =~ /^\/System\//) &amp;&amp; !(app_path =~ /^\/Library\//)
+  puts &lt;&lt;ENDS_HERE
+  &lt;item uid="status" arg="#{app_name}"&gt;
+	&lt;title&gt;#{app_name}&lt;/title&gt;
+	&lt;subtitle&gt;Press Enter to restart #{app_path}&lt;/subtitle&gt;
+	&lt;icon type="fileicon"&gt;#{app_path}&lt;/icon&gt;
+  &lt;/item&gt;
+ENDS_HERE
+  end
+end
+puts "&lt;/items&gt;"
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Press Enter to list all running applications</string>
+				<key>title</key>
+				<string>Restart App</string>
+				<key>type</key>
+				<integer>2</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>FB6ACD5D-32A8-423B-953B-D65E882701C2</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+	tell application "Alfred 3" to search "quit " &amp; q
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>7EA1997E-70E0-4900-ACD2-60BF237B13D6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>7EA1997E-70E0-4900-ACD2-60BF237B13D6</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Pressing "Alt" will result in quiting the app, But the app will not relaunch without support of restarting script.</string>
+			<key>xpos</key>
+			<integer>340</integer>
+			<key>ypos</key>
+			<integer>330</integer>
+		</dict>
+		<key>8B3BDAAA-37A7-4A66-B909-E13B8B96E8CD</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>9</integer>
+			<key>note</key>
+			<string>List running apps</string>
+			<key>xpos</key>
+			<integer>90</integer>
+			<key>ypos</key>
+			<integer>180</integer>
+		</dict>
+		<key>EA6F2542-5522-4794-AFAE-55A28D6B5EBD</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>1</integer>
+			<key>note</key>
+			<string>Direct submission for restarting an app.</string>
+			<key>xpos</key>
+			<integer>340</integer>
+			<key>ypos</key>
+			<integer>180</integer>
+		</dict>
+		<key>FB6ACD5D-32A8-423B-953B-D65E882701C2</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>5</integer>
+			<key>note</key>
+			<string>List running apps</string>
+			<key>xpos</key>
+			<integer>90</integer>
+			<key>ypos</key>
+			<integer>320</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
