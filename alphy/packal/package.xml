@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>Alphy</name>
+  <version>1.0</version>
+  <bundle>com.maximepeschard.alphy</bundle>
+  <updated>1468752789</updated>
+  <file>alphy.alfredworkflow</file>
+</workflow>
