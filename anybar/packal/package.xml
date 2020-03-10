@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>AnyBar Workflow</name>
+  <version>1.0</version>
+  <bundle>com.customct.AnyBar</bundle>
+  <updated>1433238620</updated>
+  <file>anybarworkflow.alfredworkflow</file>
+</workflow>

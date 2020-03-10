@@ -4,9 +4,12 @@
 [submodule "alfred-github-workflow"]
 	path = alfred-github-workflow
 	url = https://github.com/gharlan/alfred-github-workflow.git
-[submodule "genius-alfred-workflow"]
-	path = genius-alfred-workflow
-	url = https://github.com/likewinter/genius-alfred-workflow.git
 [submodule "gist-alfred"]
 	path = gist-alfred
 	url = https://github.com/danielecook/gist-alfred.git
+[submodule "adb-alfred"]
+	path = adb-alfred
+	url = https://github.com/zjn0505/adb-alfred.git
+[submodule "xkcd-alfred"]
+	path = xkcd-alfred
+	url = https://github.com/zjn0505/xkcd-alfred.git

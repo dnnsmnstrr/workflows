@@ -2557,7 +2557,7 @@ echo $repo-&gt;search($query);</string>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>keyword</key>
-				<string>st</string>
+				<string>sub</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
