@@ -23,9 +23,6 @@
 
 from __future__ import print_function, unicode_literals
 
-from collections import defaultdict
-from functools import total_ordering
-import json
 import os
 import tempfile
 import re
@@ -37,8 +34,8 @@ import web
 # __all__ = []
 
 
-RELEASES_BASE = 'https://api.github.com/repos/{}/releases'
-match_workflow = re.compile(r'\.alfred(\d+)?workflow$').search
+RELEASES_BASE = 'https://api.github.com/repos/{0}/releases'
+
 
 _wf = None
 
@@ -49,153 +46,6 @@ def wf():
     if _wf is None:
         _wf = workflow.Workflow()
     return _wf
-
-
-@total_ordering
-class Download(object):
-    """A workflow file that is available for download.
-
-    .. versionadded: 1.37
-
-    Attributes:
-        url (str): URL of workflow file.
-        filename (str): Filename of workflow file.
-        version (Version): Semantic version of workflow.
-        prerelease (bool): Whether version is a pre-release.
-        alfred_version (Version): Minimum compatible version
-            of Alfred.
-
-    """
-
-    @classmethod
-    def from_dict(cls, d):
-        """Create a `Download` from a `dict`."""
-        return cls(url=d['url'], filename=d['filename'],
-                   version=Version(d['version']),
-                   prerelease=d['prerelease'])
-
-    @classmethod
-    def from_releases(cls, js):
-        """Extract downloads from GitHub releases.
-
-        Searches releases with semantic tags for assets with
-        file extension .alfredworkflow or .alfredXworkflow where
-        X is a number.
-
-        Files are returned sorted by latest version first. Any
-        releases containing multiple files with the same (workflow)
-        extension are rejected as ambiguous.
-
-        Args:
-            js (str): JSON response from GitHub's releases endpoint.
-
-        Returns:
-            list: Sequence of `Download`.
-        """
-        releases = json.loads(js)
-        downloads = []
-        for release in releases:
-            tag = release['tag_name']
-            dupes = defaultdict(int)
-            try:
-                version = Version(tag)
-            except ValueError as err:
-                wf().logger.debug('ignored release: bad version "%s": %s',
-                                  tag, err)
-                continue
-
-            dls = []
-            for asset in release.get('assets', []):
-                url = asset.get('browser_download_url')
-                filename = os.path.basename(url)
-                m = match_workflow(filename)
-                if not m:
-                    wf().logger.debug('unwanted file: %s', filename)
-                    continue
-
-                ext = m.group(0)
-                dupes[ext] = dupes[ext] + 1
-                dls.append(Download(url, filename, version,
-                                    release['prerelease']))
-
-            valid = True
-            for ext, n in dupes.items():
-                if n > 1:
-                    wf().logger.debug('ignored release "%s": multiple assets '
-                                      'with extension "%s"', tag, ext)
-                    valid = False
-                    break
-
-            if valid:
-                downloads.extend(dls)
-
-        downloads.sort(reverse=True)
-        return downloads
-
-    def __init__(self, url, filename, version, prerelease=False):
-        """Create a new Download.
-
-        Args:
-            url (str): URL of workflow file.
-            filename (str): Filename of workflow file.
-            version (Version): Version of workflow.
-            prerelease (bool, optional): Whether version is
-                pre-release. Defaults to False.
-
-        """
-        if isinstance(version, basestring):
-            version = Version(version)
-
-        self.url = url
-        self.filename = filename
-        self.version = version
-        self.prerelease = prerelease
-
-    @property
-    def alfred_version(self):
-        """Minimum Alfred version based on filename extension."""
-        m = match_workflow(self.filename)
-        if not m or not m.group(1):
-            return Version('0')
-        return Version(m.group(1))
-
-    @property
-    def dict(self):
-        """Convert `Download` to `dict`."""
-        return dict(url=self.url, filename=self.filename,
-                    version=str(self.version), prerelease=self.prerelease)
-
-    def __str__(self):
-        """Format `Download` for printing."""
-        u = ('Download(url={dl.url!r}, '
-             'filename={dl.filename!r}, '
-             'version={dl.version!r}, '
-             'prerelease={dl.prerelease!r})'.format(dl=self))
-
-        return u.encode('utf-8')
-
-    def __repr__(self):
-        """Code-like representation of `Download`."""
-        return str(self)
-
-    def __eq__(self, other):
-        """Compare Downloads based on version numbers."""
-        if self.url != other.url \
-                or self.filename != other.filename \
-                or self.version != other.version \
-                or self.prerelease != other.prerelease:
-            return False
-        return True
-
-    def __ne__(self, other):
-        """Compare Downloads based on version numbers."""
-        return not self.__eq__(other)
-
-    def __lt__(self, other):
-        """Compare Downloads based on version numbers."""
-        if self.version != other.version:
-            return self.version < other.version
-        return self.alfred_version < other.alfred_version
 
 
 class Version(object):
@@ -230,9 +80,6 @@ class Version(object):
         Args:
             vstr (basestring): Semantic version string.
         """
-        if not vstr:
-            raise ValueError('invalid version number: {!r}'.format(vstr))
-
         self.vstr = vstr
         self.major = 0
         self.minor = 0
@@ -247,7 +94,7 @@ class Version(object):
         else:
             m = self.match_version(vstr)
         if not m:
-            raise ValueError('invalid version number: {!r}'.format(vstr))
+            raise ValueError('invalid version number: {0}'.format(vstr))
 
         version, suffix = m.groups()
         parts = self._parse_dotted_string(version)
@@ -257,7 +104,7 @@ class Version(object):
         if len(parts):
             self.patch = parts.pop(0)
         if not len(parts) == 0:
-            raise ValueError('version number too long: {!r}'.format(vstr))
+            raise ValueError('invalid version (too long) : {0}'.format(vstr))
 
         if suffix:
             # Build info
@@ -301,8 +148,8 @@ class Version(object):
                 return True
             if other.suffix and not self.suffix:
                 return False
-            return self._parse_dotted_string(self.suffix) \
-                < self._parse_dotted_string(other.suffix)
+            return (self._parse_dotted_string(self.suffix) <
+                    self._parse_dotted_string(other.suffix))
         # t > o
         return False
 
@@ -346,151 +193,183 @@ class Version(object):
         return "Version('{0}')".format(str(self))
 
 
-def retrieve_download(dl):
-    """Saves a download to a temporary file and returns path.
+def download_workflow(url):
+    """Download workflow at ``url`` to a local temporary file.
 
-    .. versionadded: 1.37
-
-    Args:
-        url (unicode): URL to .alfredworkflow file in GitHub repo
-
-    Returns:
-        unicode: path to downloaded file
+    :param url: URL to .alfredworkflow file in GitHub repo
+    :returns: path to downloaded file
 
     """
-    if not match_workflow(dl.filename):
-        raise ValueError('attachment not a workflow: ' + dl.filename)
+    filename = url.split('/')[-1]
 
-    path = os.path.join(tempfile.gettempdir(), dl.filename)
-    wf().logger.debug('downloading update from '
-                      '%r to %r ...', dl.url, path)
+    if (not filename.endswith('.alfredworkflow') and
+            not filename.endswith('.alfred3workflow')):
+        raise ValueError('attachment not a workflow: {0}'.format(filename))
 
-    r = web.get(dl.url)
-    r.raise_for_status()
+    local_path = os.path.join(tempfile.gettempdir(), filename)
 
-    r.save_to_path(path)
+    wf().logger.debug(
+        'downloading updated workflow from `%s` to `%s` ...', url, local_path)
 
-    return path
+    response = web.get(url)
+
+    with open(local_path, 'wb') as output:
+        output.write(response.content)
+
+    return local_path
 
 
-def build_api_url(repo):
-    """Generate releases URL from GitHub repo.
+def build_api_url(slug):
+    """Generate releases URL from GitHub slug.
 
-    Args:
-        repo (unicode): Repo name in form ``username/repo``
-
-    Returns:
-        unicode: URL to the API endpoint for the repo's releases
+    :param slug: Repo name in form ``username/repo``
+    :returns: URL to the API endpoint for the repo's releases
 
     """
-    if len(repo.split('/')) != 2:
-        raise ValueError('invalid GitHub repo: {!r}'.format(repo))
+    if len(slug.split('/')) != 2:
+        raise ValueError('invalid GitHub slug: {0}'.format(slug))
 
-    return RELEASES_BASE.format(repo)
-
-
-def get_downloads(repo):
-    """Load available ``Download``s for GitHub repo.
-
-    .. versionadded: 1.37
-
-    Args:
-        repo (unicode): GitHub repo to load releases for.
-
-    Returns:
-        list: Sequence of `Download` contained in GitHub releases.
-    """
-    url = build_api_url(repo)
-
-    def _fetch():
-        wf().logger.info('retrieving releases for %r ...', repo)
-        r = web.get(url)
-        r.raise_for_status()
-        return r.content
-
-    key = 'github-releases-' + repo.replace('/', '-')
-    js = wf().cached_data(key, _fetch, max_age=60)
-
-    return Download.from_releases(js)
+    return RELEASES_BASE.format(slug)
 
 
-def latest_download(dls, alfred_version=None, prereleases=False):
-    """Return newest `Download`."""
-    alfred_version = alfred_version or os.getenv('alfred_version')
-    version = None
-    if alfred_version:
-        version = Version(alfred_version)
+def _validate_release(release):
+    """Return release for running version of Alfred."""
+    alf3 = wf().alfred_version.major == 3
 
-    dls.sort(reverse=True)
-    for dl in dls:
-        if dl.prerelease and not prereleases:
-            wf().logger.debug('ignored prerelease: %s', dl.version)
-            continue
-        if version and dl.alfred_version > version:
-            wf().logger.debug('ignored incompatible (%s > %s): %s',
-                              dl.alfred_version, version, dl.filename)
+    downloads = {'.alfredworkflow': [], '.alfred3workflow': []}
+    dl_count = 0
+    version = release['tag_name']
+
+    for asset in release.get('assets', []):
+        url = asset.get('browser_download_url')
+        if not url:  # pragma: nocover
             continue
 
-        wf().logger.debug('latest version: %s (%s)', dl.version, dl.filename)
-        return dl
+        ext = os.path.splitext(url)[1].lower()
+        if ext not in downloads:
+            continue
 
-    return None
+        # Ignore Alfred 3-only files if Alfred 2 is running
+        if ext == '.alfred3workflow' and not alf3:
+            continue
+
+        downloads[ext].append(url)
+        dl_count += 1
+
+        # download_urls.append(url)
+
+    if dl_count == 0:
+        wf().logger.warning(
+            'invalid release (no workflow file): %s', version)
+        return None
+
+    for k in downloads:
+        if len(downloads[k]) > 1:
+            wf().logger.warning(
+                'invalid release (multiple %s files): %s', k, version)
+            return None
+
+    # Prefer .alfred3workflow file if there is one and Alfred 3 is
+    # running.
+    if alf3 and len(downloads['.alfred3workflow']):
+        download_url = downloads['.alfred3workflow'][0]
+
+    else:
+        download_url = downloads['.alfredworkflow'][0]
+
+    wf().logger.debug('release %s: %s', version, download_url)
+
+    return {
+        'version': version,
+        'download_url': download_url,
+        'prerelease': release['prerelease']
+    }
 
 
-def check_update(repo, current_version, prereleases=False,
-                 alfred_version=None):
+def get_valid_releases(github_slug, prereleases=False):
+    """Return list of all valid releases.
+
+    :param github_slug: ``username/repo`` for workflow's GitHub repo
+    :param prereleases: Whether to include pre-releases.
+    :returns: list of dicts. Each :class:`dict` has the form
+        ``{'version': '1.1', 'download_url': 'http://github.com/...',
+        'prerelease': False }``
+
+
+    A valid release is one that contains one ``.alfredworkflow`` file.
+
+    If the GitHub version (i.e. tag) is of the form ``v1.1``, the leading
+    ``v`` will be stripped.
+
+    """
+    api_url = build_api_url(github_slug)
+    releases = []
+
+    wf().logger.debug('retrieving releases list: %s', api_url)
+
+    def retrieve_releases():
+        wf().logger.info(
+            'retrieving releases: %s', github_slug)
+        return web.get(api_url).json()
+
+    slug = github_slug.replace('/', '-')
+    for release in wf().cached_data('gh-releases-' + slug, retrieve_releases):
+
+        release = _validate_release(release)
+        if release is None:
+            wf().logger.debug('invalid release: %r', release)
+            continue
+
+        elif release['prerelease'] and not prereleases:
+            wf().logger.debug('ignoring prerelease: %s', release['version'])
+            continue
+
+        wf().logger.debug('release: %r', release)
+
+        releases.append(release)
+
+    return releases
+
+
+def check_update(github_slug, current_version, prereleases=False):
     """Check whether a newer release is available on GitHub.
 
-    Args:
-        repo (unicode): ``username/repo`` for workflow's GitHub repo
-        current_version (unicode): the currently installed version of the
-            workflow. :ref:`Semantic versioning <semver>` is required.
-        prereleases (bool): Whether to include pre-releases.
-        alfred_version (unicode): version of currently-running Alfred.
-            if empty, defaults to ``$alfred_version`` environment variable.
-
-    Returns:
-        bool: ``True`` if an update is available, else ``False``
+    :param github_slug: ``username/repo`` for workflow's GitHub repo
+    :param current_version: the currently installed version of the
+        workflow. :ref:`Semantic versioning <semver>` is required.
+    :param prereleases: Whether to include pre-releases.
+    :type current_version: ``unicode``
+    :returns: ``True`` if an update is available, else ``False``
 
     If an update is available, its version number and download URL will
     be cached.
 
     """
-    key = '__workflow_latest_version'
-    # data stored when no update is available
-    no_update = {
-        'available': False,
-        'download': None,
-        'version': None,
-    }
-    current = Version(current_version)
+    releases = get_valid_releases(github_slug, prereleases)
 
-    dls = get_downloads(repo)
-    if not len(dls):
-        wf().logger.warning('no valid downloads for %s', repo)
-        wf().cache_data(key, no_update)
-        return False
+    if not len(releases):
+        raise ValueError('no valid releases for %s', github_slug)
 
-    wf().logger.info('%d download(s) for %s', len(dls), repo)
+    wf().logger.info('%d releases for %s', len(releases), github_slug)
 
-    dl = latest_download(dls, alfred_version, prereleases)
+    # GitHub returns releases newest-first
+    latest_release = releases[0]
 
-    if not dl:
-        wf().logger.warning('no compatible downloads for %s', repo)
-        wf().cache_data(key, no_update)
-        return False
+    # (latest_version, download_url) = get_latest_release(releases)
+    vr = Version(latest_release['version'])
+    vl = Version(current_version)
+    wf().logger.debug('latest=%r, installed=%r', vr, vl)
+    if vr > vl:
 
-    wf().logger.debug('latest=%r, installed=%r', dl.version, current)
-
-    if dl.version > current:
-        wf().cache_data(key, {
-            'version': str(dl.version),
-            'download': dl.dict,
-            'available': True,
+        wf().cache_data('__workflow_update_status', {
+            'version': latest_release['version'],
+            'download_url': latest_release['download_url'],
+            'available': True
         })
+
         return True
 
-    wf().cache_data(key, no_update)
+    wf().cache_data('__workflow_update_status', {'available': False})
     return False
 
 
@@ -500,68 +379,48 @@ def install_update():
     :returns: ``True`` if an update is installed, else ``False``
 
     """
-    key = '__workflow_latest_version'
-    # data stored when no update is available
-    no_update = {
-        'available': False,
-        'download': None,
-        'version': None,
-    }
-    status = wf().cached_data(key, max_age=0)
+    update_data = wf().cached_data('__workflow_update_status', max_age=0)
 
-    if not status or not status.get('available'):
+    if not update_data or not update_data.get('available'):
         wf().logger.info('no update available')
         return False
 
-    dl = status.get('download')
-    if not dl:
-        wf().logger.info('no download information')
-        return False
-
-    path = retrieve_download(Download.from_dict(dl))
+    local_file = download_workflow(update_data['download_url'])
 
     wf().logger.info('installing updated workflow ...')
-    subprocess.call(['open', path])
+    subprocess.call(['open', local_file])
 
-    wf().cache_data(key, no_update)
+    update_data['available'] = False
+    wf().cache_data('__workflow_update_status', update_data)
     return True
 
 
 if __name__ == '__main__':  # pragma: nocover
     import sys
 
-    prereleases = False
-
     def show_help(status=0):
         """Print help message."""
-        print('usage: update.py (check|install) '
-              '[--prereleases] <repo> <version>')
+        print('Usage : update.py (check|install) '
+              '[--prereleases] <github_slug> <version>')
         sys.exit(status)
 
     argv = sys.argv[:]
     if '-h' in argv or '--help' in argv:
         show_help()
 
-    if '--prereleases' in argv:
+    prereleases = '--prereleases' in argv
+
+    if prereleases:
         argv.remove('--prereleases')
-        prereleases = True
 
     if len(argv) != 4:
         show_help(1)
 
-    action = argv[1]
-    repo = argv[2]
-    version = argv[3]
+    action, github_slug, version = argv[1:]
 
-    try:
-
-        if action == 'check':
-            check_update(repo, version, prereleases)
-        elif action == 'install':
-            install_update()
-        else:
-            show_help(1)
-
-    except Exception as err:  # ensure traceback is in log file
-        wf().logger.exception(err)
-        raise err
+    if action == 'check':
+        check_update(github_slug, version, prereleases)
+    elif action == 'install':
+        install_update()
+    else:
+        show_help(1)
