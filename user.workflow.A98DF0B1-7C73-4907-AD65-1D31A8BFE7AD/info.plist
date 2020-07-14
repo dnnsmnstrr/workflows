@@ -255,7 +255,7 @@
 				  <false/>
 				</dict>
 			</array>
-				<key>rn</key>
+				<key>js</key>
 				<array>
 					<dict>
 						<key>destinationuid</key>
@@ -278,39 +278,6 @@
 					</dict>
 				</array>
 				<key>rct</key>
-				<array>
-					<dict>
-						<key>destinationuid</key>
-						<string>output</string>
-						<key>modifiers</key>
-						<integer>0</integer>
-						<key>modifiersubtext</key>
-						<string></string>
-					</dict>
-				</array>
-				<key>js</key>
-				<array>
-					<dict>
-						<key>destinationuid</key>
-						<string>output</string>
-						<key>modifiers</key>
-						<integer>0</integer>
-						<key>modifiersubtext</key>
-						<string></string>
-					</dict>
-				</array>
-				<key>js</key>
-				<array>
-					<dict>
-						<key>destinationuid</key>
-						<string>output</string>
-						<key>modifiers</key>
-						<integer>0</integer>
-						<key>modifiersubtext</key>
-						<string></string>
-					</dict>
-				</array>
-				<key>js</key>
 				<array>
 					<dict>
 						<key>destinationuid</key>
@@ -1300,7 +1267,7 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
-				<string>rn</string>
+				<string>js</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1312,13 +1279,13 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'react_native';
+				<string>$query = "{query}"; $documentation = 'javascript';
 					require_once("scripts/devdocs.php");
 				</string>
 				<key>subtext</key>
-				<string>Search for ReactNative "{query}"</string>
+				<string>Search for JavaScript "{query}"</string>
 				<key>title</key>
-				<string>DevDocs - ReactNative</string>
+				<string>DevDocs - JavaScript</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
@@ -1327,7 +1294,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>react_native</string>
+			<string>javascript</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1406,123 +1373,6 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>react</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>js</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'javascript';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>subtext</key>
-				<string>Search for JavaScript "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - JavaScript</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>javascript</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>js</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'javascript';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>subtext</key>
-				<string>Search for JavaScript "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - JavaScript</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>javascript</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>js</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'javascript';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>subtext</key>
-				<string>Search for JavaScript "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - JavaScript</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>javascript</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1685,7 +1535,7 @@
 			<key>ypos</key>
 			<integer>2085</integer>
 		</dict>
-		<key>rn</key>
+		<key>js</key>
 		<dict>
 			<key>300</key>
 			<integer>2315</integer>
@@ -1699,21 +1549,6 @@
 		<dict>
 			<key>300</key>
 			<integer>2575</integer>
-		</dict>
-		<key>js</key>
-		<dict>
-			<key>300</key>
-			<integer>2705</integer>
-		</dict>
-		<key>js</key>
-		<dict>
-			<key>300</key>
-			<integer>2835</integer>
-		</dict>
-		<key>js</key>
-		<dict>
-			<key>300</key>
-			<integer>2965</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
