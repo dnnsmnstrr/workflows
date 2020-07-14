@@ -37,6 +37,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -75,7 +77,7 @@
 			<key>uid</key>
 			<string>B5CF205D-436D-41EC-A53A-555FF106ADDD</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -136,7 +138,7 @@ Set QUICKLOOK_POST to 1 for Quick Look preview (SHIFT or CMD+Y) to show the post
 		<key>NSFW</key>
 		<string>1</string>
 		<key>QUICKLOOK_POST</key>
-		<string>0</string>
+		<string>1</string>
 	</dict>
 	<key>version</key>
 	<string>1.8.1</string>

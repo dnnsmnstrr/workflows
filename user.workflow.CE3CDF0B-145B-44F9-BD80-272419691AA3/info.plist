@@ -1,0 +1,1144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>ru.mandrigin.alfred.sww</string>
+	<key>connections</key>
+	<dict>
+		<key>0486C218-68A8-4897-8F4E-B51741037678</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F9DFD058-DFE7-4C1C-BC68-1DFAE864F813</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>0EC23CAD-38F5-4A2D-B28A-A23685F1E575</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7686C74A-A33F-49C2-8231-40F1569A481A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>14FDFA95-B03E-42F9-8F94-0DD482CBCE47</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F6142494-8ED8-4369-9BE3-555D11956DD7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>0EC23CAD-38F5-4A2D-B28A-A23685F1E575</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>C44F13D3-3A11-4292-BD0F-0F36F322D6DE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>0486C218-68A8-4897-8F4E-B51741037678</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>4B55AF9F-D256-4871-B524-9938AD009D7E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>DFDD4CE8-9ED6-40D8-8E11-7B5104273C26</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>FA71F597-12C1-4357-B3CB-D8A7CDA00BB9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>BD656024-B882-41AD-9F20-DCE01B327732</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>CBC5D8A8-255D-4E28-BE50-D7B19EE45B5F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9672888-73C0-4D89-A497-B85E986C1D50</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>2A4DC329-9524-4CB9-BB77-7410877C746A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BBE27144-1C88-4DB4-BCF3-B4E7CCE3A14B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4B55AF9F-D256-4871-B524-9938AD009D7E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9DC4528B-E0EE-40CE-8594-C3F1F1B512CB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>7686C74A-A33F-49C2-8231-40F1569A481A</key>
+		<array/>
+		<key>A9672888-73C0-4D89-A497-B85E986C1D50</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A5DC0789-027C-4177-BACF-CE2E7C089CA7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>BBE27144-1C88-4DB4-BCF3-B4E7CCE3A14B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>14FDFA95-B03E-42F9-8F94-0DD482CBCE47</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>BD656024-B882-41AD-9F20-DCE01B327732</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8F761ADE-CFDB-4C24-A4A5-9065084AC825</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C44F13D3-3A11-4292-BD0F-0F36F322D6DE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D6DE9E5D-7883-4216-B28B-1D762E60364A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>CBC5D8A8-255D-4E28-BE50-D7B19EE45B5F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9ABD10A-3146-4A01-8965-1EED64F15DD1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>DE26058B-66D8-464C-B116-3C36FC69D3FA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>14FDFA95-B03E-42F9-8F94-0DD482CBCE47</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>DFDD4CE8-9ED6-40D8-8E11-7B5104273C26</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5CECCEA1-2E2E-4EE6-A6E7-76A65C2FE3A2</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F6142494-8ED8-4369-9BE3-555D11956DD7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5A3D96FB-36AB-4CAC-A6A5-58E1B4BEA15E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Igor Mandrigin</string>
+	<key>description</key>
+	<string>Switch between windows &amp; tabs on the same desktop</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Swift Window Switcher</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argvset tabIndex to item 2 of argv as integerset windowName to item 3 of argv
+
+if proc is not "Google Chrome Canary" then	display alert "This AppleScript works for Google Chrome Canary only." message "Check the Alfred workflow diagram which triggered this script." as critical buttons {"Cancel"} default button "Cancel" cancel button "Cancel"end if
+tell application "Google Chrome Canary"	activate	set win_List to every window	repeat with win in win_List		if title of win = windowName then			set index of win to 1			set active tab index of win to tabIndex		end if	end repeatend tell
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>5A3D96FB-36AB-4CAC-A6A5-58E1B4BEA15E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Google Chrome Canary\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>F6142494-8ED8-4369-9BE3-555D11956DD7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argv
+set tabIndex to item 2 of argv as integer
+set windowName to item 3 of argv
+
+if proc is not "Google Chrome" then	display alert "This AppleScript works for Google Chrome only." message "Check the Alfred workflow diagram which triggered this script." as critical buttons {"Cancel"} default button "Cancel" cancel button "Cancel"end if
+tell application "Google Chrome"	activate	set win_List to every window	repeat with win in win_List		if title of win = windowName then			set index of win to 1			set active tab index of win to tabIndex		end if	end repeatend tell
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>7686C74A-A33F-49C2-8231-40F1569A481A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Google Chrome\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>0EC23CAD-38F5-4A2D-B28A-A23685F1E575</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>t</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching...</string>
+				<key>script</key>
+				<string>./EnumWindows --search-tabs="{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string>~/Desktop/EnumWindows/EnumWindows/EnumWindows</string>
+				<key>subtext</key>
+				<string>Enter part of the tab title</string>
+				<key>title</key>
+				<string>Search between tabs</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>DE26058B-66D8-464C-B116-3C36FC69D3FA</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")set proc to item 1 of argvset tabIndex to item 2 of argv as integerset windowName to item 3 of argvif proc is not "iTerm" then	display alert "This AppleScript works for iTerm only." message "Check the Alfred workflow diagram which triggered this script." as critical buttons {"Cancel"} default button "Cancel" cancel button "Cancel"end iftry	tell application "System Events"		with timeout of 0.1 seconds
+			-- nb. iTerm's process is "iTerm2" even though application name is "iTerm"			tell process "iTerm2" to perform action "AXRaise" of window windowName		end timeout	end tellend trytell application "iTerm"	activateend telltell front window of application "iTerm"	tell tab tabIndex		select	end tellend tell
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>D6DE9E5D-7883-4216-B28B-1D762E60364A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>iTerm\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>C44F13D3-3A11-4292-BD0F-0F36F322D6DE</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>14FDFA95-B03E-42F9-8F94-0DD482CBCE47</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argv
+set tabIndex to item 2 of argv as integer
+set windowName to item 3 of argv
+
+try
+	tell application "System Events"
+		with timeout of 0.1 seconds
+			tell process proc to perform action "AXRaise" of window windowName 
+		end timeout
+	end tell
+end try
+
+tell application proc
+    activate
+end tell
+
+if proc = "Safari Technology Preview" then
+    tell front window of application "Safari Technology Preview"
+		set current tab to tab tabIndex
+	end tell
+end if
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>F9DFD058-DFE7-4C1C-BC68-1DFAE864F813</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>1</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>win </string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>13</integer>
+				<key>hotmod</key>
+				<integer>1966080</integer>
+				<key>hotstring</key>
+				<string>W</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>2A4DC329-9524-4CB9-BB77-7410877C746A</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>Safari Technology Preview\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>0486C218-68A8-4897-8F4E-B51741037678</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>126</integer>
+				<key>keyword</key>
+				<string>win</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Searching...</string>
+				<key>script</key>
+				<string>./EnumWindows --search="{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Enter part of the title or the tab name</string>
+				<key>title</key>
+				<string>Switch between windows and tabs</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>BBE27144-1C88-4DB4-BCF3-B4E7CCE3A14B</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Safari\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>4B55AF9F-D256-4871-B524-9938AD009D7E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argv
+set tabIndex to item 2 of argv as integer
+set windowName to item 3 of argv
+
+try
+	tell application "System Events"
+		with timeout of 0.1 seconds
+			tell process proc to perform action "AXRaise" of window windowName 
+		end timeout
+	end tell
+end try
+
+tell application proc
+    activate
+end tell
+
+if proc = "Safari" then
+    tell front window of application "Safari"
+		set current tab to tab tabIndex
+	end tell
+end if
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>9DC4528B-E0EE-40CE-8594-C3F1F1B512CB</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argv
+set tabIndex to item 2 of argv as integer
+set windowName to item 3 of argv
+
+try
+	tell application "System Events"
+		with timeout of 0.1 seconds
+			tell process proc to perform action "AXRaise" of window windowName 
+		end timeout
+	end tell
+end try
+
+tell application proc
+    activate
+end tell
+
+if proc = "Opera" then	tell application "Opera" to set active tab index of front window to tabIndexend if
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>5CECCEA1-2E2E-4EE6-A6E7-76A65C2FE3A2</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Opera\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>DFDD4CE8-9ED6-40D8-8E11-7B5104273C26</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argv
+set tabIndex to item 2 of argv as integer
+set windowName to item 3 of argv
+
+try
+	tell application "System Events"
+		with timeout of 0.1 seconds
+			tell process proc to perform action "AXRaise" of window windowName 
+		end timeout
+	end tell
+end try
+
+tell application proc
+    activate
+end tell
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>FA71F597-12C1-4357-B3CB-D8A7CDA00BB9</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Opera Beta\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>BD656024-B882-41AD-9F20-DCE01B327732</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argv
+set tabIndex to item 2 of argv as integer
+set windowName to item 3 of argv
+
+try
+	tell application "System Events"
+		with timeout of 0.1 seconds
+			tell process proc to perform action "AXRaise" of window windowName 
+		end timeout
+	end tell
+end try
+
+tell application proc
+    activate
+end tell
+
+if proc = "Opera Beta" then	tell application "Opera Beta" to set active tab index of front window to tabIndexend if
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>8F761ADE-CFDB-4C24-A4A5-9065084AC825</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argv
+set tabIndex to item 2 of argv as integer
+set windowName to item 3 of argv
+
+try
+	tell application "System Events"
+		with timeout of 0.1 seconds
+			tell process proc to perform action "AXRaise" of window windowName 
+		end timeout
+	end tell
+end try
+
+tell application proc
+    activate
+end tell
+
+if proc = "Opera Developer" then	tell application "Opera Developer" to set active tab index of front window to tabIndexend if
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>A9ABD10A-3146-4A01-8965-1EED64F15DD1</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Opera Developer\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>CBC5D8A8-255D-4E28-BE50-D7B19EE45B5F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+set argv to extract_argv(q, "|||||")
+
+set proc to item 1 of argv
+set tabIndex to item 2 of argv as integer
+set windowName to item 3 of argv
+
+try
+	tell application "System Events"
+		with timeout of 0.1 seconds
+			tell process proc to perform action "AXRaise" of window windowName 
+		end timeout
+	end tell
+end try
+
+tell application proc
+    activate
+end tell
+
+if proc = "Brave Browser" then	tell application "Brave Browser" to set active tab index of front window to tabIndexend if
+
+end alfred_script
+
+on extract_argv(source_string, new_delimiter)	set backup to AppleScript's text item delimiters	set AppleScript's text item delimiters to new_delimiter	set argv to every text item of source_string	set AppleScript's text item delimiters to backup	return argvend extract_argv</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>A5DC0789-027C-4177-BACF-CE2E7C089CA7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Brave Browser\|.*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>A9672888-73C0-4D89-A497-B85E986C1D50</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Workflow for switching between active windows in the system and Safari/Opera/Brave/Chrome/iTerm tabs.
+
+❗To make this workflow work, don't forget to allow Alfred to control your apps (Security &amp; Privacy → Accessibility).
+
+Inspration is taken from "Windows Switcher" workflow from Emanuele Munafò (kudozz! 🔥) [1].
+
+[1]: https://www.alfredforum.com/topic/9326-a-simple-windows-switcher/</string>
+	<key>uidata</key>
+	<dict>
+		<key>0486C218-68A8-4897-8F4E-B51741037678</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
+		<key>0EC23CAD-38F5-4A2D-B28A-A23685F1E575</key>
+		<dict>
+			<key>xpos</key>
+			<integer>450</integer>
+			<key>ypos</key>
+			<integer>170</integer>
+		</dict>
+		<key>14FDFA95-B03E-42F9-8F94-0DD482CBCE47</key>
+		<dict>
+			<key>xpos</key>
+			<integer>390</integer>
+			<key>ypos</key>
+			<integer>280</integer>
+		</dict>
+		<key>2A4DC329-9524-4CB9-BB77-7410877C746A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
+		<key>4B55AF9F-D256-4871-B524-9938AD009D7E</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>400</integer>
+		</dict>
+		<key>5A3D96FB-36AB-4CAC-A6A5-58E1B4BEA15E</key>
+		<dict>
+			<key>note</key>
+			<string>Google Chrome Canary</string>
+			<key>xpos</key>
+			<integer>500</integer>
+			<key>ypos</key>
+			<integer>20</integer>
+		</dict>
+		<key>5CECCEA1-2E2E-4EE6-A6E7-76A65C2FE3A2</key>
+		<dict>
+			<key>note</key>
+			<string>Opera</string>
+			<key>xpos</key>
+			<integer>550</integer>
+			<key>ypos</key>
+			<integer>590</integer>
+		</dict>
+		<key>7686C74A-A33F-49C2-8231-40F1569A481A</key>
+		<dict>
+			<key>note</key>
+			<string>Google Chrome</string>
+			<key>xpos</key>
+			<integer>540</integer>
+			<key>ypos</key>
+			<integer>160</integer>
+		</dict>
+		<key>8F761ADE-CFDB-4C24-A4A5-9065084AC825</key>
+		<dict>
+			<key>note</key>
+			<string>Opera Beta</string>
+			<key>xpos</key>
+			<integer>550</integer>
+			<key>ypos</key>
+			<integer>720</integer>
+		</dict>
+		<key>9DC4528B-E0EE-40CE-8594-C3F1F1B512CB</key>
+		<dict>
+			<key>note</key>
+			<string>Safari</string>
+			<key>xpos</key>
+			<integer>570</integer>
+			<key>ypos</key>
+			<integer>450</integer>
+		</dict>
+		<key>A5DC0789-027C-4177-BACF-CE2E7C089CA7</key>
+		<dict>
+			<key>note</key>
+			<string>Brave</string>
+			<key>xpos</key>
+			<integer>550</integer>
+			<key>ypos</key>
+			<integer>1010</integer>
+		</dict>
+		<key>A9672888-73C0-4D89-A497-B85E986C1D50</key>
+		<dict>
+			<key>xpos</key>
+			<integer>450</integer>
+			<key>ypos</key>
+			<integer>1080</integer>
+		</dict>
+		<key>A9ABD10A-3146-4A01-8965-1EED64F15DD1</key>
+		<dict>
+			<key>note</key>
+			<string>Opera Dev</string>
+			<key>xpos</key>
+			<integer>550</integer>
+			<key>ypos</key>
+			<integer>870</integer>
+		</dict>
+		<key>BBE27144-1C88-4DB4-BCF3-B4E7CCE3A14B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
+		<key>BD656024-B882-41AD-9F20-DCE01B327732</key>
+		<dict>
+			<key>xpos</key>
+			<integer>440</integer>
+			<key>ypos</key>
+			<integer>670</integer>
+		</dict>
+		<key>C44F13D3-3A11-4292-BD0F-0F36F322D6DE</key>
+		<dict>
+			<key>xpos</key>
+			<integer>710</integer>
+			<key>ypos</key>
+			<integer>270</integer>
+		</dict>
+		<key>CBC5D8A8-255D-4E28-BE50-D7B19EE45B5F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>440</integer>
+			<key>ypos</key>
+			<integer>910</integer>
+		</dict>
+		<key>D6DE9E5D-7883-4216-B28B-1D762E60364A</key>
+		<dict>
+			<key>note</key>
+			<string>iTerm</string>
+			<key>xpos</key>
+			<integer>785</integer>
+			<key>ypos</key>
+			<integer>240</integer>
+		</dict>
+		<key>DE26058B-66D8-464C-B116-3C36FC69D3FA</key>
+		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>210</integer>
+		</dict>
+		<key>DFDD4CE8-9ED6-40D8-8E11-7B5104273C26</key>
+		<dict>
+			<key>xpos</key>
+			<integer>450</integer>
+			<key>ypos</key>
+			<integer>590</integer>
+		</dict>
+		<key>F6142494-8ED8-4369-9BE3-555D11956DD7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>410</integer>
+			<key>ypos</key>
+			<integer>120</integer>
+		</dict>
+		<key>F9DFD058-DFE7-4C1C-BC68-1DFAE864F813</key>
+		<dict>
+			<key>note</key>
+			<string>Safari Tech Preview</string>
+			<key>xpos</key>
+			<integer>570</integer>
+			<key>ypos</key>
+			<integer>320</integer>
+		</dict>
+		<key>FA71F597-12C1-4357-B3CB-D8A7CDA00BB9</key>
+		<dict>
+			<key>note</key>
+			<string>Other Apps (No Tabs Support)</string>
+			<key>xpos</key>
+			<integer>230</integer>
+			<key>ypos</key>
+			<integer>610</integer>
+		</dict>
+	</dict>
+	<key>version</key>
+	<string>0.3.4</string>
+	<key>webaddress</key>
+	<string>mandrigin.ru</string>
+</dict>
+</plist>

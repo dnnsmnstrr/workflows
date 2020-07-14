@@ -41,3 +41,32 @@ No bridges found on your network. Try specifying the IP address.
 Setup Error: link button not pressed
 
 Success! You can now control your lights by using the "hue" keyword.
+
+Action completed! <groups:0:off>
+
+Action completed! <lights:5:on>
+
+Action completed! <lights:5:off>
+
+Action completed! <groups:6:on>
+
+Action completed! <groups:1:off>
+
+Action completed! <lights:4:on>
+
+Action completed! <lights:4:bri:80>
+
+Error: Invalid color. Please use a 6-digit hex color.
+Action completed! <lights:4:color:white>
+
+Error: Invalid color. Please use a 6-digit hex color.
+Action completed! <lights:4:color:ffffff>
+
+Error: Invalid color. Please use a 6-digit hex color.
+Action completed! <lights:4:color:#ffffff>
+
+Action completed! <lights:4:on>
+
+Action completed! <lights:4:bri:80>
+
+Action completed! <lights:6:on>
