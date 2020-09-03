@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.bkiefer.iossimulator</string>
+	<key>category</key>
+	<string>Dev</string>
 	<key>connections</key>
 	<dict>
 		<key>C8615B14-D843-4415-A913-A59C80350B60</key>

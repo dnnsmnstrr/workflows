@@ -15,6 +15,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>3E97DC8F-A370-454D-949D-E4330F459AC6</key>
@@ -26,6 +28,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>42245363-BEB4-43FF-BF07-4EBE65E231A4</key>
@@ -37,6 +41,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>62F16E06-C63B-4499-AA35-4FB8E58D90F9</key>
@@ -48,6 +54,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>656B63D6-E0FF-41EE-AC68-8DAF0FBA036E</key>
@@ -59,10 +67,13 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>7A829045-C79D-4D35-9DD6-C279B2241C06</key>
-		<array/>
+		<array>
+		</array>
 		<key>7C121B2D-5771-4A5A-9F73-BC880BE2E4A7</key>
 		<array>
 			<dict>
@@ -72,6 +83,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>89807341-AEB7-4232-A323-4C19F67C0958</key>
@@ -83,10 +96,22 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>999ACBC0-4B7D-4A2E-952F-FF7568D65524</key>
 		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1B282587-FB16-40F1-B540-D11B024AE149</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
 			<dict>
 				<key>destinationuid</key>
 				<string>72CED92D-60E2-427F-BF50-FC9DA516FAA9</string>
@@ -94,6 +119,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>E7B3FBD8-A05D-47BB-8EE7-3EA89BAE8382</key>
@@ -105,6 +132,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>E8B4CF9F-BD9C-4A86-9DC2-A5B45DBB48B1</key>
@@ -116,6 +145,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 	</dict>
@@ -124,9 +155,9 @@
 	<key>description</key>
 	<string>A workflow to interact with Any Bar</string>
 	<key>disabled</key>
-	<false/>
+	<true/>
 	<key>name</key>
-	<string>AnyBar Workflow</string>
+	<string>AnyBar</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -140,7 +171,7 @@
 			<key>uid</key>
 			<string>0A14EA0C-8ED1-45C5-80F7-EF5184C37119</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -162,6 +193,10 @@ else
 	echo -n $color | nc -4u -w0 localhost $port;
 fi
 </string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>5</integer>
 			</dict>
@@ -170,7 +205,24 @@ fi
 			<key>uid</key>
 			<string>7A829045-C79D-4D35-9DD6-C279B2241C06</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>1B282587-FB16-40F1-B540-D11B024AE149</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -212,6 +264,10 @@ query="{query}";
 port=`cat "$(getDataDir)/port.txt"`;
 
 echo -n "$query|$port";</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -220,7 +276,7 @@ echo -n "$query|$port";</string>
 			<key>uid</key>
 			<string>999ACBC0-4B7D-4A2E-952F-FF7568D65524</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -232,20 +288,32 @@ echo -n "$query|$port";</string>
 				<key>script</key>
 				<string>set theQuery to "{query}"
 
-tell application "Alfred 2" to run trigger "SetGraphic" in workflow "com.customct.AnyBar" with argument theQuery</string>
+tell application "Alfred 4" to run trigger "SetGraphic" in workflow "xyz.muensterer.anybar" with argument theQuery</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>6</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.script</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>72CED92D-60E2-427F-BF50-FC9DA516FAA9</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -451,6 +519,10 @@ echo -n "$(getXMLResults)";
 
 
 </string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
 				<string>AnyBar Workflow</string>
 				<key>title</key>
@@ -465,7 +537,7 @@ echo -n "$(getXMLResults)";
 			<key>uid</key>
 			<string>E8B4CF9F-BD9C-4A86-9DC2-A5B45DBB48B1</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -478,7 +550,7 @@ echo -n "$(getXMLResults)";
 			<key>uid</key>
 			<string>89807341-AEB7-4232-A323-4C19F67C0958</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -525,6 +597,10 @@ else
 	echo -n "$query" &gt; "$(getDataDir)/port.txt";
 fi
 </string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>5</integer>
 			</dict>
@@ -533,7 +609,7 @@ fi
 			<key>uid</key>
 			<string>FA18CE87-4064-4A2E-95EE-D6132FEB41E8</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -554,7 +630,7 @@ fi
 			<key>uid</key>
 			<string>E7B3FBD8-A05D-47BB-8EE7-3EA89BAE8382</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -573,6 +649,10 @@ else
 	mv "$query" ~/.AnyBar;
 fi
 </string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -581,7 +661,7 @@ fi
 			<key>uid</key>
 			<string>0FF09301-153E-4DFF-8099-8A820DF0C8EF</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -600,7 +680,7 @@ fi
 			<key>uid</key>
 			<string>3E97DC8F-A370-454D-949D-E4330F459AC6</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -621,7 +701,7 @@ fi
 			<key>uid</key>
 			<string>62F16E06-C63B-4499-AA35-4FB8E58D90F9</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -663,6 +743,10 @@ query="{query}";
 echo -n "$query" &gt; "$(getDataDir)/port.txt";
 
 echo "Set to port: {query}.";</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -671,7 +755,7 @@ echo "Set to port: {query}.";</string>
 			<key>uid</key>
 			<string>656B63D6-E0FF-41EE-AC68-8DAF0FBA036E</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -716,6 +800,10 @@ cp -f ./AnyBar/*.png "${HOME}/.AnyBar"
 
 echo -n "Graphics Copied!  ";
 </string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -724,7 +812,7 @@ echo -n "Graphics Copied!  ";
 			<key>uid</key>
 			<string>7C121B2D-5771-4A5A-9F73-BC880BE2E4A7</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -733,11 +821,7 @@ echo -n "Graphics Copied!  ";
 				<false/>
 				<key>onlyshowifquerypopulated</key>
 				<true/>
-				<key>output</key>
-				<integer>0</integer>
 				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
 				<false/>
 				<key>text</key>
 				<string>AnyBar Workflow</string>
@@ -749,7 +833,7 @@ echo -n "Graphics Copied!  ";
 			<key>uid</key>
 			<string>2FBA4E10-6EF6-41D5-A415-68D7DAE5B14D</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -770,7 +854,7 @@ echo -n "Graphics Copied!  ";
 			<key>uid</key>
 			<string>42245363-BEB4-43FF-BF07-4EBE65E231A4</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -799,78 +883,115 @@ There are two External Triggers: SetGraphic and Launch. The SetGraphic external 
 	<dict>
 		<key>0A14EA0C-8ED1-45C5-80F7-EF5184C37119</key>
 		<dict>
+			<key>xpos</key>
+			<integer>100</integer>
 			<key>ypos</key>
-			<real>10</real>
+			<real>10.0</real>
 		</dict>
 		<key>0FF09301-153E-4DFF-8099-8A820DF0C8EF</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
-			<real>370</real>
+			<real>370.0</real>
+		</dict>
+		<key>1B282587-FB16-40F1-B540-D11B024AE149</key>
+		<dict>
+			<key>xpos</key>
+			<integer>680</integer>
+			<key>ypos</key>
+			<integer>75</integer>
 		</dict>
 		<key>2FBA4E10-6EF6-41D5-A415-68D7DAE5B14D</key>
 		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
 			<key>ypos</key>
-			<real>610</real>
+			<real>610.0</real>
 		</dict>
 		<key>3E97DC8F-A370-454D-949D-E4330F459AC6</key>
 		<dict>
+			<key>xpos</key>
+			<integer>100</integer>
 			<key>ypos</key>
-			<real>370</real>
+			<real>370.0</real>
 		</dict>
 		<key>42245363-BEB4-43FF-BF07-4EBE65E231A4</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
-			<real>610</real>
+			<real>610.0</real>
 		</dict>
 		<key>62F16E06-C63B-4499-AA35-4FB8E58D90F9</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
-			<real>490</real>
+			<real>490.0</real>
 		</dict>
 		<key>656B63D6-E0FF-41EE-AC68-8DAF0FBA036E</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
-			<real>490</real>
+			<real>490.0</real>
 		</dict>
 		<key>72CED92D-60E2-427F-BF50-FC9DA516FAA9</key>
 		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
 			<key>ypos</key>
-			<real>130</real>
+			<real>130.0</real>
 		</dict>
 		<key>7A829045-C79D-4D35-9DD6-C279B2241C06</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
-			<real>10</real>
+			<real>10.0</real>
 		</dict>
 		<key>7C121B2D-5771-4A5A-9F73-BC880BE2E4A7</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
-			<real>610</real>
+			<real>610.0</real>
 		</dict>
 		<key>89807341-AEB7-4232-A323-4C19F67C0958</key>
 		<dict>
+			<key>xpos</key>
+			<integer>100</integer>
 			<key>ypos</key>
-			<real>190</real>
+			<real>190.0</real>
 		</dict>
 		<key>999ACBC0-4B7D-4A2E-952F-FF7568D65524</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
-			<real>130</real>
+			<real>130.0</real>
 		</dict>
 		<key>E7B3FBD8-A05D-47BB-8EE7-3EA89BAE8382</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
-			<real>260</real>
+			<real>260.0</real>
 		</dict>
 		<key>E8B4CF9F-BD9C-4A86-9DC2-A5B45DBB48B1</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
-			<real>130</real>
+			<real>130.0</real>
 		</dict>
 		<key>FA18CE87-4064-4A2E-95EE-D6132FEB41E8</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
-			<real>250</real>
+			<real>250.0</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>

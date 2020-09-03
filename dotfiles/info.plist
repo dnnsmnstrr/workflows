@@ -19,6 +19,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>1AE8343C-5835-446F-809B-39045243938B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>14DF3092-BD66-43B6-947E-73B26BED2915</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>21DBBCAD-030E-4CF0-8C78-F992ADC0F932</key>
 		<array>
 			<dict>
@@ -35,7 +48,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>8A7F7208-227E-4A07-A351-99FE352F0EDA</string>
+				<string>42AEBED3-2C62-4A96-8543-233371796F65</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -59,13 +72,37 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>1CA4C393-8C9F-46FF-A337-AD3CA7A4C17A</string>
+				<string>5924CF84-FFCE-46FA-A5C6-0EC23C2D36BA</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>sourceoutputuid</key>
 				<string>9D03A287-F152-4F02-B171-34C1F0E44E23</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>0DD28B0C-4F8E-420C-B9C5-5FAA660681F7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>BE8778E0-6C8E-41C2-8B8E-AC590EF5FF2C</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1AE8343C-5835-446F-809B-39045243938B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>66977E1F-4833-454C-9162-781A0348BB0D</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -134,18 +171,25 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
-				<integer>0</integer>
+				<integer>102</integer>
 				<key>script</key>
-				<string>cd ~/.dotfiles
-atom</string>
+				<string>open -na Atom /Users/dennismuensterer/.dotfiles</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.terminalcommand</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>8A7F7208-227E-4A07-A351-99FE352F0EDA</string>
+			<string>42AEBED3-2C62-4A96-8543-233371796F65</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -202,11 +246,11 @@ atom</string>
 						<key>matchmode</key>
 						<integer>0</integer>
 						<key>matchstring</key>
-						<string>shell</string>
+						<string>finder</string>
 						<key>outputlabel</key>
-						<string>shell</string>
+						<string>finder</string>
 						<key>uid</key>
-						<string>B7FD92E6-DC93-4DCB-B4C3-7C2F8699A0D9</string>
+						<string>9D03A287-F152-4F02-B171-34C1F0E44E23</string>
 					</dict>
 					<dict>
 						<key>inputstring</key>
@@ -216,11 +260,39 @@ atom</string>
 						<key>matchmode</key>
 						<integer>0</integer>
 						<key>matchstring</key>
-						<string>finder</string>
+						<string>web</string>
 						<key>outputlabel</key>
-						<string>finder</string>
+						<string>web</string>
 						<key>uid</key>
-						<string>9D03A287-F152-4F02-B171-34C1F0E44E23</string>
+						<string>BE8778E0-6C8E-41C2-8B8E-AC590EF5FF2C</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>search</string>
+						<key>outputlabel</key>
+						<string>search</string>
+						<key>uid</key>
+						<string>66977E1F-4833-454C-9162-781A0348BB0D</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>shell</string>
+						<key>outputlabel</key>
+						<string>shell</string>
+						<key>uid</key>
+						<string>B7FD92E6-DC93-4DCB-B4C3-7C2F8699A0D9</string>
 					</dict>
 				</array>
 				<key>elselabel</key>
@@ -236,6 +308,21 @@ atom</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>openwith</key>
+				<string></string>
+				<key>sourcefile</key>
+				<string>~/.dotfiles/git/gitconfig</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>219A6110-4E0C-4C8F-AC47-2B40FABA5F25</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -243,7 +330,7 @@ atom</string>
 				<key>fixedorder</key>
 				<false/>
 				<key>items</key>
-				<string>[{"title":"finicky","arg":"finicky","subtitle":"Set browser defaults"},{"title":"Shell","arg":"shell\n","subtitle":"Open dotfiles directory in terminal"},{"title":"Atom","arg":"atom","subtitle":"Open dotfiles project in Atom"},{"title":"git","arg":"git","subtitle":"Configure global git settings"},{"title":"Finder","arg":"finder","subtitle":"Open dotfiles in Finder"}]</string>
+				<string>[{"title":"Finicky Config","arg":"finicky","subtitle":"Set browser defaults"},{"title":"Shell","arg":"shell\n","subtitle":"Open dotfiles directory in terminal"},{"title":"Atom","arg":"atom","subtitle":"Open dotfiles project in Atom"},{"title":"git","arg":"git","subtitle":"Configure global git settings"},{"title":"Finder","arg":"finder","subtitle":"Open dotfiles in Finder"},{"title":"Web","arg":"web","subtitle":"Open dotfiles website"},{"title":"Search","arg":"search","subtitle":"Search dotfiles directory"}]</string>
 				<key>keyword</key>
 				<string>df</string>
 				<key>runningsubtext</key>
@@ -286,28 +373,217 @@ atom</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>openwith</key>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>open /Users/dennismuensterer/.dotfiles</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
 				<string></string>
-				<key>sourcefile</key>
-				<string>~/.dotfiles/git/gitconfig</string>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.openfile</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>219A6110-4E0C-4C8F-AC47-2B40FABA5F25</string>
+			<string>5924CF84-FFCE-46FA-A5C6-0EC23C2D36BA</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>path</key>
-				<string>~/.dotfiles/README.md</string>
+				<key>anchorfields</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>daterange</key>
+				<integer>0</integer>
+				<key>fields</key>
+				<array>
+					<dict>
+						<key>field</key>
+						<string>kMDItemDisplayName</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemAlternateNames</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemFinderComment</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+				</array>
+				<key>includesystem</key>
+				<true/>
+				<key>keyword</key>
+				<string>df</string>
+				<key>limit</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>scopes</key>
+				<array>
+					<string>~/.dotfiles</string>
+				</array>
+				<key>sortmode</key>
+				<integer>0</integer>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>types</key>
+				<array/>
+				<key>withspace</key>
+				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.revealfile</string>
+			<string>alfred.workflow.input.filefilter</string>
 			<key>uid</key>
-			<string>1CA4C393-8C9F-46FF-A337-AD3CA7A4C17A</string>
+			<string>C380C2BA-6377-4B78-84AF-7A282B513EEC</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>https://muensterer.xyz/dotfiles</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>0DD28B0C-4F8E-420C-B9C5-5FAA660681F7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>anchorfields</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>daterange</key>
+				<integer>0</integer>
+				<key>fields</key>
+				<array>
+					<dict>
+						<key>field</key>
+						<string>kMDItemDisplayName</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemAlternateNames</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemFinderComment</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+				</array>
+				<key>includesystem</key>
+				<true/>
+				<key>limit</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>scopes</key>
+				<array>
+					<string>~/.dotfiles</string>
+				</array>
+				<key>sortmode</key>
+				<integer>0</integer>
+				<key>subtext</key>
+				<string>Search dotfiles directory</string>
+				<key>title</key>
+				<string>Dotfiles search</string>
+				<key>types</key>
+				<array/>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.filefilter</string>
+			<key>uid</key>
+			<string>14DF3092-BD66-43B6-947E-73B26BED2915</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>1AE8343C-5835-446F-809B-39045243938B</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -332,16 +608,30 @@ atom</string>
 		<key>08A89800-B42A-4D27-899F-67257795F12D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>10</integer>
+			<integer>30</integer>
 			<key>ypos</key>
-			<integer>225</integer>
+			<integer>255</integer>
 		</dict>
-		<key>1CA4C393-8C9F-46FF-A337-AD3CA7A4C17A</key>
+		<key>0DD28B0C-4F8E-420C-B9C5-5FAA660681F7</key>
 		<dict>
 			<key>xpos</key>
 			<integer>590</integer>
 			<key>ypos</key>
-			<integer>355</integer>
+			<integer>475</integer>
+		</dict>
+		<key>14DF3092-BD66-43B6-947E-73B26BED2915</key>
+		<dict>
+			<key>xpos</key>
+			<integer>655</integer>
+			<key>ypos</key>
+			<integer>590</integer>
+		</dict>
+		<key>1AE8343C-5835-446F-809B-39045243938B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>580</integer>
+			<key>ypos</key>
+			<integer>595</integer>
 		</dict>
 		<key>219A6110-4E0C-4C8F-AC47-2B40FABA5F25</key>
 		<dict>
@@ -357,33 +647,51 @@ atom</string>
 			<key>ypos</key>
 			<integer>185</integer>
 		</dict>
-		<key>8A7F7208-227E-4A07-A351-99FE352F0EDA</key>
+		<key>42AEBED3-2C62-4A96-8543-233371796F65</key>
 		<dict>
+			<key>note</key>
+			<string>open in atom</string>
 			<key>xpos</key>
 			<integer>590</integer>
 			<key>ypos</key>
-			<integer>130</integer>
+			<integer>120</integer>
+		</dict>
+		<key>5924CF84-FFCE-46FA-A5C6-0EC23C2D36BA</key>
+		<dict>
+			<key>note</key>
+			<string>open in finder</string>
+			<key>xpos</key>
+			<integer>590</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
+		<key>C380C2BA-6377-4B78-84AF-7A282B513EEC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>110</integer>
+			<key>ypos</key>
+			<integer>370</integer>
 		</dict>
 		<key>CBAA1ECB-A611-40A5-AD50-341AE55A1262</key>
 		<dict>
 			<key>xpos</key>
-			<integer>595</integer>
+			<integer>590</integer>
 			<key>ypos</key>
 			<integer>10</integer>
 		</dict>
 		<key>D216AA3B-251D-4FD6-B051-85EC30A17941</key>
 		<dict>
 			<key>xpos</key>
-			<integer>580</integer>
+			<integer>590</integer>
 			<key>ypos</key>
-			<integer>495</integer>
+			<integer>685</integer>
 		</dict>
 		<key>DBA57AF4-DA3D-45D7-8FF3-25B9F4C2CADC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>150</integer>
+			<integer>125</integer>
 			<key>ypos</key>
-			<integer>225</integer>
+			<integer>255</integer>
 		</dict>
 	</dict>
 	<key>version</key>

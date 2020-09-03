@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Get App Icon</name>
-  <version>1.5</version>
-  <bundle>com.mcskrzypczak.extracticon</bundle>
-  <updated>1431503745</updated>
-  <file>mcskrzypczak-extract_icon.alfredworkflow</file>
-</workflow>

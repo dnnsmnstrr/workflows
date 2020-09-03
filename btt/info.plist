@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.dnnsmnstrr.btt</string>
+	<key>connections</key>
+	<dict/>
+	<key>createdby</key>
+	<string>Dennis Muensterer</string>
+	<key>description</key>
+	<string></string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>BetterTouchTool</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>btt</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>BetterTouchTool</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>5703D890-F2BA-471C-91F7-CFBB39AD7957</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>5703D890-F2BA-471C-91F7-CFBB39AD7957</key>
+		<dict>
+			<key>xpos</key>
+			<integer>125</integer>
+			<key>ypos</key>
+			<integer>135</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>https://dnnsmnstrr.github.io</string>
+</dict>
+</plist>

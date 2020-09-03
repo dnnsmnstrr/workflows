@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.yourtion.sourcetree</string>
+	<key>category</key>
+	<string>Dev</string>
 	<key>connections</key>
 	<dict>
 		<key>081FF2F4-E464-47C1-8577-591660EF42D7</key>

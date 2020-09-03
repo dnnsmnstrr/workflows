@@ -96,6 +96,16 @@
 				<key>vitoclose</key>
 				<false/>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1BFB2B8F-7263-47C7-B15E-D61E3EB66557</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Paste url</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
 		</array>
 		<key>E780650D-E8CD-434B-AACC-7F96E8F7AD3C</key>
 		<array>
@@ -136,25 +146,6 @@
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>B12B07B3-1ADC-4677-8D9B-050AC916DF49</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>{query}</string>
-				<key>utf8</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
 			<string>9C524F85-B372-4FD7-9189-56B8585F3888</string>
 			<key>version</key>
 			<integer>1</integer>
@@ -166,53 +157,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>glm</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Please wait ...</string>
-				<key>script</key>
-				<string>python main.py --merge "{query}"</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Open merge  requests assigned to you.</string>
-				<key>title</key>
-				<string>Open merge  requests assigned to you.</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
+				<key>argumenttreatemptyqueryasnil</key>
 				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>E780650D-E8CD-434B-AACC-7F96E8F7AD3C</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -251,7 +197,24 @@
 			<key>uid</key>
 			<string>C3C3143C-7AA7-47E0-953C-80F6D8FAD7BF</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>1BFB2B8F-7263-47C7-B15E-D61E3EB66557</string>
+			<key>version</key>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -260,6 +223,76 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>glm</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Please wait ...</string>
+				<key>script</key>
+				<string>python main.py --merge "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Open merge  requests assigned to you.</string>
+				<key>title</key>
+				<string>Open merge  requests assigned to you.</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>E780650D-E8CD-434B-AACC-7F96E8F7AD3C</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>B12B07B3-1ADC-4677-8D9B-050AC916DF49</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -298,7 +331,7 @@
 			<key>uid</key>
 			<string>2DDE5C6C-F4CE-4438-B34C-A6D75E3B63B1</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -326,6 +359,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -364,7 +399,7 @@
 			<key>uid</key>
 			<string>A61EBF1F-A567-4C64-A518-699270FA1D14</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -384,6 +419,29 @@
 			<string>69290AD4-4F59-4B83-A57D-CBB1719BD40C</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python main.py --token "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>1D6A596A-AC0F-4636-BD4E-54393AF66480</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -426,29 +484,6 @@
 			<string>07D583FC-AFE3-47D1-8076-FF78BE066E4E</string>
 			<key>version</key>
 			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>python main.py --token "{query}"</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>1D6A596A-AC0F-4636-BD4E-54393AF66480</string>
-			<key>version</key>
-			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -532,6 +567,13 @@ gltodo: Open Gitlab todos in browser.</string>
 			<key>ypos</key>
 			<integer>440</integer>
 		</dict>
+		<key>1BFB2B8F-7263-47C7-B15E-D61E3EB66557</key>
+		<dict>
+			<key>xpos</key>
+			<integer>340</integer>
+			<key>ypos</key>
+			<integer>80</integer>
+		</dict>
 		<key>1D6A596A-AC0F-4636-BD4E-54393AF66480</key>
 		<dict>
 			<key>xpos</key>
@@ -579,7 +621,7 @@ gltodo: Open Gitlab todos in browser.</string>
 			<key>xpos</key>
 			<integer>340</integer>
 			<key>ypos</key>
-			<integer>80</integer>
+			<integer>10</integer>
 		</dict>
 		<key>A61EBF1F-A567-4C64-A518-699270FA1D14</key>
 		<dict>
@@ -614,7 +656,7 @@ gltodo: Open Gitlab todos in browser.</string>
 			<key>xpos</key>
 			<integer>110</integer>
 			<key>ypos</key>
-			<integer>80</integer>
+			<integer>50</integer>
 		</dict>
 		<key>E780650D-E8CD-434B-AACC-7F96E8F7AD3C</key>
 		<dict>

@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.vdesabou.spotify.mini.player</string>
+	<key>category</key>
+	<string>Music</string>
 	<key>connections</key>
 	<dict>
 		<key>024D6172-912E-4EAE-92AA-776626D52FFB</key>
@@ -3390,6 +3392,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧Settings▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -3462,6 +3466,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧Playlist▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -3545,6 +3551,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧Current Track▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -3608,6 +3616,8 @@
 			<dict>
 				<key>argument</key>
 				<string>Recent Tracks▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -3680,6 +3690,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧New Releases▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -3752,6 +3764,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧Search Online▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -3832,6 +3846,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧Play Queue▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -3891,6 +3907,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧Browse▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -3940,6 +3958,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧Spotify Connect▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -4003,6 +4023,8 @@
 			<dict>
 				<key>argument</key>
 				<string>✧Show▹</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -4068,6 +4090,10 @@
 				<false/>
 				<key>focusedappvariablename</key>
 				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -8417,6 +8443,8 @@ php -f ./src/action.php -- "$query" "TRACK" ""</string>
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>web_search</key>
@@ -8722,6 +8750,8 @@ php -f ./src/action.php -- "$query" "TRACK" "" &gt;&gt; "$alfred_workflow_cache/
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>chosen_color</key>
@@ -8740,6 +8770,8 @@ php -f ./src/action.php -- "$query" "TRACK" "" &gt;&gt; "$alfred_workflow_cache/
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>theme_color</key>
@@ -8822,6 +8854,8 @@ php -f ./src/action.php -- "$query" "TRACK" "" &gt;&gt; "$alfred_workflow_cache/
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>chosen_search_order</key>
@@ -9158,6 +9192,10 @@ do shell script deviceselectedXML</string>
 				<false/>
 				<key>focusedappvariablename</key>
 				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>

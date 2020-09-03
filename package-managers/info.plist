@@ -2218,6 +2218,23 @@ echo $repo-&gt;search($query);</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>A6F75F15-2128-4002-A841-2872651A1640</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -2243,23 +2260,6 @@ echo $pkgstr</string>
 			<string>D16CFAE9-21B6-44DD-965D-73EC1BE630C2</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<true/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-				<key>transient</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>A6F75F15-2128-4002-A841-2872651A1640</string>
-			<key>version</key>
-			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -2717,9 +2717,9 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 		<key>135ECB8C-557A-41D9-BF9A-6439A5EA949E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>550</integer>
 			<key>ypos</key>
-			<real>2080</real>
+			<integer>2055</integer>
 		</dict>
 		<key>18B0C07D-A101-4267-B306-7925DE8A30C9</key>
 		<dict>
@@ -2731,16 +2731,16 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 		<key>19F2BEFA-1474-4B56-B384-503F761B4C22</key>
 		<dict>
 			<key>xpos</key>
-			<integer>140</integer>
+			<integer>90</integer>
 			<key>ypos</key>
 			<integer>750</integer>
 		</dict>
 		<key>1A806429-BBAB-4227-B0C9-46E96CD3E492</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>570</integer>
 			<key>ypos</key>
-			<real>1930</real>
+			<integer>1915</integer>
 		</dict>
 		<key>265DF548-7D96-4F94-AB0E-6AD26F31B4A1</key>
 		<dict>
@@ -2913,9 +2913,9 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 		<key>D16CFAE9-21B6-44DD-965D-73EC1BE630C2</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>550</integer>
 			<key>ypos</key>
-			<real>2260</real>
+			<integer>2265</integer>
 		</dict>
 		<key>D22F4CD1-A38D-4D9A-B910-E82A467AB0CC</key>
 		<dict>

@@ -1,0 +1,11 @@
+{
+  "name": "alfred-zoom",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Dennis Muensterer",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "alfy": "^0.9.1"
+  }
+}

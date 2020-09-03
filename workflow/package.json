@@ -1,0 +1,12 @@
+{
+  "name": "alfred-workflow",
+  "version": "0.1.0",
+  "description": "A helper workflow to make workflows with alfy",
+  "main": "index.js",
+  "author": "Dennis Muensterer",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "alfy": "^0.10.0"
+  }
+}

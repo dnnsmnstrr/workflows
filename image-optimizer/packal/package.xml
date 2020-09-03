@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Image Optimization</name>
-  <version>2.0.1</version>
-  <bundle>com.tumblr.ramiroaraujo.alfred-image-optim-workflow</bundle>
-  <updated>1440874094</updated>
-  <file>alfred-image-optim-workflow.alfredworkflow</file>
-</workflow>

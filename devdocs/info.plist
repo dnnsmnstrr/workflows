@@ -151,6 +151,19 @@
 				<false/>
 			</dict>
 		</array>
+			<key>javascript</key>
+			<array>
+				<dict>
+					<key>destinationuid</key>
+					<string>output</string>
+					<key>modifiers</key>
+					<integer>0</integer>
+					<key>modifiersubtext</key>
+					<string></string>
+          <key>vitoclose</key>
+				  <false/>
+				</dict>
+			</array>
 			<key>react</key>
 			<array>
 				<dict>
@@ -177,7 +190,7 @@
 				  <false/>
 				</dict>
 			</array>
-			<key>javascript</key>
+			<key>html</key>
 			<array>
 				<dict>
 					<key>destinationuid</key>
@@ -203,33 +216,7 @@
 				  <false/>
 				</dict>
 			</array>
-			<key>git</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>output</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-          <key>vitoclose</key>
-				  <false/>
-				</dict>
-			</array>
-			<key>yarn</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>output</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-          <key>vitoclose</key>
-				  <false/>
-				</dict>
-			</array>
-			<key>npm</key>
+			<key>markdown</key>
 			<array>
 				<dict>
 					<key>destinationuid</key>
@@ -255,33 +242,20 @@
 				  <false/>
 				</dict>
 			</array>
+			<key>yarn</key>
+			<array>
+				<dict>
+					<key>destinationuid</key>
+					<string>output</string>
+					<key>modifiers</key>
+					<integer>0</integer>
+					<key>modifiersubtext</key>
+					<string></string>
+          <key>vitoclose</key>
+				  <false/>
+				</dict>
+			</array>
 			<key>moment</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>output</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-          <key>vitoclose</key>
-				  <false/>
-				</dict>
-			</array>
-			<key>markdown</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>output</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-          <key>vitoclose</key>
-				  <false/>
-				</dict>
-			</array>
-			<key>http</key>
 			<array>
 				<dict>
 					<key>destinationuid</key>
@@ -306,17 +280,6 @@
 					</dict>
 				</array>
 				<key>rn</key>
-				<array>
-					<dict>
-						<key>destinationuid</key>
-						<string>output</string>
-						<key>modifiers</key>
-						<integer>0</integer>
-						<key>modifiersubtext</key>
-						<string></string>
-					</dict>
-				</array>
-				<key>rct</key>
 				<array>
 					<dict>
 						<key>destinationuid</key>
@@ -917,6 +880,57 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
+				<string>javascript</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = "{query}"; $documentation = 'javascript';
+					require_once("scripts/devdocs.php");
+				</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search for JavaScript "{query}"</string>
+				<key>title</key>
+				<string>DevDocs - JavaScript</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>javascript</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>118</integer>
+				<key>keyword</key>
 				<string>react</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
@@ -1019,7 +1033,7 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
-				<string>javascript</string>
+				<string>html</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1031,7 +1045,7 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'javascript';
+				<string>$query = "{query}"; $documentation = 'html';
 					require_once("scripts/devdocs.php");
 				</string>
 				<key>scriptargtype</key>
@@ -1039,9 +1053,9 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Search for JavaScript "{query}"</string>
+				<string>Search for HTML "{query}"</string>
 				<key>title</key>
-				<string>DevDocs - JavaScript</string>
+				<string>DevDocs - HTML</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
@@ -1050,7 +1064,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>javascript</string>
+			<string>html</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1121,7 +1135,7 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
-				<string>git</string>
+				<string>markdown</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1133,7 +1147,7 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'git';
+				<string>$query = "{query}"; $documentation = 'markdown';
 					require_once("scripts/devdocs.php");
 				</string>
 				<key>scriptargtype</key>
@@ -1141,9 +1155,9 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Search for Git "{query}"</string>
+				<string>Search for Markdown "{query}"</string>
 				<key>title</key>
-				<string>DevDocs - Git</string>
+				<string>DevDocs - Markdown</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
@@ -1152,109 +1166,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>git</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>yarn</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'yarn';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search for Yarn "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - Yarn</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>yarn</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>npm</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'npm';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search for npm "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - npm</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>npm</string>
+			<string>markdown</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1325,6 +1237,57 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
+				<string>yarn</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = "{query}"; $documentation = 'yarn';
+					require_once("scripts/devdocs.php");
+				</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search for Yarn "{query}"</string>
+				<key>title</key>
+				<string>DevDocs - Yarn</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>yarn</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>118</integer>
+				<key>keyword</key>
 				<string>moment</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
@@ -1357,108 +1320,6 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>moment</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>markdown</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'markdown';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search for Markdown "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - Markdown</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>markdown</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>http</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'http';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search for HTTP "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - HTTP</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>http</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1537,45 +1398,6 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>react_native</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>rct</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'react';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>subtext</key>
-				<string>Search for React "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - React</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>react</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1721,56 +1543,56 @@
 			<key>ypos</key>
 			<integer>930</integer>
 		</dict>
-		<key>react</key>
+		<key>javascript</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1175</integer>
 		</dict>
-		<key>react_native</key>
+		<key>react</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1305</integer>
 		</dict>
-		<key>javascript</key>
+		<key>react_native</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1435</integer>
 		</dict>
-		<key>bash</key>
+		<key>html</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1565</integer>
 		</dict>
-		<key>git</key>
+		<key>bash</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1695</integer>
 		</dict>
-		<key>yarn</key>
+		<key>markdown</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1825</integer>
 		</dict>
-		<key>npm</key>
+		<key>node</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1955</integer>
 		</dict>
-		<key>node</key>
+		<key>yarn</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
@@ -1784,39 +1606,20 @@
 			<key>ypos</key>
 			<integer>2215</integer>
 		</dict>
-		<key>markdown</key>
-		<dict>
-			<key>ypos</key>
-			<integer>300</integer>
-			<key>ypos</key>
-			<integer>2345</integer>
-		</dict>
-		<key>http</key>
-		<dict>
-			<key>ypos</key>
-			<integer>300</integer>
-			<key>ypos</key>
-			<integer>2475</integer>
-		</dict>
 		<key>js</key>
 		<dict>
 			<key>300</key>
-			<integer>2705</integer>
+			<integer>2445</integer>
 		</dict>
 		<key>rn</key>
 		<dict>
 			<key>300</key>
-			<integer>2835</integer>
-		</dict>
-		<key>rct</key>
-		<dict>
-			<key>300</key>
-			<integer>2965</integer>
+			<integer>2575</integer>
 		</dict>
 		<key>md</key>
 		<dict>
 			<key>300</key>
-			<integer>3095</integer>
+			<integer>2705</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
