@@ -4,8 +4,6 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.alredapp.kfunderburg</string>
-	<key>category</key>
-	<string>Search</string>
 	<key>connections</key>
 	<dict>
 		<key>0288F758-00A4-4133-B9F5-0747B526A1D1</key>
@@ -245,6 +243,8 @@ end run</string>
 			<dict>
 				<key>argument</key>
 				<string>{var:theApp}, {query}</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict/>
 			</dict>
@@ -309,6 +309,8 @@ end run</string>
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>theApp</key>
