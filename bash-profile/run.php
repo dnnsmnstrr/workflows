@@ -6,7 +6,7 @@ $queryString = $argv[1];
 $searchArr   = explode(' ', $queryString);
 $home        = $_SERVER['HOME'] . '/';
 
-    $paths = ['.bash_profile', 'my_bash/profile.sh', '.profile', '.zprofile', '.shell/aliases', '.shell/functions' ];
+$paths = ['.bash_profile', '.profile', '.shell/profile', '.shell/functions', '.shell/aliases'];
 
 $lines = [];
 foreach ($paths as $path) {
@@ -35,8 +35,3 @@ $resultArr = [
 
 $result = json_encode($resultArr, JSON_THROW_ON_ERROR, 512);
 echo $result;
-
-
-
-
-

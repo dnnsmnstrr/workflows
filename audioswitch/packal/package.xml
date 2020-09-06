@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>Audio Swith</name>
+  <version>1</version>
+  <bundle>rsampayo.audioswitch</bundle>
+  <updated>1414674597</updated>
+  <file>audio_switch.alfredworkflow</file>
+</workflow>

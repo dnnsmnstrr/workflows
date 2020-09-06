@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>ca.fancywhale.memeflow</string>
+	<key>category</key>
+	<string>Fun</string>
+	<key>connections</key>
+	<dict>
+		<key>46C2EA85-FBCF-4162-8FDE-AFC5249D6BEA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2F32D5FC-B9DF-4224-B38D-B92033F767FF</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4EBB5842-7A58-4C19-8C47-EC54D4EF1784</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FE02DD4D-D769-42A7-8B98-ED95FB42D9A9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>FE02DD4D-D769-42A7-8B98-ED95FB42D9A9</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B131147E-6C49-4EA6-A051-9B36768FEAA8</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Gui Martins</string>
+	<key>description</key>
+	<string>Paste meme images from your ~/meme folder</string>
+	<key>disabled</key>
+	<true/>
+	<key>name</key>
+	<string>memepaste</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>count</key>
+				<integer>1</integer>
+				<key>keychar</key>
+				<string>v</string>
+				<key>keycode</key>
+				<integer>-1</integer>
+				<key>keymod</key>
+				<integer>1048576</integer>
+				<key>overridewithargument</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.dispatchkeycombo</string>
+			<key>uid</key>
+			<string>B131147E-6C49-4EA6-A051-9B36768FEAA8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>anchorfields</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>daterange</key>
+				<integer>0</integer>
+				<key>fields</key>
+				<array>
+					<dict>
+						<key>field</key>
+						<string>kMDItemDisplayName</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemAlternateNames</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemFinderComment</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+				</array>
+				<key>includesystem</key>
+				<false/>
+				<key>keyword</key>
+				<string>meme</string>
+				<key>limit</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>scopes</key>
+				<array>
+					<string>~/meme</string>
+				</array>
+				<key>sortmode</key>
+				<integer>0</integer>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>types</key>
+				<array/>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.filefilter</string>
+			<key>uid</key>
+			<string>4EBB5842-7A58-4C19-8C47-EC54D4EF1784</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/local/bin/impbcopy "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>FE02DD4D-D769-42A7-8B98-ED95FB42D9A9</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>memedownload</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Downloads memes from the default source</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>46C2EA85-FBCF-4162-8FDE-AFC5249D6BEA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>_encode() {
+    local _length="${#1}"
+    for (( _offset = 0 ; _offset &lt; _length ; _offset++ )); do
+        _print_offset="${1:_offset:1}"
+        case "${_print_offset}" in
+            [a-zA-Z0-9.~_-]) printf "${_print_offset}" ;;
+            '/') printf '/' ;;
+            ':') printf ':' ;;
+            *) printf '%%%X' "'${_print_offset}" ;;
+        esac
+    done
+}
+
+if [[ ! -d "$HOME/meme" ]]; then
+	mkdir $HOME/meme
+fi
+
+cd $HOME/meme
+
+list_of_urls=$(curl https://memepaste.blob.core.windows.net/meme\?restype\=container\&amp;comp\=list | sed 's/&gt;/\n/g' | grep /Url | cut -d '&lt;' -f 1)
+
+IFS=$'\n'; arr=( $(echo -e "$list_of_urls") );for url in ${arr[@]}; do
+	echo "Downloading from url: $url" 
+    filename=$(echo "$url" | cut -d '/' -f 5)
+    if [ -f "./$filename" ]; then
+        echo "$filename already exists!"
+    else
+        _encode $url | xargs -n 1 curl -o "$filename" 
+    fi
+done</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>2F32D5FC-B9DF-4224-B38D-B92033F767FF</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>2F32D5FC-B9DF-4224-B38D-B92033F767FF</key>
+		<dict>
+			<key>xpos</key>
+			<integer>235</integer>
+			<key>ypos</key>
+			<integer>170</integer>
+		</dict>
+		<key>46C2EA85-FBCF-4162-8FDE-AFC5249D6BEA</key>
+		<dict>
+			<key>xpos</key>
+			<integer>30</integer>
+			<key>ypos</key>
+			<integer>170</integer>
+		</dict>
+		<key>4EBB5842-7A58-4C19-8C47-EC54D4EF1784</key>
+		<dict>
+			<key>xpos</key>
+			<integer>30</integer>
+			<key>ypos</key>
+			<integer>20</integer>
+		</dict>
+		<key>B131147E-6C49-4EA6-A051-9B36768FEAA8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>445</integer>
+			<key>ypos</key>
+			<integer>20</integer>
+		</dict>
+		<key>FE02DD4D-D769-42A7-8B98-ED95FB42D9A9</key>
+		<dict>
+			<key>xpos</key>
+			<integer>235</integer>
+			<key>ypos</key>
+			<integer>20</integer>
+		</dict>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>2.1</string>
+	<key>webaddress</key>
+	<string>https://fancywhale.ca</string>
+</dict>
+</plist>
