@@ -16,3 +16,9 @@
 [submodule "alfred-zettelkasten"]
 	path = alfred-zettelkasten
 	url = https://github.com/dnnsmnstrr/alfred-zettelkasten.git
+[submodule "alfred-meme"]
+	path = alfred-meme
+	url = https://github.com/dnnsmnstrr/alfred-meme.git
+[submodule "alfred-workflow"]
+	path = alfred-workflow
+	url = https://github.com/dnnsmnstrr/alfred-workflow.git
