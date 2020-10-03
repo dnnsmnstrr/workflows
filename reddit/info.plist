@@ -136,7 +136,7 @@ Set QUICKLOOK_POST to 1 for Quick Look preview (SHIFT or CMD+Y) to show the post
 	<key>variables</key>
 	<dict>
 		<key>NSFW</key>
-		<string>1</string>
+		<string>0</string>
 		<key>QUICKLOOK_POST</key>
 		<string>1</string>
 	</dict>
