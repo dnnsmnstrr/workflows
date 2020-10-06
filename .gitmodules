@@ -13,9 +13,6 @@
 [submodule "xkcd-alfred"]
 	path = xkcd-alfred
 	url = https://github.com/zjn0505/xkcd-alfred.git
-[submodule "alfred-zettelkasten"]
-	path = alfred-zettelkasten
-	url = https://github.com/dnnsmnstrr/alfred-zettelkasten.git
 [submodule "alfred-meme"]
 	path = alfred-meme
 	url = https://github.com/dnnsmnstrr/alfred-meme.git
