@@ -234,6 +234,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>dotfiles</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Dotfiles</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>08A89800-B42A-4D27-899F-67257795F12D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -257,27 +278,6 @@
 			<string>alfred.workflow.input.listfilter</string>
 			<key>uid</key>
 			<string>DBA57AF4-DA3D-45D7-8FF3-25B9F4C2CADC</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>keyword</key>
-				<string>dotfiles</string>
-				<key>subtext</key>
-				<string></string>
-				<key>text</key>
-				<string>Dotfiles</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>08A89800-B42A-4D27-899F-67257795F12D</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -478,7 +478,7 @@
 	<key>variables</key>
 	<dict>
 		<key>dotfiles</key>
-		<string>/Users/dennismuensterer/.dotfiles</string>
+		<string>~/dotfiles</string>
 		<key>extra</key>
 		<string>.extra</string>
 		<key>homepage</key>
