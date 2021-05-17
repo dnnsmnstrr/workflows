@@ -189,10 +189,6 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -231,7 +227,7 @@
 			<key>uid</key>
 			<string>024CCF2C-F278-4295-B1AF-CCF8771F79AB</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -309,6 +305,8 @@ color_picker($action);</string>
 			<integer>1</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict/>
 			<key>type</key>
 			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
@@ -317,6 +315,8 @@ color_picker($action);</string>
 			<integer>1</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict/>
 			<key>type</key>
 			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
@@ -595,7 +595,7 @@ color_picker($action);</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.0</string>
+	<string>3.0.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/benknight/hue-alfred-workflow</string>
 </dict>

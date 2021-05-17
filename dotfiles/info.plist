@@ -36,49 +36,13 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>CBAA1ECB-A611-40A5-AD50-341AE55A1262</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>sourceoutputuid</key>
-				<string>1A649858-45AD-491B-9871-B6EEA114A0CC</string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>42AEBED3-2C62-4A96-8543-233371796F65</string>
+				<string>8737E156-6502-4B1A-9A47-8699AC6103CB</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>sourceoutputuid</key>
 				<string>BE638D6E-5343-4AE3-987A-68C8B7E92A8B</string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>219A6110-4E0C-4C8F-AC47-2B40FABA5F25</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>sourceoutputuid</key>
-				<string>9455EAA8-7DA4-4F2A-B256-EC38F54571DA</string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>5924CF84-FFCE-46FA-A5C6-0EC23C2D36BA</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>sourceoutputuid</key>
-				<string>9D03A287-F152-4F02-B171-34C1F0E44E23</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -91,6 +55,16 @@
 				<string></string>
 				<key>sourceoutputuid</key>
 				<string>BE8778E0-6C8E-41C2-8B8E-AC590EF5FF2C</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>14DF3092-BD66-43B6-947E-73B26BED2915</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -113,18 +87,31 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>sourceoutputuid</key>
+				<string>B7FD92E6-DC93-4DCB-B4C3-7C2F8699A0D9</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>D216AA3B-251D-4FD6-B051-85EC30A17941</string>
+				<string>CBAA1ECB-A611-40A5-AD50-341AE55A1262</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
-				<key>sourceoutputuid</key>
-				<string>B7FD92E6-DC93-4DCB-B4C3-7C2F8699A0D9</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>8737E156-6502-4B1A-9A47-8699AC6103CB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>42AEBED3-2C62-4A96-8543-233371796F65</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -156,27 +143,13 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>openwith</key>
-				<string></string>
-				<key>sourcefile</key>
-				<string>~/.dotfiles/config/finicky.js</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openfile</string>
-			<key>uid</key>
-			<string>CBAA1ECB-A611-40A5-AD50-341AE55A1262</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>open -na Atom /Users/dennismuensterer/.dotfiles</string>
+				<string>query=$1
+open -na Atom $HOME/$query</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -194,22 +167,44 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argument</key>
+				<string>{var:dotfiles}</string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>8737E156-6502-4B1A-9A47-8699AC6103CB</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{var:homepage}/dotfiles</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>0DD28B0C-4F8E-420C-B9C5-5FAA660681F7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>conditions</key>
 				<array>
-					<dict>
-						<key>inputstring</key>
-						<string></string>
-						<key>matchcasesensitive</key>
-						<false/>
-						<key>matchmode</key>
-						<integer>0</integer>
-						<key>matchstring</key>
-						<string>finicky</string>
-						<key>outputlabel</key>
-						<string>finicky</string>
-						<key>uid</key>
-						<string>1A649858-45AD-491B-9871-B6EEA114A0CC</string>
-					</dict>
 					<dict>
 						<key>inputstring</key>
 						<string></string>
@@ -223,34 +218,6 @@
 						<string>atom</string>
 						<key>uid</key>
 						<string>BE638D6E-5343-4AE3-987A-68C8B7E92A8B</string>
-					</dict>
-					<dict>
-						<key>inputstring</key>
-						<string></string>
-						<key>matchcasesensitive</key>
-						<false/>
-						<key>matchmode</key>
-						<integer>4</integer>
-						<key>matchstring</key>
-						<string>git</string>
-						<key>outputlabel</key>
-						<string>git</string>
-						<key>uid</key>
-						<string>9455EAA8-7DA4-4F2A-B256-EC38F54571DA</string>
-					</dict>
-					<dict>
-						<key>inputstring</key>
-						<string></string>
-						<key>matchcasesensitive</key>
-						<false/>
-						<key>matchmode</key>
-						<integer>0</integer>
-						<key>matchstring</key>
-						<string>finder</string>
-						<key>outputlabel</key>
-						<string>finder</string>
-						<key>uid</key>
-						<string>9D03A287-F152-4F02-B171-34C1F0E44E23</string>
 					</dict>
 					<dict>
 						<key>inputstring</key>
@@ -296,56 +263,12 @@
 					</dict>
 				</array>
 				<key>elselabel</key>
-				<string>dotfiles</string>
+				<string>filepath</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.conditional</string>
 			<key>uid</key>
 			<string>21DBBCAD-030E-4CF0-8C78-F992ADC0F932</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>openwith</key>
-				<string></string>
-				<key>sourcefile</key>
-				<string>~/.dotfiles/git/gitconfig</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openfile</string>
-			<key>uid</key>
-			<string>219A6110-4E0C-4C8F-AC47-2B40FABA5F25</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>fixedorder</key>
-				<false/>
-				<key>items</key>
-				<string>[{"title":"Finicky Config","arg":"finicky","subtitle":"Set browser defaults"},{"title":"Shell","arg":"shell\n","subtitle":"Open dotfiles directory in terminal"},{"title":"Atom","arg":"atom","subtitle":"Open dotfiles project in Atom"},{"title":"git","arg":"git","subtitle":"Configure global git settings"},{"title":"Finder","arg":"finder","subtitle":"Open dotfiles in Finder"},{"title":"Web","arg":"web","subtitle":"Open dotfiles website"},{"title":"Search","arg":"search","subtitle":"Search dotfiles directory"}]</string>
-				<key>keyword</key>
-				<string>df</string>
-				<key>runningsubtext</key>
-				<string></string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>dotfiles</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.listfilter</string>
-			<key>uid</key>
-			<string>DBA57AF4-DA3D-45D7-8FF3-25B9F4C2CADC</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -373,122 +296,29 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>open /Users/dennismuensterer/.dotfiles</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>5924CF84-FFCE-46FA-A5C6-0EC23C2D36BA</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>anchorfields</key>
-				<true/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>daterange</key>
-				<integer>0</integer>
-				<key>fields</key>
-				<array>
-					<dict>
-						<key>field</key>
-						<string>kMDItemDisplayName</string>
-						<key>not</key>
-						<false/>
-						<key>split</key>
-						<true/>
-						<key>value</key>
-						<string>{query}</string>
-						<key>words</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>field</key>
-						<string>kMDItemAlternateNames</string>
-						<key>not</key>
-						<false/>
-						<key>split</key>
-						<true/>
-						<key>value</key>
-						<string>{query}</string>
-						<key>words</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>field</key>
-						<string>kMDItemFinderComment</string>
-						<key>not</key>
-						<false/>
-						<key>split</key>
-						<true/>
-						<key>value</key>
-						<string>{query}</string>
-						<key>words</key>
-						<true/>
-					</dict>
-				</array>
-				<key>includesystem</key>
-				<true/>
+				<integer>1</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"title":"Finicky Config","arg":"{var:dotfiles}\/config\/finicky.js","subtitle":"Set browser defaults"},{"title":"Shell","arg":"shell\n","subtitle":"Open dotfiles directory in terminal"},{"title":"Atom","arg":"atom","subtitle":"Open dotfiles project in Atom"},{"title":"git","arg":"{var:dotfiles}\/git\/gitconfig","subtitle":"Configure global git settings"},{"title":"Finder","arg":"{var:dotfiles}","subtitle":"Open dotfiles in Finder"},{"title":"Web","arg":"web","subtitle":"Open dotfiles website"},{"title":"Search","arg":"search","subtitle":"Search dotfiles directory"},{"title":"Extra","arg":"~\/.extra"}]</string>
 				<key>keyword</key>
 				<string>df</string>
-				<key>limit</key>
-				<integer>0</integer>
 				<key>runningsubtext</key>
 				<string></string>
-				<key>scopes</key>
-				<array>
-					<string>~/.dotfiles</string>
-				</array>
-				<key>sortmode</key>
-				<integer>0</integer>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
-				<string></string>
-				<key>types</key>
-				<array/>
+				<string>dotfiles</string>
 				<key>withspace</key>
-				<true/>
+				<false/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.filefilter</string>
+			<string>alfred.workflow.input.listfilter</string>
 			<key>uid</key>
-			<string>C380C2BA-6377-4B78-84AF-7A282B513EEC</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>https://muensterer.xyz/dotfiles</string>
-				<key>utf8</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>0DD28B0C-4F8E-420C-B9C5-5FAA660681F7</string>
+			<string>DBA57AF4-DA3D-45D7-8FF3-25B9F4C2CADC</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -551,6 +381,7 @@
 				<key>scopes</key>
 				<array>
 					<string>~/.dotfiles</string>
+					<string>~/dotfiles</string>
 				</array>
 				<key>sortmode</key>
 				<integer>0</integer>
@@ -591,7 +422,7 @@
 			<key>config</key>
 			<dict>
 				<key>path</key>
-				<string>~/.dotfiles</string>
+				<string>{var:dotfiles_path}</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.browseinterminal</string>
@@ -599,6 +430,21 @@
 			<string>D216AA3B-251D-4FD6-B051-85EC30A17941</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>openwith</key>
+				<string></string>
+				<key>sourcefile</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>CBAA1ECB-A611-40A5-AD50-341AE55A1262</string>
+			<key>version</key>
+			<integer>3</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -610,89 +456,82 @@
 			<key>xpos</key>
 			<integer>30</integer>
 			<key>ypos</key>
-			<integer>255</integer>
+			<integer>270</integer>
 		</dict>
 		<key>0DD28B0C-4F8E-420C-B9C5-5FAA660681F7</key>
 		<dict>
 			<key>xpos</key>
-			<integer>590</integer>
+			<integer>625</integer>
 			<key>ypos</key>
-			<integer>475</integer>
+			<integer>170</integer>
 		</dict>
 		<key>14DF3092-BD66-43B6-947E-73B26BED2915</key>
 		<dict>
 			<key>xpos</key>
-			<integer>655</integer>
+			<integer>625</integer>
 			<key>ypos</key>
-			<integer>590</integer>
+			<integer>290</integer>
 		</dict>
 		<key>1AE8343C-5835-446F-809B-39045243938B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>580</integer>
-			<key>ypos</key>
-			<integer>595</integer>
-		</dict>
-		<key>219A6110-4E0C-4C8F-AC47-2B40FABA5F25</key>
-		<dict>
-			<key>xpos</key>
 			<integer>590</integer>
 			<key>ypos</key>
-			<integer>240</integer>
+			<integer>320</integer>
 		</dict>
 		<key>21DBBCAD-030E-4CF0-8C78-F992ADC0F932</key>
 		<dict>
 			<key>xpos</key>
-			<integer>305</integer>
+			<integer>230</integer>
 			<key>ypos</key>
-			<integer>185</integer>
+			<integer>245</integer>
 		</dict>
 		<key>42AEBED3-2C62-4A96-8543-233371796F65</key>
 		<dict>
 			<key>note</key>
 			<string>open in atom</string>
 			<key>xpos</key>
-			<integer>590</integer>
+			<integer>630</integer>
 			<key>ypos</key>
-			<integer>120</integer>
+			<integer>20</integer>
 		</dict>
-		<key>5924CF84-FFCE-46FA-A5C6-0EC23C2D36BA</key>
-		<dict>
-			<key>note</key>
-			<string>open in finder</string>
-			<key>xpos</key>
-			<integer>590</integer>
-			<key>ypos</key>
-			<integer>350</integer>
-		</dict>
-		<key>C380C2BA-6377-4B78-84AF-7A282B513EEC</key>
+		<key>8737E156-6502-4B1A-9A47-8699AC6103CB</key>
 		<dict>
 			<key>xpos</key>
-			<integer>110</integer>
+			<integer>585</integer>
 			<key>ypos</key>
-			<integer>370</integer>
+			<integer>50</integer>
 		</dict>
 		<key>CBAA1ECB-A611-40A5-AD50-341AE55A1262</key>
 		<dict>
 			<key>xpos</key>
-			<integer>590</integer>
+			<integer>625</integer>
 			<key>ypos</key>
-			<integer>10</integer>
+			<integer>540</integer>
 		</dict>
 		<key>D216AA3B-251D-4FD6-B051-85EC30A17941</key>
 		<dict>
 			<key>xpos</key>
-			<integer>590</integer>
+			<integer>625</integer>
 			<key>ypos</key>
-			<integer>685</integer>
+			<integer>415</integer>
 		</dict>
 		<key>DBA57AF4-DA3D-45D7-8FF3-25B9F4C2CADC</key>
 		<dict>
 			<key>xpos</key>
 			<integer>125</integer>
 			<key>ypos</key>
-			<integer>255</integer>
+			<integer>270</integer>
 		</dict>
+	</dict>
+	<key>variables</key>
+	<dict>
+		<key>dotfiles</key>
+		<string>dotfiles</string>
+		<key>extra</key>
+		<string>.extra</string>
+		<key>homepage</key>
+		<string>https://muensterer.xyz</string>
 	</dict>
 	<key>version</key>
 	<string>1.0.0</string>

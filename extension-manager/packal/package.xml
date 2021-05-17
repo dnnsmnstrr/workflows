@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Manage Alfred Extension</name>
-  <version>2.11</version>
-  <bundle>com.jmjeong.alfredv2.mae</bundle>
-  <updated>1463887395</updated>
-  <file>managealfredextension.alfredworkflow</file>
-</workflow>
