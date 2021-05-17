@@ -528,7 +528,7 @@ def request(method, url, params=None, data=None, headers=None, cookies=None,
     socket.setdefaulttimeout(timeout)
 
     # Default handlers
-    openers = [urllib2.ProxyHandler(urllib2.getproxies())]
+    openers = []
 
     if not allow_redirects:
         openers.append(NoRedirectHandler())

@@ -72,8 +72,7 @@
 			</dict>
 		</array>
 		<key>7A829045-C79D-4D35-9DD6-C279B2241C06</key>
-		<array>
-		</array>
+		<array/>
 		<key>7C121B2D-5771-4A5A-9F73-BC880BE2E4A7</key>
 		<array>
 			<dict>
@@ -155,7 +154,7 @@
 	<key>description</key>
 	<string>A workflow to interact with Any Bar</string>
 	<key>disabled</key>
-	<true/>
+	<false/>
 	<key>name</key>
 	<string>AnyBar</string>
 	<key>objects</key>
@@ -288,7 +287,7 @@ echo -n "$query|$port";</string>
 				<key>script</key>
 				<string>set theQuery to "{query}"
 
-tell application "Alfred 4" to run trigger "SetGraphic" in workflow "xyz.muensterer.anybar" with argument theQuery</string>
+tell application "Alfred 4" to run trigger "SetGraphic" in workflow "com.customct.AnyBar" with argument theQuery</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -886,14 +885,14 @@ There are two External Triggers: SetGraphic and Launch. The SetGraphic external 
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>10.0</real>
+			<real>10</real>
 		</dict>
 		<key>0FF09301-153E-4DFF-8099-8A820DF0C8EF</key>
 		<dict>
 			<key>xpos</key>
 			<integer>500</integer>
 			<key>ypos</key>
-			<real>370.0</real>
+			<real>370</real>
 		</dict>
 		<key>1B282587-FB16-40F1-B540-D11B024AE149</key>
 		<dict>
@@ -907,91 +906,91 @@ There are two External Triggers: SetGraphic and Launch. The SetGraphic external 
 			<key>xpos</key>
 			<integer>700</integer>
 			<key>ypos</key>
-			<real>610.0</real>
+			<real>610</real>
 		</dict>
 		<key>3E97DC8F-A370-454D-949D-E4330F459AC6</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>370.0</real>
+			<real>370</real>
 		</dict>
 		<key>42245363-BEB4-43FF-BF07-4EBE65E231A4</key>
 		<dict>
 			<key>xpos</key>
 			<integer>300</integer>
 			<key>ypos</key>
-			<real>610.0</real>
+			<real>610</real>
 		</dict>
 		<key>62F16E06-C63B-4499-AA35-4FB8E58D90F9</key>
 		<dict>
 			<key>xpos</key>
 			<integer>300</integer>
 			<key>ypos</key>
-			<real>490.0</real>
+			<real>490</real>
 		</dict>
 		<key>656B63D6-E0FF-41EE-AC68-8DAF0FBA036E</key>
 		<dict>
 			<key>xpos</key>
 			<integer>500</integer>
 			<key>ypos</key>
-			<real>490.0</real>
+			<real>490</real>
 		</dict>
 		<key>72CED92D-60E2-427F-BF50-FC9DA516FAA9</key>
 		<dict>
 			<key>xpos</key>
 			<integer>700</integer>
 			<key>ypos</key>
-			<real>130.0</real>
+			<real>130</real>
 		</dict>
 		<key>7A829045-C79D-4D35-9DD6-C279B2241C06</key>
 		<dict>
 			<key>xpos</key>
 			<integer>500</integer>
 			<key>ypos</key>
-			<real>10.0</real>
+			<real>10</real>
 		</dict>
 		<key>7C121B2D-5771-4A5A-9F73-BC880BE2E4A7</key>
 		<dict>
 			<key>xpos</key>
 			<integer>500</integer>
 			<key>ypos</key>
-			<real>610.0</real>
+			<real>610</real>
 		</dict>
 		<key>89807341-AEB7-4232-A323-4C19F67C0958</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>190.0</real>
+			<real>190</real>
 		</dict>
 		<key>999ACBC0-4B7D-4A2E-952F-FF7568D65524</key>
 		<dict>
 			<key>xpos</key>
 			<integer>500</integer>
 			<key>ypos</key>
-			<real>130.0</real>
+			<real>130</real>
 		</dict>
 		<key>E7B3FBD8-A05D-47BB-8EE7-3EA89BAE8382</key>
 		<dict>
 			<key>xpos</key>
 			<integer>300</integer>
 			<key>ypos</key>
-			<real>260.0</real>
+			<real>260</real>
 		</dict>
 		<key>E8B4CF9F-BD9C-4A86-9DC2-A5B45DBB48B1</key>
 		<dict>
 			<key>xpos</key>
 			<integer>300</integer>
 			<key>ypos</key>
-			<real>130.0</real>
+			<real>130</real>
 		</dict>
 		<key>FA18CE87-4064-4A2E-95EE-D6132FEB41E8</key>
 		<dict>
 			<key>xpos</key>
 			<integer>500</integer>
 			<key>ypos</key>
-			<real>250.0</real>
+			<real>250</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>

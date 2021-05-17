@@ -83,6 +83,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>84E2BBA9-C862-464A-9520-0115DF750908</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1196BE0C-E25C-486E-B0D8-DD269ABA5BFC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>8F28D51F-88E6-4EF1-9CC7-90163DD527A2</key>
 		<array>
 			<dict>
@@ -141,7 +154,7 @@
 	<key>description</key>
 	<string>Join or start a zoom.us meeting.</string>
 	<key>disabled</key>
-	<true/>
+	<false/>
 	<key>name</key>
 	<string>Zoom</string>
 	<key>objects</key>
@@ -149,10 +162,173 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>triggerid</key>
+				<string>zoom</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>84E2BBA9-C862-464A-9520-0115DF750908</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>zm</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>./node_modules/.bin/run-node index.js "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>1196BE0C-E25C-486E-B0D8-DD269ABA5BFC</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string></string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>81BEA4A5-0A37-4C46-990D-9793612817CF</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"title":"General Daily","arg":"mario","subtitle":"9:30"},{"title":"Developer Daily","arg":"dev","subtitle":"10:00"},{"title":"Muffin","arg":"muffin","subtitle":"Lunch Room\/Coffee Break"},{"title":"SIM","arg":"leon","subtitle":"11:45"},{"title":"ASAB","arg":"asab","subtitle":"10:30"},{"title":"REA","arg":"lea"},{"title":"SOL","arg":"leon\n","subtitle":"11:15"},{"title":"Mario","arg":"mario\n"},{"title":"Leon","arg":"leon\n"},{"title":"Personal Meeting Room","arg":"me","subtitle":""},{"title":"Roman","arg":"roman"}]</string>
+				<key>keyword</key>
+				<string>zoom join</string>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Start or Join a meeting {query}...</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>B4F31BA3-EF3A-4D0E-BF84-7E9975EBFAB4</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>zoom cli</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Configure zoom-cli</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>4B61FCDA-60EE-4CB3-97D0-105F3805A0F5</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>zoom join {query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.terminalcommand</string>
+			<key>uid</key>
+			<string>19ABDD23-5850-4CFF-BA51-E75DF4F9794C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>openwith</key>
+				<string></string>
+				<key>sourcefile</key>
+				<string>~/.zoom-cli.json</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>AD228EB9-38AC-4F4B-B977-0C5B74126C19</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>autopaste</key>
 				<false/>
 				<key>clipboardtext</key>
 				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
 				<key>transient</key>
 				<false/>
 			</dict>
@@ -281,154 +457,6 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string></string>
-				<key>utf8</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>81BEA4A5-0A37-4C46-990D-9793612817CF</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>zm</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string></string>
-				<key>script</key>
-				<string>./node_modules/.bin/run-node index.js "$1"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>1196BE0C-E25C-486E-B0D8-DD269ABA5BFC</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>fixedorder</key>
-				<false/>
-				<key>items</key>
-				<string>[{"title":"General Daily","arg":"mario","subtitle":"9:30"},{"title":"Developer Daily","arg":"dev","subtitle":"10:00"},{"title":"Muffin","arg":"muffin","subtitle":"Lunch Room\/Coffee Break"},{"title":"SIM","arg":"leon","subtitle":"11:45"},{"title":"ASAB","arg":"asab","subtitle":"10:30"},{"title":"REA","arg":"lea"},{"title":"SOL","arg":"leon\n","subtitle":"11:15"},{"title":"Mario","arg":"mario\n"},{"title":"Leon","arg":"leon\n"},{"title":"Personal Meeting Room","arg":"me","subtitle":""},{"title":"Roman","arg":"roman"}]</string>
-				<key>keyword</key>
-				<string>zoom join</string>
-				<key>runningsubtext</key>
-				<string></string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>Start or Join a meeting {query}...</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.listfilter</string>
-			<key>uid</key>
-			<string>B4F31BA3-EF3A-4D0E-BF84-7E9975EBFAB4</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>script</key>
-				<string>zoom join {query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.terminalcommand</string>
-			<key>uid</key>
-			<string>19ABDD23-5850-4CFF-BA51-E75DF4F9794C</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>openwith</key>
-				<string></string>
-				<key>sourcefile</key>
-				<string>~/.zoom-cli.json</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openfile</string>
-			<key>uid</key>
-			<string>AD228EB9-38AC-4F4B-B977-0C5B74126C19</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>zoom cli</string>
-				<key>subtext</key>
-				<string></string>
-				<key>text</key>
-				<string>Configure zoom-cli</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>4B61FCDA-60EE-4CB3-97D0-105F3805A0F5</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string>Alfred Workflow for Zoom.us
@@ -442,93 +470,100 @@ by Chai Feng</string>
 		<key>1196BE0C-E25C-486E-B0D8-DD269ABA5BFC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>215</integer>
+			<integer>175</integer>
 			<key>ypos</key>
-			<integer>215</integer>
+			<integer>10</integer>
 		</dict>
 		<key>19ABDD23-5850-4CFF-BA51-E75DF4F9794C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>470</integer>
 			<key>ypos</key>
-			<integer>330</integer>
+			<integer>170</integer>
 		</dict>
 		<key>232568D3-74B4-487E-8971-004B7D1C4FCE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>30</integer>
+			<integer>10</integer>
 			<key>ypos</key>
-			<integer>95</integer>
+			<integer>340</integer>
 		</dict>
 		<key>4B61FCDA-60EE-4CB3-97D0-105F3805A0F5</key>
 		<dict>
 			<key>xpos</key>
-			<integer>100</integer>
+			<integer>10</integer>
 			<key>ypos</key>
-			<integer>480</integer>
+			<integer>170</integer>
 		</dict>
 		<key>4C1EE76F-B6D4-4BA3-87A8-94125D5CD30B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>385</integer>
+			<integer>365</integer>
 			<key>ypos</key>
-			<integer>95</integer>
+			<integer>340</integer>
 		</dict>
 		<key>5CF13FD6-0253-4731-AAB8-782A8DE938CC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>625</integer>
+			<integer>605</integer>
 			<key>ypos</key>
-			<integer>90</integer>
+			<integer>340</integer>
 		</dict>
 		<key>81BEA4A5-0A37-4C46-990D-9793612817CF</key>
 		<dict>
 			<key>xpos</key>
-			<integer>395</integer>
+			<integer>355</integer>
 			<key>ypos</key>
-			<integer>215</integer>
+			<integer>10</integer>
+		</dict>
+		<key>84E2BBA9-C862-464A-9520-0115DF750908</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>10</integer>
 		</dict>
 		<key>8F28D51F-88E6-4EF1-9CC7-90163DD527A2</key>
 		<dict>
 			<key>xpos</key>
-			<integer>280</integer>
+			<integer>235</integer>
 			<key>ypos</key>
-			<integer>150</integer>
+			<integer>400</integer>
 		</dict>
 		<key>8F912BF9-D2BD-449C-B79B-99021C792247</key>
 		<dict>
 			<key>xpos</key>
-			<integer>540</integer>
+			<integer>520</integer>
 			<key>ypos</key>
-			<integer>120</integer>
+			<integer>370</integer>
 		</dict>
 		<key>AD228EB9-38AC-4F4B-B977-0C5B74126C19</key>
 		<dict>
 			<key>xpos</key>
-			<integer>470</integer>
+			<integer>155</integer>
 			<key>ypos</key>
-			<integer>480</integer>
+			<integer>170</integer>
 		</dict>
 		<key>B4F31BA3-EF3A-4D0E-BF84-7E9975EBFAB4</key>
 		<dict>
 			<key>xpos</key>
-			<integer>90</integer>
+			<integer>315</integer>
 			<key>ypos</key>
-			<integer>330</integer>
+			<integer>170</integer>
 		</dict>
 		<key>DB006362-6638-4695-9F8E-41F54FB4301F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>785</integer>
+			<integer>765</integer>
 			<key>ypos</key>
-			<integer>90</integer>
+			<integer>340</integer>
 		</dict>
 		<key>F1968A94-5D33-495C-8B00-9146F5311799</key>
 		<dict>
 			<key>xpos</key>
-			<integer>280</integer>
+			<integer>235</integer>
 			<key>ypos</key>
-			<integer>90</integer>
+			<integer>340</integer>
 		</dict>
 	</dict>
 	<key>version</key>

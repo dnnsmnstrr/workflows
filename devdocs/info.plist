@@ -190,19 +190,6 @@
 				  <false/>
 				</dict>
 			</array>
-			<key>html</key>
-			<array>
-				<dict>
-					<key>destinationuid</key>
-					<string>output</string>
-					<key>modifiers</key>
-					<integer>0</integer>
-					<key>modifiersubtext</key>
-					<string></string>
-          <key>vitoclose</key>
-				  <false/>
-				</dict>
-			</array>
 			<key>bash</key>
 			<array>
 				<dict>
@@ -216,7 +203,7 @@
 				  <false/>
 				</dict>
 			</array>
-			<key>markdown</key>
+			<key>css</key>
 			<array>
 				<dict>
 					<key>destinationuid</key>
@@ -229,7 +216,33 @@
 				  <false/>
 				</dict>
 			</array>
-			<key>node</key>
+			<key>homebrew</key>
+			<array>
+				<dict>
+					<key>destinationuid</key>
+					<string>output</string>
+					<key>modifiers</key>
+					<integer>0</integer>
+					<key>modifiersubtext</key>
+					<string></string>
+          <key>vitoclose</key>
+				  <false/>
+				</dict>
+			</array>
+			<key>html</key>
+			<array>
+				<dict>
+					<key>destinationuid</key>
+					<string>output</string>
+					<key>modifiers</key>
+					<integer>0</integer>
+					<key>modifiersubtext</key>
+					<string></string>
+          <key>vitoclose</key>
+				  <false/>
+				</dict>
+			</array>
+			<key>http</key>
 			<array>
 				<dict>
 					<key>destinationuid</key>
@@ -255,7 +268,46 @@
 				  <false/>
 				</dict>
 			</array>
-			<key>moment</key>
+			<key>svg</key>
+			<array>
+				<dict>
+					<key>destinationuid</key>
+					<string>output</string>
+					<key>modifiers</key>
+					<integer>0</integer>
+					<key>modifiersubtext</key>
+					<string></string>
+          <key>vitoclose</key>
+				  <false/>
+				</dict>
+			</array>
+			<key>node</key>
+			<array>
+				<dict>
+					<key>destinationuid</key>
+					<string>output</string>
+					<key>modifiers</key>
+					<integer>0</integer>
+					<key>modifiersubtext</key>
+					<string></string>
+          <key>vitoclose</key>
+				  <false/>
+				</dict>
+			</array>
+			<key>npm</key>
+			<array>
+				<dict>
+					<key>destinationuid</key>
+					<string>output</string>
+					<key>modifiers</key>
+					<integer>0</integer>
+					<key>modifiersubtext</key>
+					<string></string>
+          <key>vitoclose</key>
+				  <false/>
+				</dict>
+			</array>
+			<key>markdown</key>
 			<array>
 				<dict>
 					<key>destinationuid</key>
@@ -280,17 +332,6 @@
 					</dict>
 				</array>
 				<key>rn</key>
-				<array>
-					<dict>
-						<key>destinationuid</key>
-						<string>output</string>
-						<key>modifiers</key>
-						<integer>0</integer>
-						<key>modifiersubtext</key>
-						<string></string>
-					</dict>
-				</array>
-				<key>md</key>
 				<array>
 					<dict>
 						<key>destinationuid</key>
@@ -1033,57 +1074,6 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
-				<string>html</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'html';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search for HTML "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - HTML</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>html</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
 				<string>bash</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
@@ -1135,7 +1125,7 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
-				<string>markdown</string>
+				<string>css</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1147,7 +1137,7 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'markdown';
+				<string>$query = "{query}"; $documentation = 'css';
 					require_once("scripts/devdocs.php");
 				</string>
 				<key>scriptargtype</key>
@@ -1155,9 +1145,9 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Search for Markdown "{query}"</string>
+				<string>Search for CSS "{query}"</string>
 				<key>title</key>
-				<string>DevDocs - Markdown</string>
+				<string>DevDocs - CSS</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
@@ -1166,7 +1156,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>markdown</string>
+			<string>css</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1186,7 +1176,7 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
-				<string>node</string>
+				<string>homebrew</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1198,7 +1188,7 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'node';
+				<string>$query = "{query}"; $documentation = 'homebrew';
 					require_once("scripts/devdocs.php");
 				</string>
 				<key>scriptargtype</key>
@@ -1206,9 +1196,9 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Search for Node.js "{query}"</string>
+				<string>Search for Homebrew "{query}"</string>
 				<key>title</key>
-				<string>DevDocs - Node.js</string>
+				<string>DevDocs - Homebrew</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
@@ -1217,7 +1207,109 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>node</string>
+			<string>homebrew</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>118</integer>
+				<key>keyword</key>
+				<string>html</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = "{query}"; $documentation = 'html';
+					require_once("scripts/devdocs.php");
+				</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search for HTML "{query}"</string>
+				<key>title</key>
+				<string>DevDocs - HTML</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>html</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>118</integer>
+				<key>keyword</key>
+				<string>http</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = "{query}"; $documentation = 'http';
+					require_once("scripts/devdocs.php");
+				</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search for HTTP "{query}"</string>
+				<key>title</key>
+				<string>DevDocs - HTTP</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>http</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1288,7 +1380,7 @@
 				<key>escaping</key>
 				<integer>118</integer>
 				<key>keyword</key>
-				<string>moment</string>
+				<string>svg</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1300,7 +1392,7 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'moment';
+				<string>$query = "{query}"; $documentation = 'svg';
 					require_once("scripts/devdocs.php");
 				</string>
 				<key>scriptargtype</key>
@@ -1308,9 +1400,9 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Search for Moment.js "{query}"</string>
+				<string>Search for SVG "{query}"</string>
 				<key>title</key>
-				<string>DevDocs - Moment.js</string>
+				<string>DevDocs - SVG</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
@@ -1319,7 +1411,160 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>moment</string>
+			<string>svg</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>118</integer>
+				<key>keyword</key>
+				<string>node</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = "{query}"; $documentation = 'node';
+					require_once("scripts/devdocs.php");
+				</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search for Node.js "{query}"</string>
+				<key>title</key>
+				<string>DevDocs - Node.js</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>node</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>118</integer>
+				<key>keyword</key>
+				<string>npm</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = "{query}"; $documentation = 'npm';
+					require_once("scripts/devdocs.php");
+				</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search for npm "{query}"</string>
+				<key>title</key>
+				<string>DevDocs - npm</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>npm</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>118</integer>
+				<key>keyword</key>
+				<string>markdown</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = "{query}"; $documentation = 'markdown';
+					require_once("scripts/devdocs.php");
+				</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search for Markdown "{query}"</string>
+				<key>title</key>
+				<string>DevDocs - Markdown</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>markdown</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1398,45 +1643,6 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>react_native</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>118</integer>
-				<key>keyword</key>
-				<string>md</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = "{query}"; $documentation = 'markdown';
-					require_once("scripts/devdocs.php");
-				</string>
-				<key>subtext</key>
-				<string>Search for Markdown "{query}"</string>
-				<key>title</key>
-				<string>DevDocs - Markdown</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>markdown</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1564,62 +1770,85 @@
 			<key>ypos</key>
 			<integer>1435</integer>
 		</dict>
-		<key>html</key>
+		<key>bash</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1565</integer>
 		</dict>
-		<key>bash</key>
+		<key>css</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1695</integer>
 		</dict>
-		<key>markdown</key>
+		<key>homebrew</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1825</integer>
 		</dict>
-		<key>node</key>
+		<key>html</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>1955</integer>
 		</dict>
-		<key>yarn</key>
+		<key>http</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>2085</integer>
 		</dict>
-		<key>moment</key>
+		<key>yarn</key>
 		<dict>
 			<key>ypos</key>
 			<integer>300</integer>
 			<key>ypos</key>
 			<integer>2215</integer>
 		</dict>
+		<key>svg</key>
+		<dict>
+			<key>ypos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>2345</integer>
+		</dict>
+		<key>node</key>
+		<dict>
+			<key>ypos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>2475</integer>
+		</dict>
+		<key>npm</key>
+		<dict>
+			<key>ypos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>2605</integer>
+		</dict>
+		<key>markdown</key>
+		<dict>
+			<key>ypos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>2735</integer>
+		</dict>
 		<key>js</key>
 		<dict>
 			<key>300</key>
-			<integer>2445</integer>
+			<integer>2965</integer>
 		</dict>
 		<key>rn</key>
 		<dict>
 			<key>300</key>
-			<integer>2575</integer>
-		</dict>
-		<key>md</key>
-		<dict>
-			<key>300</key>
-			<integer>2705</integer>
+			<integer>3095</integer>
 		</dict>
 	</dict>
 	<key>variables</key>

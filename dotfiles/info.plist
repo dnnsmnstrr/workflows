@@ -36,7 +36,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>42AEBED3-2C62-4A96-8543-233371796F65</string>
+				<string>8737E156-6502-4B1A-9A47-8699AC6103CB</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -55,6 +55,16 @@
 				<string></string>
 				<key>sourceoutputuid</key>
 				<string>BE8778E0-6C8E-41C2-8B8E-AC590EF5FF2C</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>14DF3092-BD66-43B6-947E-73B26BED2915</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -85,6 +95,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>CBAA1ECB-A611-40A5-AD50-341AE55A1262</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>8737E156-6502-4B1A-9A47-8699AC6103CB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>42AEBED3-2C62-4A96-8543-233371796F65</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -125,7 +148,8 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>open -na Atom /Users/dennismuensterer/.dotfiles</string>
+				<string>query=$1
+open -na Atom $HOME/$query</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -139,6 +163,23 @@
 			<string>42AEBED3-2C62-4A96-8543-233371796F65</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>{var:dotfiles}</string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>8737E156-6502-4B1A-9A47-8699AC6103CB</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -340,6 +381,7 @@
 				<key>scopes</key>
 				<array>
 					<string>~/.dotfiles</string>
+					<string>~/dotfiles</string>
 				</array>
 				<key>sortmode</key>
 				<integer>0</integer>
@@ -453,6 +495,13 @@
 			<key>ypos</key>
 			<integer>20</integer>
 		</dict>
+		<key>8737E156-6502-4B1A-9A47-8699AC6103CB</key>
+		<dict>
+			<key>xpos</key>
+			<integer>585</integer>
+			<key>ypos</key>
+			<integer>50</integer>
+		</dict>
 		<key>CBAA1ECB-A611-40A5-AD50-341AE55A1262</key>
 		<dict>
 			<key>xpos</key>
@@ -478,7 +527,7 @@
 	<key>variables</key>
 	<dict>
 		<key>dotfiles</key>
-		<string>~/dotfiles</string>
+		<string>dotfiles</string>
 		<key>extra</key>
 		<string>.extra</string>
 		<key>homepage</key>

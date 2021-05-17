@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>Telegram</name>
+  <version>1.3.0</version>
+  <bundle>me.swineson.alfred.telegram</bundle>
+  <updated>1472641634</updated>
+  <file>telegram.alfredworkflow</file>
+</workflow>

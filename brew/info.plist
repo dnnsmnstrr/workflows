@@ -126,7 +126,14 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>Homebrew and Cask for Alfred
+============================
+
+Easily control Homebrew and Cask with Alfred.
+
+For more information, visit:
+https://github.com/fniephaus/alfred-homebrew/
+</string>
 	<key>uidata</key>
 	<dict>
 		<key>BE21043D-F355-45C6-8CF0-80F5DAD8BA5B</key>
@@ -145,6 +152,8 @@
 			<real>10</real>
 		</dict>
 	</dict>
+	<key>version</key>
+	<string>5.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/fniephaus/alfred-homebrew/</string>
 </dict>
