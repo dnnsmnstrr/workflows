@@ -28,3 +28,8 @@ Many of my workflows were installed from [packal](https://packal.org).
 For some workflows it made sense to copy and modify them to suit my needs. These include:
 
 - [btt](https://github.com/kevin-funderburg/alfred-bettertouchtool-gestures)
+
+# Snippets
+I also use Alfred for snippet completion outside of my IDEs, here are some of them:
+- [Emoji Snippet Pack](joelcalifa.com/blog/alfred-emoji-snippet-pack) by [@notdetails](https://twitter.com/notdetails)
+- [My Extension to the Emoji Pack](./Emoji Pack Extension.alfredsnippets)
