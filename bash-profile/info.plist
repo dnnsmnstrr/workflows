@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>bash.profile.commands</string>
+	<key>category</key>
+	<string>Dev</string>
 	<key>connections</key>
 	<dict>
 		<key>039EEFD9-10FD-4C62-B31A-E80C5740440E</key>
@@ -77,6 +79,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>8CBCC890-FBFF-40B5-9B2B-A5A48F79484A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6E7D6402-7C69-4C14-8407-EB0F9EE45C72</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>90A2C1C6-1082-4C6F-BAC2-74315BA09C1F</key>
 		<array>
 			<dict>
@@ -124,7 +139,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Bash Profile commands</string>
+	<string>Terminal</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -177,6 +192,8 @@ fi
 				<string>{query}</string>
 				<key>textcolor</key>
 				<string></string>
+				<key>wrapat</key>
+				<integer>50</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.largetype</string>
@@ -345,6 +362,8 @@ fi
 				<string>{query}</string>
 				<key>textcolor</key>
 				<string></string>
+				<key>wrapat</key>
+				<integer>50</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.largetype</string>
@@ -396,6 +415,27 @@ fi
 			<string>alfred.workflow.action.terminalcommand</string>
 			<key>uid</key>
 			<string>6E7D6402-7C69-4C14-8407-EB0F9EE45C72</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<false/>
+				<key>acceptsmulti</key>
+				<integer>0</integer>
+				<key>acceptstext</key>
+				<true/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Run in Terminal</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>8CBCC890-FBFF-40B5-9B2B-A5A48F79484A</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -452,6 +492,13 @@ fi
 			<integer>420</integer>
 			<key>ypos</key>
 			<integer>465</integer>
+		</dict>
+		<key>8CBCC890-FBFF-40B5-9B2B-A5A48F79484A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>585</integer>
 		</dict>
 		<key>90A2C1C6-1082-4C6F-BAC2-74315BA09C1F</key>
 		<dict>
