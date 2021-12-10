@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>Mark Text</name>
+  <version>1.0</version>
+  <bundle>com.eviato.marktext</bundle>
+  <updated>1529586274</updated>
+  <file>mark-text.alfredworkflow</file>
+</workflow>
