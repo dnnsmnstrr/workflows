@@ -1,86 +1,17 @@
-Success! You can now control your lights by using the "hue" keyword.
 
+{"items": [{"valid": false, "subtitle": "u'username'", "icon": {"path": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns"}, "title": "Error in workflow 'Philips Hue Controller'"}]}
+No bridges found on your network. Try specifying the IP address.
 
-Action completed! <lights:13:rename:Cei>
-
-Action completed! <lights:13:rename:Ceiling>
-
-Action completed! <lights:13:rename:Blah>
-
-
-
-
-
-Action completed!
-
-
-
-
-Action completed! <lights:13:rename:Ceiling>
-
-Action completed! <\u2019\u2019>
-
-Action completed! <\u2019\u2019>
-
-Action completed! <lights:13:rename:ÑÑÑ>
-
-Action completed! <lights:13:rename:Ceiling>
-
-Action completed! <lights:13:off>
-
-Action completed! <lights:13:rename:ÑÑ>
-
-Action completed! <lights:13:rename:Ceiling>
-
-Action completed! <groups:0:on>
+No bridges found on your network. Try specifying the IP address.
 
 No bridges found on your network. Try specifying the IP address.
 
 No bridges found on your network. Try specifying the IP address.
 
-Setup Error: link button not pressed
-
-Success! You can now control your lights by using the "hue" keyword.
-
-Success! You can now control your lights by using the "hue" keyword.
-
-Action completed! <groups:0:harmony:triad:ff1700>
-
-Action completed! <lights:13:off>
-
-Action completed! <groups:1:set:xIHXEXB0kWLVMFF>
-
-Action completed! <groups:1:set:xIHXEXB0kWLVMFF>
-
-Action completed! <groups:0:off>
-
-Action completed! <groups:0:on>
-
-Action completed! <lights:11:color:blue>
-
-Action completed! <groups:0:set:6KnewjOb81KdQc2>
-
-Action completed! <lights:13:off>
-
-Action completed! <groups:1:set:xIHXEXB0kWLVMFF>
-
-Action completed! <groups:1:set:7Az47pqFjGRxsvj>
-
-Action completed! <groups:1:on>
-
-Action completed! <groups:1:bri:50>
-
-Action completed! <groups:1:set:xIHXEXB0kWLVMFF>
-
-Action completed! <groups:1:set:xIHXEXB0kWLVMFF>
+No bridges found on your network. Try specifying the IP address.
 
 No bridges found on your network. Try specifying the IP address.
 
-Action completed! <groups:0:color:white>
-
-Action completed! <groups:1:bri:100>
-
-{"items": [{"valid": false, "subtitle": "Expecting value: line 1 column 1 (char 0)", "icon": {"path": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns"}, "title": "Error in workflow 'hue-alfred-workflow'"}]}
 No bridges found on your network. Try specifying the IP address.
 
 No bridges found on your network. Try specifying the IP address.
@@ -89,124 +20,5 @@ Connection error.
 
 Connection error.
 
+{"items": [{"valid": false, "subtitle": "HTTPConnectionPool(host='192.168.178.82', port=80): Max retries exceeded with url: /api/NYBzPGPubn14nJ-cPLh0EZwcFHTVCNb9mbwfFPfx/groups/0/action (Caused by <class 'socket.error'>: [Errno 60] Operation timed out)", "icon": {"path": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns"}, "title": "Error in workflow 'Philips Hue Controller'"}]}
 Connection error.
-
-Connection error.
-
-Setup Error: link button not pressed
-
-Success! You can now control your lights by using the "hue" keyword.
-
-Action completed! <groups:0:off>
-
-Action completed! <lights:1:on>
-
-No bridges found on your network. Try specifying the IP address.
-
-Action completed! <lights:3:on>
-
-Action completed! <lights:2:on>
-
-Action completed! <groups:1:color:red>
-
-Action completed! <lights:3:color:red>
-
-Action completed! <groups:0:color:blue>
-
-Action completed! <groups:0:color:green>
-
-Action completed! <groups:0:color:red>
-
-Action completed! <groups:1:color:purple>
-
-Action completed! <lights:3:color:purple>
-
-Action completed! <lights:1:rename:Hawaii>
-
-Action completed! <groups:1:rename:PoopFart>
-
-Action completed! <groups:1:rename:Blah>
-
-Action completed! <groups:1:rename:Poop>
-
-Action completed! <groups:1:rename:Fart>
-
-Action completed! <groups:0:color:pink>
-
-Setup Error: link button not pressed
-
-Success! You can now control your lights by using the "hue" keyword.
-
-No bridges found on your network. Try specifying the IP address.
-
-Setup Error: link button not pressed
-
-Success! You can now control your lights by using the "hue" keyword.
-
-Action completed! <groups:1:effect:none>
-
-Action completed! <lights:3:color:red>
-
-Action completed! <lights:1:off>
-
-{
-  "items": [
-    {
-      "valid": false,
-      "subtitle": "0",
-      "icon": {
-        "path": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns"
-      },
-      "title": "Error in workflow 'Philips Hue Controller'"
-    }
-  ]
-}
-{
-  "items": [
-    {
-      "valid": false,
-      "subtitle": "0",
-      "icon": {
-        "path": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns"
-      },
-      "title": "Error in workflow 'Philips Hue Controller'"
-    }
-  ]
-}
-{
-  "items": [
-    {
-      "valid": false,
-      "subtitle": "0",
-      "icon": {
-        "path": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns"
-      },
-      "title": "Error in workflow 'Philips Hue Controller'"
-    }
-  ]
-}
-Success! You can now control your lights by using the "hue" keyword.
-
-Setup Error: link button not pressed
-
-Success! You can now control your lights by using the "hue" keyword.
-
-Action completed! <groups:6:bri:80>
-
-Action completed! <groups:6:bri:50>
-
-Action completed! <groups:7:on>
-
-Action completed! <groups:7:off>
-
-Action completed! <groups:7:shuffle>
-
-Action completed! <groups:7:color:random>
-
-Action completed! <groups:7:on>
-
-Action completed! <groups:7:effect:colorloop>
-
-Action completed! <groups:7:effect:none>
-
-Action completed! <groups:7:set:IYveNbIBrbZUc4X>

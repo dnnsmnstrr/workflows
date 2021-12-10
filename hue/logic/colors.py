@@ -3,7 +3,7 @@
 Library for RGB / CIE1931 "x, y" coversion.
 Based on Philips implementation guidance:
 http://www.developers.meethue.com/documentation/color-conversions-rgb-xy
-Copyright (c) 2020 Benjamin Knight / MIT License.
+Copyright (c) 2016 Benjamin Knight / MIT License.
 """
 import math
 import random

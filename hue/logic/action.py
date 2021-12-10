@@ -168,7 +168,23 @@ class HueAction:
             endpoint = '/schedules'
 
         elif function == 'set':
-            data = {'scene': value}
+            # if bridge is deconz, scenes are set differently.
+            # what we need is groups:group_id:scenes:scene_id:recall
+            is_deconz = False
+            try:
+                if workflow.stored_data("full_state")["config"]["modelid"] == "deCONZ":
+                    is_deconz = True
+            except:
+                # not sure if hue also returns config/modelid
+                pass
+
+            if is_deconz:
+                method = 'put'
+                endpoint = '/groups/{}/scenes/{}/recall'.format(rid, value)
+                data = {}
+            else:
+                data = {'scene': value}
+
 
         elif function == 'save':
             lids = utils.get_group_lids(rid)
@@ -184,20 +200,21 @@ class HueAction:
 
         return
 
-
 def main(workflow):
-    query = workflow.args[0].split(':')
+    # Handle multiple queries separated with '|' (pipe) character
+    queries = workflow.args[0].split('|')
 
-    if query[0] == 'set_bridge':
-        bridge_ip = workflow.args[0].split(':', 1)[1]
-        setup.set_bridge(bridge_ip)
-    else:
-        action = HueAction()
-        try:
-            action.execute(query)
-            print(('Action completed! <%s>' % workflow.args[0]).encode('utf-8'))
-        except ValueError:
-            pass
+    for query_str in queries:
+        query = query_str.split(':')
+        if query[0] == 'set_bridge':
+            setup.set_bridge(query[1] if len(query) > 1 else None)
+        else:
+            action = HueAction()
+            try:
+                action.execute(query)
+                print(('Action completed! <%s>' % query_str).encode('utf-8'))
+            except ValueError:
+                pass
 
 
 if __name__ == '__main__':
