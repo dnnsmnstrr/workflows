@@ -274,7 +274,7 @@ end tell</string>
 				<integer>102</integer>
 				<key>script</key>
 				<string>if [ -n "$1" ]; then
-	./genius_lyrics "${1}"
+	./src/genius_lyrics.go "${1}"
 fi</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>

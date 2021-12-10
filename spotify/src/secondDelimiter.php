@@ -10,28 +10,10 @@
  */
 function secondDelimiterShows($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
-    $is_public_playlists = $settings->is_public_playlists;
     $output_application = $settings->output_application;
     $use_artworks = $settings->use_artworks;
+    $fuzzy_search = $settings->fuzzy_search;
 
     // display episodes for selected show
     $tmp = explode('∙', $words[1]);
@@ -39,7 +21,7 @@ function secondDelimiterShows($w, $query, $settings, $db, $update_in_progress) {
     $show_name = $tmp[1];
     $episode = $words[2];
 
-    if (mb_strlen($episode) < 2) {
+    if (countCharacters($episode) < 2) {
         $show_artwork_path = getShowArtwork($w, $show_uri, false, false, false, $use_artworks);
         // $w->result(null, serialize(array(
         //             $show_uri /*track_uri*/,
@@ -58,24 +40,36 @@ function secondDelimiterShows($w, $query, $settings, $db, $update_in_progress) {
         //             '' /* album_artwork_path */,
         //             '' /* playlist_name */,
         //             '', /* playlist_artwork_path */
-        //         )), '🎙 '.$show_name, 'Play show', $show_artwork_path, 'yes', null, '');
+        //         )), getenv('emoji_show').' '.$show_name, 'Play show', $show_artwork_path, 'yes', null, '');
 
 
-        $w->result(null, '', 'Follow/Unfollow Show', array('Display options to follow/unfollow the show', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/follow.png', 'no', null, 'Follow/Unfollow▹' . $show_uri . '@' . $show_name . '▹');
+        $w->result(null, '', 'Follow/Unfollow Show', array('Display options to follow/unfollow the show', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/follow.png', 'no', null, 'Follow/Unfollow▹' . $show_uri . '@' . $show_name . '▹');
 
-        $getEpisodes = 'select uri, name, uri, show_uri, show_name, description, episode_artwork_path, is_playable, languages, nb_times_played, is_externally_hosted, duration_ms, explicit, release_date, release_date_precision, audio_preview_url, fully_played, resume_position_ms from episodes where show_uri=:show_uri order by release_date desc limit ' . $max_results;
-        $stmt = $db->prepare($getEpisodes);
-        $stmt->bindValue(':show_uri', $show_uri);
+        if($update_in_progress && file_exists($w->data() . '/create_library')) {
+            $results = getExternalResults($w, 'episodes', array('uri', 'name', 'uri', 'show_uri', 'show_name', 'description', 'episode_artwork_path', 'is_playable', 'languages', 'nb_times_played', 'is_externally_hosted', 'duration_ms', 'explicit', 'release_date', 'release_date_precision', 'audio_preview_url', 'fully_played', 'resume_position_ms'), 'order by release_date desc limit ' . $max_results, "where show_uri=\"".$show_uri."\"");
+        } else {
+            $getEpisodes = 'select uri, name, uri, show_uri, show_name, description, episode_artwork_path, is_playable, languages, nb_times_played, is_externally_hosted, duration_ms, explicit, release_date, release_date_precision, audio_preview_url, fully_played, resume_position_ms from episodes where show_uri=:show_uri order by release_date desc limit ' . $max_results;
+            $stmt = $db->prepare($getEpisodes);
+            $stmt->bindValue(':show_uri', $show_uri);
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+        }
     }
     else {
-        $getEpisodes = 'select uri, name, uri, show_uri, show_name, description, episode_artwork_path, is_playable, languages, nb_times_played, is_externally_hosted, duration_ms, explicit, release_date, release_date_precision, audio_preview_url, fully_played, resume_position_ms from episodes where show_uri=:show_uri and name like :name order by release_date desc limit ' . $max_results;
-        $stmt = $db->prepare($getEpisodes);
-        $stmt->bindValue(':show_uri', $show_uri);
-        $stmt->bindValue(':name', '%' . $episode . '%');
+        if($fuzzy_search || ($update_in_progress && file_exists($w->data() . '/create_library'))) {
+            $results = getFuzzySearchResults($w, $update_in_progress, $episode, 'episodes', array('uri', 'name', 'uri', 'show_uri', 'show_name', 'description', 'episode_artwork_path', 'is_playable', 'languages', 'nb_times_played', 'is_externally_hosted', 'duration_ms', 'explicit', 'release_date', 'release_date_precision', 'audio_preview_url', 'fully_played', 'resume_position_ms'), $max_results, '2,4', "where show_uri=\"".$show_uri."\"");
+        } else {
+            $getEpisodes = 'select uri, name, uri, show_uri, show_name, description, episode_artwork_path, is_playable, languages, nb_times_played, is_externally_hosted, duration_ms, explicit, release_date, release_date_precision, audio_preview_url, fully_played, resume_position_ms from episodes where show_uri=:show_uri and name_deburr like :name order by release_date desc limit ' . $max_results;
+            $stmt = $db->prepare($getEpisodes);
+            $stmt->bindValue(':show_uri', $show_uri);
+            $stmt->bindValue(':name', '%' . deburr($episode) . '%');
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+        }
     }
-    $episodes = $stmt->execute();
+
     $noresult = true;
-    while ($episodes = $stmt->fetch()) {
+    foreach ($results as $episodes) {
         $noresult = false;
         $subtitle = $episodes[6];
 
@@ -93,20 +87,20 @@ function secondDelimiterShows($w, $query, $settings, $db, $update_in_progress) {
                 /* other_settings*/, 'play_episode'
                 /* other_action */, $episodes[7] /* artist_name */, $episodes[5] /* track_name */, $episodes[6] /* album_name */, $episodes[9] /* track_artwork_path */, $episodes[10] /* artist_artwork_path */, $episodes[11] /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), $fully_played . $episodes[1], array($episode->episode_type . 'Progress: ' . floatToCircles(intval($episodes[17]) / intval($episodes[11])) . ' Duration ' . beautifyTime($episodes[11] / 1000) . ' ● Release date: ' . $episodes[13] . ' ● Languages: ' . $episodes[8], 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $episodes[6], 'yes', null, '');
+                )), $fully_played . $episodes[1], array('Progress: ' . floatToCircles(intval($episodes[17]) / intval($episodes[11])) . ' Duration ' . beautifyTime($episodes[11] / 1000) . ' '.getenv('emoji_separator').' Release date: ' . $episodes[13] . ' '.getenv('emoji_separator').' Languages: ' . $episodes[8], 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $episodes[6], 'yes', null, '');
             }
             else {
-                $w->result(null, '', '🚫 ' . $fully_played . $episodes[1], $episode->episode_type . 'Progress: ' . floatToCircles(intval($episodes[17]) / intval($episodes[11])) . ' Duration ' . beautifyTime($episodes[11] / 1000) . ' ● Release date: ' . $episodes[13] . ' ● Languages: ' . $episodes[8], $episodes[6], 'no', null, '');
+                $w->result(null, '', getenv('emoji_not_playable').' ' . $fully_played . $episodes[1], 'Progress: ' . floatToCircles(intval($episodes[17]) / intval($episodes[11])) . ' Duration ' . beautifyTime($episodes[11] / 1000) . ' '.getenv('emoji_separator').' Release date: ' . $episodes[13] . ' '.getenv('emoji_separator').' Languages: ' . $episodes[8], $episodes[6], 'no', null, '');
             }
         }
     }
 
     if ($noresult) {
-        if (mb_strlen($episode) < 2) {
-            $w->result(null, 'help', 'There is no episode in your library for the show ' . escapeQuery($show_name), array('Choose one of the options above', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/info.png', 'no', null, '');
+        if (countCharacters($episode) < 2) {
+            $w->result(null, 'help', 'There is no episode in your library for the show ' . escapeQuery($show_name), array('Choose one of the options above', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/info.png', 'no', null, '');
         }
         else {
-            $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         }
     }
 
@@ -128,7 +122,7 @@ function secondDelimiterShows($w, $query, $settings, $db, $update_in_progress) {
         /* artist_artwork_path */, ''
         /* album_artwork_path */, ''
         /* playlist_name */, '', /* playlist_artwork_path */
-        )), 'Search for show ' . $show_name . ' in Spotify', array('This will start a new search in Spotify', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/spotify.png', 'yes', null, '');
+        )), 'Search for show ' . $show_name . ' in Spotify', array('This will start a new search in Spotify', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/spotify.png', 'yes', null, '');
     }
 }
 
@@ -143,28 +137,13 @@ function secondDelimiterShows($w, $query, $settings, $db, $update_in_progress) {
  */
 function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
     $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
     $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $is_public_playlists = $settings->is_public_playlists;
     $output_application = $settings->output_application;
     $use_artworks = $settings->use_artworks;
+    $fuzzy_search = $settings->fuzzy_search;
 
     // display tracks for selected artists
     $tmp = explode('∙', $words[1]);
@@ -177,7 +156,7 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
         $track_uri = $artist_uri;
         $artist_uri = getArtistUriFromTrack($w, $track_uri);
         if ($artist_uri == false) {
-            $w->result(null, 'help', 'The artist cannot be retrieved from track uri', array('URI was ' . $tmp[0], 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'The artist cannot be retrieved from track uri', array('URI was ' . $tmp[0], 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
 
             exit;
@@ -186,13 +165,13 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
     if ($href[1] == 'local') {
         $artist_uri = getArtistUriFromSearch($w, $href[2], $country_code);
         if ($artist_uri == false) {
-            $w->result(null, 'help', 'The artist cannot be retrieved from local track uri', array('URI was ' . $tmp[0], 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'The artist cannot be retrieved from local track uri', array('URI was ' . $tmp[0], 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
 
             exit;
         }
     }
-    if (mb_strlen($track) < 2) {
+    if (countCharacters($track) < 2) {
         $artist_artwork_path = getArtistArtwork($w, $artist_uri, $artist_name, false, false, false, $use_artworks);
         $w->result(null, serialize(array(''
         /*track_uri*/, ''
@@ -210,7 +189,7 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
         /* artist_artwork_path */, ''
         /* album_artwork_path */, ''
         /* playlist_name */, '', /* playlist_artwork_path */
-        )), '👤 ' . $artist_name, 'Play artist', $artist_artwork_path, 'yes', null, '');
+        )), getenv('emoji_artist').' ' . $artist_name, 'Play artist', $artist_artwork_path, 'yes', null, '');
         $w->result(null, serialize(array(''
         /*track_uri*/, ''
         /* album_uri */, $artist_uri
@@ -227,11 +206,11 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
         /* artist_artwork_path */, ''
         /* album_artwork_path */, ''
         /* playlist_name */, '', /* playlist_artwork_path */
-        )), '👤 ' . $artist_name, '☁︎ Query all albums/tracks from this artist online..', './images/online_artist.png', 'yes', null, '');
+        )), getenv('emoji_artist').' ' . $artist_name, getenv('emoji_online').'  all albums/tracks from this artist online..', './images/online_artist.png', 'yes', null, '');
 
-        $w->result(null, '', 'Follow/Unfollow Artist', array('Display options to follow/unfollow the artist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/follow.png', 'no', null, 'Follow/Unfollow▹' . $artist_uri . '@' . $artist_name . '▹');
+        $w->result(null, '', 'Follow/Unfollow Artist', array('Display options to follow/unfollow the artist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/follow.png', 'no', null, 'Follow/Unfollow▹' . $artist_uri . '@' . $artist_name . '▹');
 
-        $w->result(null, '', 'Related Artists', array('Browse related artists', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/related.png', 'no', null, 'OnlineRelated▹' . $artist_uri . '@' . $artist_name . '▹');
+        $w->result(null, '', 'Related Artists', array('Browse related artists', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/related.png', 'no', null, 'OnlineRelated▹' . $artist_uri . '@' . $artist_name . '▹');
 
         if ($update_in_progress == false) {
             $privacy_status = 'private';
@@ -281,27 +260,33 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
             )), 'Create a Complete Collection Playlist for ' . $artist_name, 'This will create a ' . $privacy_status . ' playlist for the artist with all the albums and singles', './images/complete_collection.png', 'yes', null, '');
         }
 
-        // if ($all_playlists == false || count($tmp) == 3) {
-        //     $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic=1 and artist_uri=:artist_uri limit '.$max_results;
-        // } else {
-        $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where artist_uri=:artist_uri limit ' . $max_results;
-        // }
-        $stmt = $db->prepare($getTracks);
-        $stmt->bindValue(':artist_uri', $artist_uri);
+        if($update_in_progress && file_exists($w->data() . '/create_library')) {
+            $results = getExternalResults($w, 'tracks', array('yourmusic', 'popularity', 'uri', 'album_uri', 'artist_uri', 'track_name', 'album_name', 'artist_name', 'album_type', 'track_artwork_path', 'artist_artwork_path', 'album_artwork_path', 'playlist_name', 'playlist_uri', 'playable', 'added_at', 'duration', 'nb_times_played', 'local_track'), 'limit ' . $max_results,"where artist_uri=\"".$artist_uri."\"");
+        } else {
+            $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where artist_uri=:artist_uri limit ' . $max_results;
+
+            $stmt = $db->prepare($getTracks);
+            $stmt->bindValue(':artist_uri', $artist_uri);
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+        }
     }
     else {
-        // if ($all_playlists == false || count($tmp) == 3) {
-        //     $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic=1 and (artist_uri=:artist_uri and track_name like :track)'.' limit '.$max_results;
-        // } else {
-        $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where artist_uri=:artist_uri and track_name like :track limit ' . $max_results;
-        // }
-        $stmt = $db->prepare($getTracks);
-        $stmt->bindValue(':artist_uri', $artist_uri);
-        $stmt->bindValue(':track', '%' . $track . '%');
+        if($fuzzy_search || ($update_in_progress && file_exists($w->data() . '/create_library'))) {
+            $results = getFuzzySearchResults($w, $update_in_progress, $track, 'tracks', array('yourmusic', 'popularity', 'uri', 'album_uri', 'artist_uri', 'track_name', 'album_name', 'artist_name', 'album_type', 'track_artwork_path', 'artist_artwork_path', 'album_artwork_path', 'playlist_name', 'playlist_uri', 'playable', 'added_at', 'duration', 'nb_times_played', 'local_track'), $max_results, '6', "where artist_uri=\"".$artist_uri."\"");
+
+        } else {
+            $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where artist_uri=:artist_uri and track_name_deburr like :track limit ' . $max_results;
+
+            $stmt = $db->prepare($getTracks);
+            $stmt->bindValue(':artist_uri', $artist_uri);
+            $stmt->bindValue(':track', '%' . deburr($track) . '%');
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+        }
     }
-    $tracks = $stmt->execute();
     $noresult = true;
-    while ($track = $stmt->fetch()) {
+    foreach ($results as $track) {
         $noresult = false;
         $subtitle = $track[6];
 
@@ -311,9 +296,9 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
                 // skip local tracks if using Mopidy
                 continue;
             }
-            $added = '📌 ';
+            $added = getenv('emoji_local_track').' ';
         }
-        if (checkIfResultAlreadyThere($w->results(), $added . $track[7] . ' ● ' . $track[5]) == false) {
+        if (checkIfResultAlreadyThere($w->results(), $added . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5]) == false) {
             if ($track[14] == true) {
                 $w->result(null, serialize(array($track[2] /*track_uri*/, $track[3] /* album_uri */, $track[4] /* artist_uri */, ''
                 /* playlist_uri */, ''
@@ -322,20 +307,20 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
                 /* other_settings*/, ''
                 /* other_action */, $track[7] /* artist_name */, $track[5] /* track_name */, $track[6] /* album_name */, $track[9] /* track_artwork_path */, $track[10] /* artist_artwork_path */, $track[11] /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), $added . $track[7] . ' ● ' . $track[5], array($track[16] . ' ● ' . $subtitle . getPlaylistsForTrack($db, $track[2]), 'alt' => 'Play album ' . $track[6] . ' in Spotify', 'cmd' => 'Play artist ' . $track[7] . ' in Spotify', 'fn' => 'Add track ' . $track[5] . ' to ...', 'shift' => 'Add album ' . $track[6] . ' to ...', 'ctrl' => 'Search artist ' . $track[7] . ' online',), $track[9], 'yes', null, '');
+                )), $added . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5], array($track[16] . ' '.getenv('emoji_separator').' ' . $subtitle . getPlaylistsForTrack($db, $track[2]), 'alt' => 'Play album ' . $track[6] . ' in Spotify', 'cmd' => 'Play artist ' . $track[7] . ' in Spotify', 'fn' => 'Add track ' . $track[5] . ' to ...', 'shift' => 'Add album ' . $track[6] . ' to ...', 'ctrl' => 'Search artist ' . $track[7] . ' online',), $track[9], 'yes', null, '');
             }
             else {
-                $w->result(null, '', '🚫 ' . $track[7] . ' ● ' . $track[5], $track[16] . ' ● ' . $subtitle . getPlaylistsForTrack($db, $track[2]), $track[9], 'no', null, '');
+                $w->result(null, '', getenv('emoji_not_playable').' ' . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5], $track[16] . ' '.getenv('emoji_separator').' ' . $subtitle . getPlaylistsForTrack($db, $track[2]), $track[9], 'no', null, '');
             }
         }
     }
 
     if ($noresult) {
-        if (mb_strlen($track) < 2) {
-            $w->result(null, 'help', 'There is no track in your library for the artist ' . escapeQuery($artist_name), array('Choose one of the options above', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/info.png', 'no', null, '');
+        if (countCharacters($track) < 2) {
+            $w->result(null, 'help', 'There is no track in your library for the artist ' . escapeQuery($artist_name), array('Choose one of the options above', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/info.png', 'no', null, '');
         }
         else {
-            $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         }
     }
 
@@ -357,7 +342,7 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
         /* artist_artwork_path */, ''
         /* album_artwork_path */, ''
         /* playlist_name */, '', /* playlist_artwork_path */
-        )), 'Search for artist ' . $artist_name . ' in Spotify', array('This will start a new search in Spotify', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/spotify.png', 'yes', null, '');
+        )), 'Search for artist ' . $artist_name . ' in Spotify', array('This will start a new search in Spotify', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/spotify.png', 'yes', null, '');
     }
 }
 
@@ -372,27 +357,12 @@ function secondDelimiterArtists($w, $query, $settings, $db, $update_in_progress)
  */
 function secondDelimiterAlbums($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
 
     $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $output_application = $settings->output_application;
     $use_artworks = $settings->use_artworks;
+    $fuzzy_search = $settings->fuzzy_search;
 
     // display tracks for selected album
     $tmp = explode('∙', $words[1]);
@@ -405,7 +375,7 @@ function secondDelimiterAlbums($w, $query, $settings, $db, $update_in_progress) 
         $track_uri = $album_uri;
         $album_uri = getAlbumUriFromTrack($w, $track_uri);
         if ($album_uri == false) {
-            $w->result(null, 'help', 'The album cannot be retrieved from track uri', array('URI was ' . $tmp[0], 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'The album cannot be retrieved from track uri', array('URI was ' . $tmp[0], 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
 
             exit;
@@ -413,32 +383,57 @@ function secondDelimiterAlbums($w, $query, $settings, $db, $update_in_progress) 
     }
 
     try {
-        if (mb_strlen($track) < 2) {
-            if ($all_playlists == false) {
-                $getTracks = 'select yourmusic_album, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic_album=1 and album_uri=:album_uri limit ' . $max_results;
+        if (countCharacters($track) < 2) {
+
+            if($update_in_progress && file_exists($w->data() . '/create_library')) {
+
+                if ($all_playlists == false) {
+                    $where_clause = 'where yourmusic=1 and album_uri="'.$album_uri.'"';
+                }
+                else {
+                    $where_clause = 'where album_uri="'.$album_uri.'"';
+                }
+                $results = getExternalResults($w, 'tracks', array('yourmusic_album', 'popularity', 'uri', 'album_uri', 'artist_uri', 'track_name', 'album_name', 'artist_name', 'album_type', 'track_artwork_path', 'artist_artwork_path', 'album_artwork_path', 'playlist_name', 'playlist_uri', 'playable', 'added_at', 'duration', 'nb_times_played', 'local_track'), '', $where_clause);
+            } else {
+                if ($all_playlists == false) {
+                    $getTracks = 'select yourmusic_album, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic_album=1 and album_uri=:album_uri limit ' . $max_results;
+                }
+                else {
+                    $getTracks = 'select yourmusic_album, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where album_uri=:album_uri limit ' . $max_results;
+                }
+                $stmt = $db->prepare($getTracks);
+                $stmt->bindValue(':album_uri', $album_uri);
+                $stmt->execute();
+                $results = $stmt->fetchAll();
             }
-            else {
-                $getTracks = 'select yourmusic_album, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where album_uri=:album_uri limit ' . $max_results;
-            }
-            $stmt = $db->prepare($getTracks);
-            $stmt->bindValue(':album_uri', $album_uri);
         }
         else {
-            if ($all_playlists == false) {
-                $getTracks = 'select yourmusic_album, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic_album=1 and (album_uri=:album_uri and track_name like :track limit ' . $max_results;
-            }
-            else {
-                $getTracks = 'select yourmusic_album, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where album_uri=:album_uri and track_name like :track limit ' . $max_results;
-            }
-            $stmt = $db->prepare($getTracks);
-            $stmt->bindValue(':album_uri', $album_uri);
-            $stmt->bindValue(':track', '%' . $track . '%');
-        }
+            if($fuzzy_search || ($update_in_progress && file_exists($w->data() . '/create_library'))) {
+                if ($all_playlists == false) {
+                    $where_clause = 'where yourmusic=1 and album_uri="'.$album_uri.'"';
+                }
+                else {
+                    $where_clause = 'where album_uri="'.$album_uri.'"';
+                }
+                $results = getFuzzySearchResults($w, $update_in_progress, $track, 'tracks', array('yourmusic_album', 'popularity', 'uri', 'album_uri', 'artist_uri', 'track_name', 'album_name', 'artist_name', 'album_type', 'track_artwork_path', 'artist_artwork_path', 'album_artwork_path', 'playlist_name', 'playlist_uri', 'playable', 'added_at', 'duration', 'nb_times_played', 'local_track'), $max_results, '6..8', $where_clause);
+            } else {
+                if ($all_playlists == false) {
+                    $getTracks = 'select yourmusic_album, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic_album=1 and (album_uri=:album_uri and track_name_deburr like :track limit ' . $max_results;
+                }
+                else {
+                    $getTracks = 'select yourmusic_album, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where album_uri=:album_uri and track_name_deburr like :track limit ' . $max_results;
+                }
 
-        $tracks = $stmt->execute();
+                $stmt = $db->prepare($getTracks);
+                $stmt->bindValue(':album_uri', $album_uri);
+                $stmt->bindValue(':track', '%' . deburr($track) . '%');
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            }
+        }
     }
     catch(PDOException $e) {
-        handleDbIssuePdoXml($db);
+        handleDbIssuePdoXml($e);
 
         exit;
     }
@@ -462,28 +457,28 @@ function secondDelimiterAlbums($w, $query, $settings, $db, $update_in_progress) 
     /* artist_artwork_path */, $album_artwork_path
     /* album_artwork_path */, ''
     /* playlist_name */, '', /* playlist_artwork_path */
-    )), '💿 ' . $album_name, 'Play album', $album_artwork_path, 'yes', null, '');
+    )), getenv('emoji_album').' ' . $album_name, 'Play album', $album_artwork_path, 'yes', null, '');
 
     try {
         $getArtist = 'select artist_uri,artist_name from tracks where album_uri=:album_uri limit 1';
         $stmtGetArtist = $db->prepare($getArtist);
         $stmtGetArtist->bindValue(':album_uri', $album_uri);
-        $tracks_artist = $stmtGetArtist->execute();
+        $stmtGetArtist->execute();
         $onetrack = $stmtGetArtist->fetch();
     }
     catch(PDOException $e) {
-        handleDbIssuePdoXml($db);
+        handleDbIssuePdoXml($e);
 
         exit;
     }
 
-    $w->result(null, '', '💿 ' . $album_name, array('☁︎ Query all tracks from this album online..', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/online_album.png', 'no', null, 'Online▹' . $onetrack[0] . '@' . $onetrack[1] . '@' . $album_uri . '@' . $album_name . '▹');
+    $w->result(null, '', getenv('emoji_album').' ' . $album_name, array(getenv('emoji_online').'  all tracks from this album online..', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/online_album.png', 'no', null, 'Online▹' . $onetrack[0] . '@' . $onetrack[1] . '@' . $album_uri . '@' . $album_name . '▹');
 
     if ($update_in_progress == false) {
-        $w->result(null, '', 'Add album ' . escapeQuery($album_name) . ' to...', array('This will add the album to Your Music or a playlist you will choose in next step', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/add.png', 'no', null, 'Add▹' . $album_uri . '∙' . escapeQuery($album_name) . '▹');
+        $w->result(null, '', 'Add album ' . escapeQuery($album_name) . ' to...', array('This will add the album to Your Music or a playlist you will choose in next step', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/add.png', 'no', null, 'Add▹' . $album_uri . '∙' . escapeQuery($album_name) . '▹');
     }
     $noresult = true;
-    while ($track = $stmt->fetch()) {
+    foreach ($results as $track) {
         $noresult = false;
         $subtitle = $track[6];
 
@@ -493,9 +488,9 @@ function secondDelimiterAlbums($w, $query, $settings, $db, $update_in_progress) 
                 // skip local tracks if using Mopidy
                 continue;
             }
-            $added = '📌 ';
+            $added = getenv('emoji_local_track').' ';
         }
-        if (checkIfResultAlreadyThere($w->results(), $added . $track[7] . ' ● ' . $track[5]) == false) {
+        if (checkIfResultAlreadyThere($w->results(), $added . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5]) == false) {
             if ($track[14] == true) {
                 $w->result(null, serialize(array($track[2] /*track_uri*/, $track[3] /* album_uri */, $track[4] /* artist_uri */, ''
                 /* playlist_uri */, ''
@@ -504,16 +499,16 @@ function secondDelimiterAlbums($w, $query, $settings, $db, $update_in_progress) 
                 /* other_settings*/, 'play_track_in_album_context'
                 /* other_action */, $track[7] /* artist_name */, $track[5] /* track_name */, $track[6] /* album_name */, $track[9] /* track_artwork_path */, $track[10] /* artist_artwork_path */, $track[11] /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), $added . $track[7] . ' ● ' . $track[5], array($track[16] . ' ● ' . $subtitle . getPlaylistsForTrack($db, $track[2]), 'alt' => 'Play album ' . $track[6] . ' in Spotify', 'cmd' => 'Play artist ' . $track[7] . ' in Spotify', 'fn' => 'Add track ' . $track[5] . ' to ...', 'shift' => 'Add album ' . $track[6] . ' to ...', 'ctrl' => 'Search artist ' . $track[7] . ' online',), $track[9], 'yes', null, '');
+                )), $added . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5], array($track[16] . ' '.getenv('emoji_separator').' ' . $subtitle . getPlaylistsForTrack($db, $track[2]), 'alt' => 'Play album ' . $track[6] . ' in Spotify', 'cmd' => 'Play artist ' . $track[7] . ' in Spotify', 'fn' => 'Add track ' . $track[5] . ' to ...', 'shift' => 'Add album ' . $track[6] . ' to ...', 'ctrl' => 'Search artist ' . $track[7] . ' online',), $track[9], 'yes', null, '');
             }
             else {
-                $w->result(null, '', '🚫 ' . $track[7] . ' ● ' . $track[5], $track[16] . ' ● ' . $subtitle . getPlaylistsForTrack($db, $track[2]), $track[9], 'no', null, '');
+                $w->result(null, '', getenv('emoji_not_playable').' ' . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5], $track[16] . ' '.getenv('emoji_separator').' ' . $subtitle . getPlaylistsForTrack($db, $track[2]), $track[9], 'no', null, '');
             }
         }
     }
 
     if ($noresult) {
-        $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
     }
 
     if ($output_application != 'MOPIDY') {
@@ -532,7 +527,7 @@ function secondDelimiterAlbums($w, $query, $settings, $db, $update_in_progress) 
         /* artist_artwork_path */, ''
         /* album_artwork_path */, ''
         /* playlist_name */, '', /* playlist_artwork_path */
-        )), 'Search for album ' . $album_name . ' in Spotify', array('This will start a new search in Spotify', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/spotify.png', 'yes', null, '');
+        )), 'Search for album ' . $album_name . ' in Spotify', array('This will start a new search in Spotify', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/spotify.png', 'yes', null, '');
     }
 }
 
@@ -547,42 +542,31 @@ function secondDelimiterAlbums($w, $query, $settings, $db, $update_in_progress) 
  */
 function secondDelimiterPlaylists($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
     $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
     $userid = $settings->userid;
-
+    $fuzzy_search = $settings->fuzzy_search;
     $output_application = $settings->output_application;
 
-    // display tracks for selected playlist
     $theplaylisturi = $words[1];
     $thetrack = $words[2];
-    $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist,collaborative,public from playlists where uri=:uri';
 
     try {
-        $stmt = $db->prepare($getPlaylists);
-        $stmt->bindValue(':uri', $theplaylisturi);
+        // display tracks for selected playlist
+        if($update_in_progress && file_exists($w->data() . '/create_library')) {
+            $results_playlist = getExternalResults($w, 'playlists', array('uri','name','nb_tracks','author','username','playlist_artwork_path','ownedbyuser','nb_playable_tracks','duration_playlist','collaborative','public'), '', "where uri=\"".$theplaylisturi."\"");
+        } else {
+            $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist,collaborative,public from playlists where uri=:uri';
+            $stmt = $db->prepare($getPlaylists);
+            $stmt->bindValue(':uri', $theplaylisturi);
+            $stmt->execute();
+            $results_playlist = $stmt->fetchAll();
+        }
 
-        $playlists = $stmt->execute();
         $noresultplaylist = true;
-        while ($playlist = $stmt->fetch()) {
+        foreach ($results_playlist as $playlist) {
             $noresultplaylist = false;
-            if (mb_strlen($thetrack) < 2) {
+            if (countCharacters($thetrack) < 2) {
                 if ($playlist[9]) {
                     $public_status = 'collaborative';
                 }
@@ -607,10 +591,10 @@ function secondDelimiterPlaylists($w, $query, $settings, $db, $update_in_progres
                     $cmdMsg = 'Change playlist privacy to ' . $public_status_contrary;
                 }
                 else {
-                    $cmdMsg = 'Not Available';
+                    $cmdMsg = '';
                 }
                 if (startswith($playlist[1], 'Artist radio for')) {
-                    $added = '📻 ';
+                    $added = getenv('emoji_radio').' ';
                 }
                 $w->result(null, serialize(array(''
                 /*track_uri*/, ''
@@ -625,7 +609,7 @@ function secondDelimiterPlaylists($w, $query, $settings, $db, $update_in_progres
                 /* track_artwork_path */, ''
                 /* artist_artwork_path */, ''
                 /* album_artwork_path */, $playlist[1] /* playlist_name */, $playlist[5], /* playlist_artwork_path */
-                )), '🎵' . $added . $playlist[1] . ' by ' . $playlist[3] . ' ● ' . $playlist[7] . ' tracks ● ' . $playlist[8], array($subtitle, 'alt' => 'Not Available', 'cmd' => $cmdMsg, 'shift' => 'Add playlist ' . $playlist[1] . ' to ...', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $playlist[5], 'yes', null, '');
+                )), getenv('emoji_playlist') . $added . $playlist[1] . ' by ' . $playlist[3] . ' '.getenv('emoji_separator').' ' . $playlist[7] . ' tracks '.getenv('emoji_separator').' ' . $playlist[8], array($subtitle, 'alt' => '', 'cmd' => $cmdMsg, 'shift' => 'Add playlist ' . $playlist[1] . ' to ...', 'fn' => '', 'ctrl' => '',), $playlist[5], 'yes', null, '');
                 if ($output_application != 'MOPIDY') {
                     $w->result(null, serialize(array(''
                     /*track_uri*/, ''
@@ -648,11 +632,11 @@ function secondDelimiterPlaylists($w, $query, $settings, $db, $update_in_progres
                 }
 
                 if ($update_in_progress == false) {
-                    $w->result(null, '', 'Add playlist ' . escapeQuery($playlist[1]) . ' to...', array('This will add the playlist to Your Music or a playlist you will choose in next step', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/add.png', 'no', null, 'Add▹' . $playlist[0] . '∙' . base64_encode($playlist[1]) . '▹');
+                    $w->result(null, '', 'Add playlist ' . escapeQuery($playlist[1]) . ' to...', array('This will add the playlist to Your Music or a playlist you will choose in next step', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/add.png', 'no', null, 'Add▹' . $playlist[0] . '∙' . base64_encode($playlist[1]) . '▹');
                 }
 
                 if ($update_in_progress == false) {
-                    $w->result(null, '', 'Remove playlist ' . escapeQuery($playlist[1]), array('A confirmation will be asked in next step', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/uncheck.png', 'no', null, 'Confirm Remove Playlist▹' . $playlist[0] . '∙' . base64_encode($playlist[1]) . '▹');
+                    $w->result(null, '', 'Remove playlist ' . escapeQuery($playlist[1]), array('A confirmation will be asked in next step', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/uncheck.png', 'no', null, 'Confirm Remove Playlist▹' . $playlist[0] . '∙' . base64_encode($playlist[1]) . '▹');
                 }
                 if ($update_in_progress == false) {
                     $w->result(null, serialize(array(''
@@ -674,26 +658,37 @@ function secondDelimiterPlaylists($w, $query, $settings, $db, $update_in_progres
                     /* album_artwork_path */, escapeQuery($playlist[1]) /* playlist_name */, '', /* playlist_artwork_path */
                     )), 'Create a similar playlist for ' . escapeQuery($playlist[1]), 'This will create a similar playlist', './images/playlists.png', 'yes', null, '');
                 }
-                $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where playlist_uri=:theplaylisturi order by added_at desc limit ' . $max_results;
-                $stmt = $db->prepare($getTracks);
-                $stmt->bindValue(':theplaylisturi', $theplaylisturi);
+                if($update_in_progress && file_exists($w->data() . '/create_library')) {
+                    $results = getExternalResults($w, 'tracks', array('yourmusic', 'popularity', 'uri', 'album_uri', 'artist_uri', 'track_name', 'album_name', 'artist_name', 'album_type', 'track_artwork_path', 'artist_artwork_path', 'album_artwork_path', 'playlist_name', 'playlist_uri', 'playable', 'added_at', 'duration', 'nb_times_played', 'local_track'), 'order by added_at desc limit ' . $max_results, "where playlist_uri=\"".$theplaylisturi."\"");
+                } else {
+                    $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where playlist_uri=:theplaylisturi order by added_at desc limit ' . $max_results;
+                    $stmt = $db->prepare($getTracks);
+                    $stmt->bindValue(':theplaylisturi', $theplaylisturi);
+                    $stmt->execute();
+                    $results = $stmt->fetchAll();
+                }
             }
             else {
-                $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where playlist_uri=:theplaylisturi and (artist_name like :track or album_name like :track or track_name like :track)' . ' order by added_at desc limit ' . $max_results;
-                $stmt = $db->prepare($getTracks);
-                $stmt->bindValue(':theplaylisturi', $theplaylisturi);
-                $stmt->bindValue(':track', '%' . $thetrack . '%');
+                if($fuzzy_search || ($update_in_progress && file_exists($w->data() . '/create_library'))) {
+                    $results = getFuzzySearchResults($w, $update_in_progress, $thetrack, 'tracks', array('yourmusic', 'popularity', 'uri', 'album_uri', 'artist_uri', 'track_name', 'album_name', 'artist_name', 'album_type', 'track_artwork_path', 'artist_artwork_path', 'album_artwork_path', 'playlist_name', 'playlist_uri', 'playable', 'added_at', 'duration', 'nb_times_played', 'local_track'), $max_results, '6..8', "where playlist_uri=\"".$theplaylisturi."\"");
+                } else {
+                    $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where playlist_uri=:theplaylisturi and (artist_name_deburr like :track or album_name_deburr like :track or track_name_deburr like :track)' . ' order by added_at desc limit ' . $max_results;
+                    $stmt = $db->prepare($getTracks);
+                    $stmt->bindValue(':theplaylisturi', $theplaylisturi);
+                    $stmt->bindValue(':track', '%' . deburr($thetrack) . '%');
+                    $stmt->execute();
+                    $results = $stmt->fetchAll();
+                }
             }
 
             if ($theplaylisturi == $alfred_playlist_uri) {
                 if ($update_in_progress == false) {
-                    $w->result(null, '', 'Change your Alfred playlist', array('Select one of your playlists as your Alfred playlist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/settings.png', 'no', null, 'Alfred Playlist▹Set Alfred Playlist▹');
+                    $w->result(null, '', getenv('emoji_alfred') . 'Change your Alfred playlist', array('Select one of your playlists as your Alfred playlist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, 'Alfred Playlist▹Set Alfred Playlist▹');
                 }
             }
 
-            $tracks = $stmt->execute();
             $noresult = true;
-            while ($track = $stmt->fetch()) {
+            foreach ($results as $track) {
                 $noresult = false;
                 $subtitle = $track[6];
                 $added = '';
@@ -702,9 +697,9 @@ function secondDelimiterPlaylists($w, $query, $settings, $db, $update_in_progres
                         // skip local tracks if using Mopidy
                         continue;
                     }
-                    $added = '📌 ';
+                    $added = getenv('emoji_local_track').' ';
                 }
-                if (checkIfResultAlreadyThere($w->results(), $added . $track[7] . ' ● ' . $track[5]) == false) {
+                if (checkIfResultAlreadyThere($w->results(), $added . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5]) == false) {
                     if ($track[14] == true) {
                         $w->result(null, serialize(array($track[2] /*track_uri*/, $track[3] /* album_uri */, $track[4] /* artist_uri */, $theplaylisturi
                         /* playlist_uri */, ''
@@ -712,35 +707,33 @@ function secondDelimiterPlaylists($w, $query, $settings, $db, $update_in_progres
                         /* query */, ''
                         /* other_settings*/, ''
                         /* other_action */, $track[7] /* artist_name */, $track[5] /* track_name */, $track[6] /* album_name */, $track[9] /* track_artwork_path */, $track[10] /* artist_artwork_path */, $track[11] /* album_artwork_path */, $playlist[1] /* playlist_name */, '', /* playlist_artwork_path */
-                        )), $added . $track[7] . ' ● ' . $track[5], array($track[16] . ' ● ' . $subtitle . getPlaylistsForTrack($db, $track[2]), 'alt' => 'Play album ' . $track[6] . ' in Spotify', 'cmd' => 'Play artist ' . $track[7] . ' in Spotify', 'fn' => 'Add track ' . $track[5] . ' to ...', 'shift' => 'Add album ' . $track[6] . ' to ...', 'ctrl' => 'Search artist ' . $track[7] . ' online',), $track[9], 'yes', null, '');
+                        )), $added . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5], array($track[16] . ' '.getenv('emoji_separator').' ' . $subtitle . getPlaylistsForTrack($db, $track[2]), 'alt' => 'Play album ' . $track[6] . ' in Spotify', 'cmd' => 'Play artist ' . $track[7] . ' in Spotify', 'fn' => 'Add track ' . $track[5] . ' to ...', 'shift' => 'Add album ' . $track[6] . ' to ...', 'ctrl' => 'Search artist ' . $track[7] . ' online',), $track[9], 'yes', null, '');
                     }
                     else {
-                        $w->result(null, '', '🚫 ' . $track[7] . ' ● ' . $track[5], $track[16] . ' ● ' . $subtitle . getPlaylistsForTrack($db, $track[2]), $track[9], 'no', null, '');
+                        $w->result(null, '', getenv('emoji_not_playable').' ' . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5], $track[16] . ' '.getenv('emoji_separator').' ' . $subtitle . getPlaylistsForTrack($db, $track[2]), $track[9], 'no', null, '');
                     }
                 }
             }
 
             if ($noresult) {
-                $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
 
         if ($theplaylisturi == $alfred_playlist_uri) {
             if ($update_in_progress == false) {
-                if (strtolower($r[3]) != strtolower('Starred')) {
-                    $w->result(null, '', 'Clear your Alfred Playlist', array('This will remove all the tracks in your current Alfred Playlist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/uncheck.png', 'no', null, 'Alfred Playlist▹Confirm Clear Alfred Playlist▹');
-                }
+                $w->result(null, '', getenv('emoji_alfred') . 'Clear your Alfred Playlist', array('This will remove all the tracks in your current Alfred Playlist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/uncheck.png', 'no', null, 'Alfred Playlist▹Confirm Clear Alfred Playlist▹');
             }
         }
 
         // can happen only with Alfred Playlist deleted
         if ($noresultplaylist) {
-            $w->result(null, 'help', 'It seems your Alfred Playlist was deleted', array('Choose option below to change it', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
-            $w->result(null, '', 'Change your Alfred playlist', array('Select one of your playlists below as your Alfred playlist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/settings.png', 'no', null, 'Alfred Playlist▹Set Alfred Playlist▹');
+            $w->result(null, 'help', 'It seems your Alfred Playlist was deleted', array('Choose option below to change it', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
+            $w->result(null, '', getenv('emoji_alfred') . 'Change your Alfred playlist', array('Select one of your playlists below as your Alfred playlist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, 'Alfred Playlist▹Set Alfred Playlist▹');
         }
     }
     catch(PDOException $e) {
-        handleDbIssuePdoXml($db);
+        handleDbIssuePdoXml($e);
 
         exit;
     }
@@ -757,26 +750,10 @@ function secondDelimiterPlaylists($w, $query, $settings, $db, $update_in_progres
  */
 function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
     $search = $words[2];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
     $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
     $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     if (substr_count($query, '@') == 1) {
@@ -794,7 +771,7 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
             $artist_name = $words[1];
 
             $artist_artwork_path = getArtistArtwork($w, $artist_uri, $artist_name, false, false, false, $use_artworks);
-            if (mb_strlen($search) < 2) {
+            if (countCharacters($search) < 2) {
                 $w->result(null, serialize(array(''
                 /*track_uri*/, ''
                 /* album_uri */, $artist_uri
@@ -811,21 +788,21 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
                 /* artist_artwork_path */, ''
                 /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), '👤 ' . escapeQuery($artist_name), 'Play artist', $artist_artwork_path, 'yes', null, '');
+                )), getenv('emoji_artist').' ' . escapeQuery($artist_name), 'Play artist', $artist_artwork_path, 'yes', null, '');
             }
 
-            if (mb_strlen($search) < 2) {
-                $w->result(null, '', 'Follow/Unfollow Artist', array('Display options to follow/unfollow the artist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/follow.png', 'no', null, 'Follow/Unfollow▹' . $artist_uri . '@' . $artist_name . '▹');
+            if (countCharacters($search) < 2) {
+                $w->result(null, '', 'Follow/Unfollow Artist', array('Display options to follow/unfollow the artist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/follow.png', 'no', null, 'Follow/Unfollow▹' . $artist_uri . '@' . $artist_name . '▹');
 
-                $w->result(null, '', 'Related Artists', array('Browse related artists', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/related.png', 'no', null, 'OnlineRelated▹' . $artist_uri . '@' . $artist_name . '▹');
+                $w->result(null, '', 'Related Artists', array('Browse related artists', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/related.png', 'no', null, 'OnlineRelated▹' . $artist_uri . '@' . $artist_name . '▹');
             }
 
             if ($update_in_progress == false) {
-                if (mb_strlen($search) < 2) {
+                if (countCharacters($search) < 2) {
                     $w->result(null, serialize(array(''
                     /*track_uri*/, ''
                     /* album_uri */, $artist_uri
-                    /* artist_uri */, ''
+                    /* artist_uris */, ''
                     /* playlist_uri */, ''
                     /* spotify_command */, ''
                     /* query */, ''
@@ -846,8 +823,8 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
             // it displays an error in main window
             $albums = getTheArtistAlbums($w, $artist_uri, $country_code);
 
-            if (mb_strlen($search) < 2) {
-                $w->result(null, 'help', 'Select an album below to browse it', array('singles and compilations are also displayed', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/info.png', 'no', null, '');
+            if (countCharacters($search) < 2) {
+                $w->result(null, 'help', 'Select an album below to browse it', array('singles and compilations are also displayed', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/info.png', 'no', null, '');
             }
 
             $noresult = true;
@@ -856,18 +833,18 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
                     ->tracks
                     ->items) . ' tracks)') == false) {
                     $noresult = false;
-                    $genre = (count($album->genres) > 0) ? ' ● Genre: ' . implode('|', $album->genres) : '';
+                    $genre = (count($album->genres) > 0) ? ' '.getenv('emoji_separator').' Genre: ' . implode('|', $album->genres) : '';
                     $tracks = $album->tracks;
-                    if (mb_strlen($search) < 2 || strpos(strtolower($artist_name), strtolower($search)) !== false || strpos(strtolower($album->name), strtolower($search)) !== false) {
+                    if (countCharacters($search) < 2 || strpos(strtolower($artist_name), strtolower($search)) !== false || strpos(strtolower($album->name), strtolower($search)) !== false) {
                         $w->result(null, '', $album->name . ' (' . count($album
                             ->tracks
-                            ->items) . ' tracks)', $album->album_type . ' by ' . $artist_name . ' ● Release date: ' . $album->release_date . $genre, getTrackOrAlbumArtwork($w, $album->uri, false, false, false, $use_artworks), 'no', null, 'Online▹' . $artist_uri . '@' . $artist_name . '@' . $album->uri . '@' . $album->name . '▹');
+                            ->items) . ' tracks)', $album->album_type . ' by ' . $artist_name . ' '.getenv('emoji_separator').' Release date: ' . $album->release_date . $genre, getTrackOrAlbumArtwork($w, $album->uri, false, false, false, $use_artworks), 'no', null, 'Online▹' . $artist_uri . '@' . $artist_name . '@' . $album->uri . '@' . $album->name . '▹');
                     }
                 }
             }
 
             if ($noresult) {
-                $w->result(null, 'help', 'There is no album for this artist', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, 'help', 'There is no album for this artist', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
         else if ($tmp_uri[1] == 'show') {
@@ -877,7 +854,7 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
             $show_name = $words[1];
 
             $show_artwork_path = getShowArtwork($w, $show_uri, false, false, false, $use_artworks);
-            if (mb_strlen($search) < 2) {
+            if (countCharacters($search) < 2) {
                 // $w->result(null, serialize(array(
                 //         '' /*track_uri*/,
                 //         '' /* album_uri */,
@@ -895,20 +872,20 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
                 //         '' /* album_artwork_path */,
                 //         '' /* playlist_name */,
                 //         '', /* playlist_artwork_path */
-                //     )), '🎙 '.escapeQuery($show_name), 'Play show', $show_artwork_path, 'yes', null, '');
+                //     )), getenv('emoji_show').' '.escapeQuery($show_name), 'Play show', $show_artwork_path, 'yes', null, '');
 
             }
 
-            if (mb_strlen($search) < 2) {
-                $w->result(null, '', 'Follow/Unfollow Show', array('Display options to follow/unfollow the show', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/follow.png', 'no', null, 'Follow/Unfollow▹' . $show_uri . '@' . $show_name . '▹');
+            if (countCharacters($search) < 2) {
+                $w->result(null, '', 'Follow/Unfollow Show', array('Display options to follow/unfollow the show', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/follow.png', 'no', null, 'Follow/Unfollow▹' . $show_uri . '@' . $show_name . '▹');
             }
 
             // call to web api, if it fails,
             // it displays an error in main window
             $episodes = getTheShowEpisodes($w, $show_uri, $country_code);
 
-            if (mb_strlen($search) < 2) {
-                $w->result(null, 'help', 'Select an episode below to play it', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/info.png', 'no', null, '');
+            if (countCharacters($search) < 2) {
+                $w->result(null, 'help', 'Select an episode below to play it', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/info.png', 'no', null, '');
             }
 
             $iso = new Matriphe\ISO639\ISO639;
@@ -917,7 +894,7 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
             foreach ($episodes as $episode) {
                 if (checkIfResultAlreadyThere($w->results(), $episode->name) == false) {
                     $noresult = false;
-                    if (mb_strlen($search) < 2 || strpos(strtolower($episode->name), strtolower($search)) !== false) {
+                    if (countCharacters($search) < 2 || strpos(strtolower($episode->name), strtolower($search)) !== false) {
 
                         $array_languages = array();
                         foreach ($episode->languages as $language) {
@@ -942,13 +919,13 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
                         /* playlist_name */, '', /* playlist_artwork_path */
                         )), $episode->name, array($episode->episode_type . 'Progress: ' . floatToCircles(intval($episode
                             ->resume_point
-                            ->resume_position_ms) / intval($episode->duration_ms)) . ' Duration ' . beautifyTime($episode->duration_ms / 1000) . ' ● Release date: ' . $episode->release_date . ' ● Languages: ' . implode(',', $array_languages), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $show_artwork_path, 'yes', null, '');
+                            ->resume_position_ms) / intval($episode->duration_ms)) . ' Duration ' . beautifyTime($episode->duration_ms / 1000) . ' '.getenv('emoji_separator').' Release date: ' . $episode->release_date . ' '.getenv('emoji_separator').' Languages: ' . implode(',', $array_languages), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $show_artwork_path, 'yes', null, '');
                     }
                 }
             }
 
             if ($noresult) {
-                $w->result(null, 'help', 'There is no episode for this show', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, 'help', 'There is no episode for this show', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
     }
@@ -967,7 +944,7 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
             $track_uri = $album_uri;
             $album_uri = getAlbumUriFromTrack($w, $track_uri);
             if ($album_uri == false) {
-                $w->result(null, 'help', 'The album cannot be retrieved from track uri', array('URI was ' . $track_uri, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, 'help', 'The album cannot be retrieved from track uri', array('URI was ' . $track_uri, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
                 echo $w->tojson();
                 exit;
             }
@@ -977,13 +954,13 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
             $track_uri = $artist_uri;
             $artist_uri = getArtistUriFromTrack($w, $track_uri);
             if ($artist_uri == false) {
-                $w->result(null, 'help', 'The artist cannot be retrieved from track uri', array('URI was ' . $track_uri, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, 'help', 'The artist cannot be retrieved from track uri', array('URI was ' . $track_uri, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
                 echo $w->tojson();
                 exit;
             }
         }
         $album_artwork_path = getTrackOrAlbumArtwork($w, $album_uri, false, false, false, $use_artworks);
-        if (mb_strlen($search) < 2) {
+        if (countCharacters($search) < 2) {
             $w->result(null, serialize(array(''
             /*track_uri*/, $album_uri
             /* album_uri */, ''
@@ -1000,12 +977,12 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
             /* artist_artwork_path */, $album_artwork_path
             /* album_artwork_path */, ''
             /* playlist_name */, '', /* playlist_artwork_path */
-            )), '💿 ' . escapeQuery($album_name), 'Play album', $album_artwork_path, 'yes', null, '');
+            )), getenv('emoji_album').' ' . escapeQuery($album_name), 'Play album', $album_artwork_path, 'yes', null, '');
         }
 
         if ($update_in_progress == false) {
-            if (mb_strlen($search) < 2) {
-                $w->result(null, '', 'Add album ' . escapeQuery($album_name) . ' to...', array('This will add the album to Your Music or a playlist you will choose in next step', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/add.png', 'no', null, 'Add▹' . $album_uri . '∙' . escapeQuery($album_name) . '▹');
+            if (countCharacters($search) < 2) {
+                $w->result(null, '', 'Add album ' . escapeQuery($album_name) . ' to...', array('This will add the album to Your Music or a playlist you will choose in next step', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/add.png', 'no', null, 'Add▹' . $album_uri . '∙' . escapeQuery($album_name) . '▹');
             }
         }
 
@@ -1020,7 +997,7 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
             $track_artwork = getTrackOrAlbumArtwork($w, $track->uri, false, false, false, $use_artworks);
             if (isset($track->is_playable) && $track->is_playable) {
                 $noresult = false;
-                if (mb_strlen($search) < 2 || strpos(strtolower($artist->name), strtolower($search)) !== false || strpos(strtolower($track->name), strtolower($search)) !== false || strpos(strtolower($album->name), strtolower($search)) !== false) {
+                if (countCharacters($search) < 2 || strpos(strtolower($artist->name), strtolower($search)) !== false || strpos(strtolower($track->name), strtolower($search)) !== false) {
                     $w->result(null, serialize(array($track->uri
                     /*track_uri*/, $album_uri
                     /* album_uri */, $artist_uri
@@ -1037,12 +1014,12 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
                     /* artist_artwork_path */, ''
                     /* album_artwork_path */, ''
                     /* playlist_name */, '', /* playlist_artwork_path */
-                    )), escapeQuery($artist->name) . ' ● ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' ● ' . $album_name, 'alt' => 'Play album ' . escapeQuery($album_name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($artist->name) . ' in Spotify', 'fn' => 'Add track ' . escapeQuery($track->name) . ' to ...', 'shift' => 'Add album ' . escapeQuery($album_name) . ' to ...', 'ctrl' => 'Search artist ' . escapeQuery($artist->name) . ' online',), $track_artwork, 'yes', null, '');
+                    )), escapeQuery($artist->name) . ' '.getenv('emoji_separator').' ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' '.getenv('emoji_separator').' ' . $album_name, 'alt' => 'Play album ' . escapeQuery($album_name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($artist->name) . ' in Spotify', 'fn' => 'Add track ' . escapeQuery($track->name) . ' to ...', 'shift' => 'Add album ' . escapeQuery($album_name) . ' to ...', 'ctrl' => 'Search artist ' . escapeQuery($artist->name) . ' online',), $track_artwork, 'yes', null, '');
                 }
             }
             else {
-                if (mb_strlen($search) < 2 || strpos(strtolower($artist->name), strtolower($search)) !== false || strpos(strtolower($track->name), strtolower($search)) !== false || strpos(strtolower($album->name), strtolower($search)) !== false) {
-                    $w->result(null, '', '🚫 ' . escapeQuery($artist->name) . ' ● ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' ● ' . $album_name, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $track_artwork, 'no', null, '');
+                if (countCharacters($search) < 2 || strpos(strtolower($artist->name), strtolower($search)) !== false || strpos(strtolower($track->name), strtolower($search)) !== false) {
+                    $w->result(null, '', getenv('emoji_not_playable').' ' . escapeQuery($artist->name) . ' '.getenv('emoji_separator').' ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' '.getenv('emoji_separator').' ' . $album_name, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $track_artwork, 'no', null, '');
                 }
             }
         }
@@ -1060,26 +1037,8 @@ function secondDelimiterOnline($w, $query, $settings, $db, $update_in_progress) 
  */
 function secondDelimiterOnlineRelated($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
     $search = $words[2];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     if (substr_count($query, '@') == 1) {
@@ -1095,8 +1054,8 @@ function secondDelimiterOnlineRelated($w, $query, $settings, $db, $update_in_pro
         $relateds = getTheArtistRelatedArtists($w, trim($artist_uri));
 
         foreach ($relateds as $related) {
-            if (mb_strlen($search) < 2 || strpos(strtolower($related->name), strtolower($search)) !== false) {
-                $w->result(null, '', '👤 ' . $related->name, '☁︎ Query all albums/tracks from this artist online..', getArtistArtwork($w, $related->uri, $related->name, false, false, false, $use_artworks), 'no', null, 'Online▹' . $related->uri . '@' . $related->name . '▹');
+            if (countCharacters($search) < 2 || strpos(strtolower($related->name), strtolower($search)) !== false) {
+                $w->result(null, '', getenv('emoji_artist').' ' . $related->name, getenv('emoji_online').'  all albums/tracks from this artist online..', getArtistArtwork($w, $related->uri, $related->name, false, false, false, $use_artworks), 'no', null, 'Online▹' . $related->uri . '@' . $related->name . '▹');
             }
         }
     }
@@ -1113,25 +1072,11 @@ function secondDelimiterOnlineRelated($w, $query, $settings, $db, $update_in_pro
  */
 function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
 
-    $all_playlists = $settings->all_playlists;
     $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
     $alfred_playlist_name = $settings->alfred_playlist_name;
     $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $is_public_playlists = $settings->is_public_playlists;
     $output_application = $settings->output_application;
     $use_artworks = $settings->use_artworks;
@@ -1158,8 +1103,6 @@ function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_pr
         $offsetGetUserPlaylistTracks = 0;
         $limitGetUserPlaylistTracks = 100;
         do {
-            // refresh api
-            $api = getSpotifyWebAPI($w, false, $api);
             $userPlaylistTracks = $api->getPlaylistTracks($playlist_id, array('fields' => array('total', 'items(added_at)', 'items(is_local)', 'items.track(is_playable,duration_ms,uri,popularity,name)', 'items.track.album(album_type,images,uri,name)', 'items.track.artists(name,uri)',), 'limit' => $limitGetUserPlaylistTracks, 'offset' => $offsetGetUserPlaylistTracks, 'market' => $country_code,));
 
             foreach ($userPlaylistTracks->items as $item) {
@@ -1172,7 +1115,7 @@ function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_pr
         } while ($offsetGetUserPlaylistTracks < $userPlaylistTracks->total);
     }
     catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-        $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         echo $w->tojson();
         exit;
     }
@@ -1182,7 +1125,7 @@ function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_pr
         $subtitle = "$subtitle ,⇧ ▹ add playlist to ...";
     }
     $playlist_artwork_path = getPlaylistArtwork($w, $theplaylisturi, false, false, $use_artworks);
-    if (mb_strlen($search) < 2) {
+    if (countCharacters($search) < 2) {
         $w->result(null, serialize(array(''
         /*track_uri*/, ''
         /* album_uri */, ''
@@ -1203,11 +1146,11 @@ function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_pr
         /* playlist_name */, $playlist_artwork_path
         /* playlist_artwork_path */, $alfred_playlist_name,
         /* alfred_playlist_name */
-        )), '🎵' . $theplaylistname . ' by ' . $owner_id . ' ● ' . $nb_tracks . ' tracks ● ' . beautifyTime($duration_playlist / 1000, true), array($subtitle, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Add playlist ' . $theplaylistname . ' to your Alfred Playlist', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $playlist_artwork_path, 'yes', null, '');
+        )), getenv('emoji_playlist') . $theplaylistname . ' '.getenv('emoji_separator').' ' . $nb_tracks . ' tracks '.getenv('emoji_separator').' ' . beautifyTime($duration_playlist / 1000, true), array($subtitle, 'alt' => '', 'cmd' => '', 'shift' => 'Add playlist ' . $theplaylistname . ' to your Alfred Playlist', 'fn' => '', 'ctrl' => '',), $playlist_artwork_path, 'yes', null, '');
     }
 
     if ($output_application != 'MOPIDY') {
-        if (mb_strlen($search) < 2) {
+        if (countCharacters($search) < 2) {
             $w->result(null, serialize(array(''
             /*track_uri*/, ''
             /* album_uri */, ''
@@ -1235,7 +1178,7 @@ function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_pr
             $added = 'publicly';
             $privacy_status = 'public';
         }
-        if (mb_strlen($search) < 2) {
+        if (countCharacters($search) < 2) {
             $w->result(null, serialize(array(''
             /*track_uri*/, ''
             /* album_uri */, ''
@@ -1271,7 +1214,7 @@ function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_pr
         $track_artwork_path = getTrackOrAlbumArtwork($w, $track->uri, false, false, false, $use_artworks);
         if (isset($track->is_playable) && $track->is_playable) {
 
-            if (mb_strlen($search) < 2 || strpos(strtolower($artist->name), strtolower($search)) !== false || strpos(strtolower($track->name), strtolower($search)) !== false || strpos(strtolower($album->name), strtolower($search)) !== false) {
+            if (countCharacters($search) < 2 || strpos(strtolower($artist->name), strtolower($search)) !== false || strpos(strtolower($track->name), strtolower($search)) !== false || strpos(strtolower($album->name), strtolower($search)) !== false) {
                 $w->result(null, serialize(array($track->uri
                 /*track_uri*/, $album->uri
                 /* album_uri */, $artist->uri
@@ -1285,20 +1228,20 @@ function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_pr
                 /* artist_artwork_path */, ''
                 /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), escapeQuery($artist->name) . ' ● ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' ● ' . escapeQuery($album->name), 'alt' => 'Play album ' . escapeQuery($album->name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($artist->name) . ' in Spotify', 'fn' => 'Add track ' . escapeQuery($track->name) . ' to ...', 'shift' => 'Add album ' . escapeQuery($album->name) . ' to ...', 'ctrl' => 'Search artist ' . escapeQuery($artist->name) . ' online',), $track_artwork_path, 'yes', null, '');
+                )), escapeQuery($artist->name) . ' '.getenv('emoji_separator').' ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' '.getenv('emoji_separator').' ' . escapeQuery($album->name), 'alt' => 'Play album ' . escapeQuery($album->name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($artist->name) . ' in Spotify', 'fn' => 'Add track ' . escapeQuery($track->name) . ' to ...', 'shift' => 'Add album ' . escapeQuery($album->name) . ' to ...', 'ctrl' => 'Search artist ' . escapeQuery($artist->name) . ' online',), $track_artwork_path, 'yes', null, '');
                 ++$nb_results;
             }
         }
         else {
             $added = '';
             if (isset($item->is_local) && $item->is_local) {
-                $added = '📌 ';
+                $added = getenv('emoji_local_track').' ';
             }
             else {
-                $added = '🚫 ';
+                $added = getenv('emoji_not_playable').' ';
             }
-            if (mb_strlen($search) < 2 || strpos(strtolower($artist->name), strtolower($search)) !== false || strpos(strtolower($track->name), strtolower($search)) !== false || strpos(strtolower($album->name), strtolower($search)) !== false) {
-                $w->result(null, '', $added . escapeQuery($artist->name) . ' ● ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' ● ' . escapeQuery($album->name), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $track_artwork_path, 'no', null, '');
+            if (countCharacters($search) < 2 || strpos(strtolower($artist->name), strtolower($search)) !== false || strpos(strtolower($track->name), strtolower($search)) !== false || strpos(strtolower($album->name), strtolower($search)) !== false) {
+                $w->result(null, '', $added . escapeQuery($artist->name) . ' '.getenv('emoji_separator').' ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' '.getenv('emoji_separator').' ' . escapeQuery($album->name), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $track_artwork_path, 'no', null, '');
                 ++$nb_results;
             }
         }
@@ -1316,45 +1259,65 @@ function secondDelimiterOnlinePlaylist($w, $query, $settings, $db, $update_in_pr
  */
 function secondDelimiterYourMusicTracks($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
+    $thetrack = $words[2];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
-
     $output_application = $settings->output_application;
+    $fuzzy_search = $settings->fuzzy_search;
 
     // display tracks for Your Music
     $search = $words[2];
 
-    if (mb_strlen($thetrack) < 2) {
-        $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic=1 order by added_at desc limit ' . $max_results;
-        $stmt = $db->prepare($getTracks);
+    if (countCharacters($thetrack) < 2) {
+        $w->result(null, serialize(array(''
+        /*track_uri*/, ''
+        /* album_uri */, ''
+        /* artist_uri */, ''
+        /* playlist_uri */, ''
+        /* spotify_command */, ''
+        /* query */, ''
+        /* other_settings*/, 'play_liked_songs'
+        /* other_action */, ''
+        /* artist_name */, ''
+        /* track_name */, ''
+        /* album_name */, ''
+        /* track_artwork_path */, ''
+        /* artist_artwork_path */, ''
+        /* album_artwork_path */, '' /* playlist_name */, '', /* playlist_artwork_path */
+        )), '♥️ Play your Liked Songs', 'This will play your liked songs', './images/star.png', 'yes', null, '');
+
+        if($update_in_progress && file_exists($w->data() . '/create_library')) {
+            $results = getExternalResults($w, 'tracks', array('yourmusic', 'popularity', 'uri', 'album_uri', 'artist_uri', 'track_name', 'album_name', 'artist_name', 'album_type', 'track_artwork_path', 'artist_artwork_path', 'album_artwork_path', 'playlist_name', 'playlist_uri', 'playable', 'added_at', 'duration', 'nb_times_played', 'local_track'), 'order by added_at desc limit ' . $max_results, 'where yourmusic=1');
+        } else {
+            $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic=1 order by added_at desc limit ' . $max_results;
+            $stmt = $db->prepare($getTracks);
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+        }
     }
     else {
-        $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic=1 and (artist_name like :track or album_name like :track or track_name like :track)' . ' order by added_at desc limit ' . $max_results;
-        $stmt = $db->prepare($getTracks);
-        $stmt->bindValue(':track', '%' . $thetrack . '%');
+
+        if($fuzzy_search || ($update_in_progress && file_exists($w->data() . '/create_library'))) {
+            $results = getFuzzySearchResults($w, $update_in_progress, $thetrack, 'tracks', array('yourmusic', 'popularity', 'uri', 'album_uri', 'artist_uri', 'track_name', 'album_name', 'artist_name', 'album_type', 'track_artwork_path', 'artist_artwork_path', 'album_artwork_path', 'playlist_name', 'playlist_uri', 'playable', 'added_at', 'duration', 'nb_times_played', 'local_track'), $max_results, '6..8', 'where yourmusic=1');
+        } else {
+            // Search tracks
+            $getTracks = 'select yourmusic, popularity, uri, album_uri, artist_uri, track_name, album_name, artist_name, album_type, track_artwork_path, artist_artwork_path, album_artwork_path, playlist_name, playlist_uri, playable, added_at, duration, nb_times_played, local_track from tracks where yourmusic=1 and (artist_name_deburr like :query or album_name_deburr like :query or track_name_deburr like :query)' . ' limit ' . $max_results;
+            $stmt = $db->prepare($getTracks);
+            $stmt->bindValue(':query', '%' . deburr($thetrack) . '%');
+            try {
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            }
+            catch(PDOException $e) {
+                handleDbIssuePdoXml($e);
+
+                return;
+            }
+        }
     }
 
-    $tracks = $stmt->execute();
-
     $noresult = true;
-    while ($track = $stmt->fetch()) {
+    foreach ($results as $track) {
         $noresult = false;
         $subtitle = $track[6];
 
@@ -1364,9 +1327,9 @@ function secondDelimiterYourMusicTracks($w, $query, $settings, $db, $update_in_p
                 // skip local tracks if using Mopidy
                 continue;
             }
-            $added = '📌 ';
+            $added = getenv('emoji_local_track').' ';
         }
-        if (checkIfResultAlreadyThere($w->results(), $added . $track[7] . ' ● ' . $track[5]) == false) {
+        if (checkIfResultAlreadyThere($w->results(), $added . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5]) == false) {
             if ($track[14] == true) {
                 $w->result(null, serialize(array($track[2] /*track_uri*/, $track[3] /* album_uri */, $track[4] /* artist_uri */, ''
                 /* playlist_uri */, ''
@@ -1375,19 +1338,19 @@ function secondDelimiterYourMusicTracks($w, $query, $settings, $db, $update_in_p
                 /* other_settings*/, ''
                 /* other_action */, $track[7] /* artist_name */, $track[5] /* track_name */, $track[6] /* album_name */, $track[9] /* track_artwork_path */, $track[10] /* artist_artwork_path */, $track[11] /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), $added . $track[7] . ' ● ' . $track[5], array($track[16] . ' ● ' . $subtitle . getPlaylistsForTrack($db, $track[2]), 'alt' => 'Play album ' . $track[6] . ' in Spotify', 'cmd' => 'Play artist ' . $track[7] . ' in Spotify', 'fn' => 'Add track ' . $track[5] . ' to ...', 'shift' => 'Add album ' . $track[6] . ' to ...', 'ctrl' => 'Search artist ' . $track[7] . ' online',), $track[9], 'yes', null, '');
+                )), $added . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5], array($track[16] . ' '.getenv('emoji_separator').' ' . $subtitle . getPlaylistsForTrack($db, $track[2]), 'alt' => 'Play album ' . $track[6] . ' in Spotify', 'cmd' => 'Play artist ' . $track[7] . ' in Spotify', 'fn' => 'Add track ' . $track[5] . ' to ...', 'shift' => 'Add album ' . $track[6] . ' to ...', 'ctrl' => 'Search artist ' . $track[7] . ' online',), $track[9], 'yes', null, '');
             }
             else {
-                $w->result(null, '', '🚫 ' . $track[7] . ' ● ' . $track[5], $track[16] . ' ● ' . $subtitle . getPlaylistsForTrack($db, $track[2]), $track[9], 'no', null, '');
+                $w->result(null, '', getenv('emoji_not_playable').' ' . $track[7] . ' '.getenv('emoji_separator').' ' . $track[5], $track[16] . ' '.getenv('emoji_separator').' ' . $subtitle . getPlaylistsForTrack($db, $track[2]), $track[9], 'no', null, '');
             }
         }
     }
 
     if ($noresult) {
-        $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
     }
 
-    if (mb_strlen($thetrack) > 0) {
+    if (countCharacters($thetrack) > 0) {
         if ($output_application != 'MOPIDY') {
             $w->result(null, serialize(array(''
             /*track_uri*/, ''
@@ -1404,10 +1367,10 @@ function secondDelimiterYourMusicTracks($w, $query, $settings, $db, $update_in_p
             /* artist_artwork_path */, ''
             /* album_artwork_path */, ''
             /* playlist_name */, '', /* playlist_artwork_path */
-            )), 'Search for ' . $thetrack . ' in Spotify', array('This will start a new search in Spotify', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/spotify.png', 'yes', null, '');
+            )), 'Search for ' . $thetrack . ' in Spotify', array('This will start a new search in Spotify', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/spotify.png', 'yes', null, '');
         }
 
-        $w->result(null, null, 'Search for ' . $thetrack . ' online', array('This will search online, i.e not in your library', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/online.png', 'no', null, 'Search Online▹' . $thetrack);
+        $w->result(null, null, 'Search for ' . $thetrack . ' online', array('This will search online, i.e not in your library', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/online.png', 'no', null, 'Search Online▹' . $thetrack);
     }
 }
 
@@ -1422,59 +1385,54 @@ function secondDelimiterYourMusicTracks($w, $query, $settings, $db, $update_in_p
  */
 function secondDelimiterYourMusicAlbums($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
+    $fuzzy_search = $settings->fuzzy_search;
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
 
     // Search albums
     $album = $words[2];
     try {
-        if (mb_strlen($album) < 2) {
-            $getTracks = 'select album_name,album_artwork_path,artist_name,album_uri,album_type from tracks where yourmusic_album=1 group by album_name order by max(added_at) desc limit ' . $max_results;
-            $stmt = $db->prepare($getTracks);
+        if (countCharacters($album) < 2) {
+            if($update_in_progress && file_exists($w->data() . '/create_library')) {
+                $results = getExternalResults($w, 'tracks', array('album_name','album_artwork_path','artist_name','album_uri','album_type'), 'group by album_name order by max(added_at) desc limit ' . $max_results,'where yourmusic_album=1');
+            } else {
+                $getTracks = 'select album_name,album_artwork_path,artist_name,album_uri,album_type from tracks where yourmusic_album=1 group by album_name order by max(added_at) desc limit ' . $max_results;
+                $stmt = $db->prepare($getTracks);
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            }
         }
         else {
-            $getTracks = 'select album_name,album_artwork_path,artist_name,album_uri,album_type from tracks where yourmusic_albums=1 and album_name like :query group by album_name order by max(added_at) desc limit ' . $max_results;
-            $stmt = $db->prepare($getTracks);
-            $stmt->bindValue(':query', '%' . $album . '%');
+            if($fuzzy_search || ($update_in_progress && file_exists($w->data() . '/create_library'))) {
+                $results = getFuzzySearchResults($w, $update_in_progress, $album, 'tracks', array('album_name','album_artwork_path','artist_name','album_uri','album_type'), $max_results, '1,3', 'where yourmusic_album=1');
+            } else {
+                // Search albums
+                $getTracks = 'select album_name,album_artwork_path,artist_name,album_uri,album_type from tracks where yourmusic=1 and album_name != "" and (album_name_deburr like :album_name or artist_name_deburr like :album_name) group by album_name order by max(added_at) desc limit ' . $max_results;
+                $stmt = $db->prepare($getTracks);
+                $stmt->bindValue(':album_name', '%' . deburr($album) . '%');
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            }
         }
-
-        $tracks = $stmt->execute();
     }
     catch(PDOException $e) {
-        handleDbIssuePdoXml($db);
+        handleDbIssuePdoXml($e);
 
         exit;
     }
 
     // display all albums
     $noresult = true;
-    while ($track = $stmt->fetch()) {
+    foreach ($results as $track) {
         $noresult = false;
-        $nb_album_tracks = getNumberOfTracksForAlbum($db, $track[3], true);
+        $nb_album_tracks = getNumberOfTracksForAlbum($update_in_progress, $w, $db, $track[3], true);
         if (checkIfResultAlreadyThere($w->results(), $track[0] . ' (' . $nb_album_tracks . ' tracks)') == false) {
-            $w->result(null, '', $track[0] . ' (' . $nb_album_tracks . ' tracks)', array($track[4] . ' by ' . $track[2], 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $track[1], 'no', null, 'Album▹' . $track[3] . '∙' . $track[0] . '▹');
+            $w->result(null, '', $track[0] . ' (' . $nb_album_tracks . ' tracks)', array($track[4] . ' by ' . $track[2], 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $track[1], 'no', null, 'Album▹' . $track[3] . '∙' . $track[0] . '▹');
         }
     }
 
     if ($noresult) {
-        $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
     }
 }
 
@@ -1489,26 +1447,9 @@ function secondDelimiterYourMusicAlbums($w, $query, $settings, $db, $update_in_p
  */
 function secondDelimiterYourTopArtists($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
     $time_range = $words[2];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     try {
@@ -1519,15 +1460,15 @@ function secondDelimiterYourTopArtists($w, $query, $settings, $db, $update_in_pr
         $noresult = true;
         foreach ($items as $artist) {
             $noresult = false;
-            $w->result(null, '', '👤 ' . $artist->name, 'Browse this artist', getArtistArtwork($w, $artist->uri, $artist->name, false, false, false, $use_artworks), 'no', null, 'Artist▹' . $artist->uri . '∙' . $artist->name . '▹');
+            $w->result(null, '', getenv('emoji_artist').' ' . $artist->name, 'Browse this artist', getArtistArtwork($w, $artist->uri, $artist->name, false, false, false, $use_artworks), 'no', null, 'Artist▹' . $artist->uri . '∙' . $artist->name . '▹');
         }
 
         if ($noresult) {
-            $w->result(null, 'help', 'There is no result for your top artists', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'There is no result for your top artists', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         }
     }
     catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-        $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         echo $w->tojson();
         exit;
     }
@@ -1544,26 +1485,9 @@ function secondDelimiterYourTopArtists($w, $query, $settings, $db, $update_in_pr
  */
 function secondDelimiterYourTopTracks($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
     $time_range = $words[2];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     try {
@@ -1584,7 +1508,7 @@ function secondDelimiterYourTopTracks($w, $query, $settings, $db, $update_in_pro
             $w->result(null, serialize(array($track->uri
             /*track_uri*/, $album->uri
             /* album_uri */, $artist->uri
-            /* artist_uri */, $theplaylisturi
+            /* artist_uri */, ''
             /* playlist_uri */, ''
             /* spotify_command */, ''
             /* query */, ''
@@ -1594,16 +1518,15 @@ function secondDelimiterYourTopTracks($w, $query, $settings, $db, $update_in_pro
             /* artist_artwork_path */, ''
             /* album_artwork_path */, ''
             /* playlist_name */, '', /* playlist_artwork_path */
-            )), escapeQuery($artist->name) . ' ● ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' ● ' . escapeQuery($album->name), 'alt' => 'Play album ' . escapeQuery($album->name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($artist->name) . ' in Spotify', 'fn' => 'Add track ' . escapeQuery($track->name) . ' to ...', 'shift' => 'Add album ' . escapeQuery($album->name) . ' to ...', 'ctrl' => 'Search artist ' . escapeQuery($artist->name) . ' online',), $track_artwork_path, 'yes', null, '');
-            ++$nb_results;
+            )), escapeQuery($artist->name) . ' '.getenv('emoji_separator').' ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' '.getenv('emoji_separator').' ' . escapeQuery($album->name), 'alt' => 'Play album ' . escapeQuery($album->name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($artist->name) . ' in Spotify', 'fn' => 'Add track ' . escapeQuery($track->name) . ' to ...', 'shift' => 'Add album ' . escapeQuery($album->name) . ' to ...', 'ctrl' => 'Search artist ' . escapeQuery($artist->name) . ' online',), $track_artwork_path, 'yes', null, '');
         }
 
         if ($noresult) {
-            $w->result(null, 'help', 'There is no result for your top tracks', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'There is no result for your top tracks', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         }
     }
     catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-        $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         echo $w->tojson();
         exit;
     }
@@ -1620,62 +1543,56 @@ function secondDelimiterYourTopTracks($w, $query, $settings, $db, $update_in_pro
  */
 function secondDelimiterYourMusicArtists($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
+    $fuzzy_search = $settings->fuzzy_search;
 
     // Search artists
     $artist = $words[2];
 
     try {
-        if (mb_strlen($artist) < 2) {
-            $getArtists = 'select name,artist_artwork_path,uri from followed_artists group by name' . ' limit ' . $max_results;
-            $stmt = $db->prepare($getArtists);
+        if (countCharacters($artist) < 2) {
+            if($update_in_progress && file_exists($w->data() . '/create_library')) {
+                $results = getExternalResults($w, 'followed_artists', array('name','artist_artwork_path','uri'), 'group by name' . ' limit ' . $max_results);
+            } else {
+                $getArtists = 'select name,artist_artwork_path,uri from followed_artists group by name' . ' limit ' . $max_results;
+                $stmt = $db->prepare($getArtists);
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            }
         }
         else {
-            $getArtists = 'select name,artist_artwork_path,uri from followed_artists where name like :query limit ' . $max_results;
-            $stmt = $db->prepare($getArtists);
-            $stmt->bindValue(':query', '%' . $artist . '%');
+            if($fuzzy_search || ($update_in_progress && file_exists($w->data() . '/create_library'))) {
+                $results = getFuzzySearchResults($w, $update_in_progress, $artist, 'followed_artists', array('name','artist_artwork_path','uri'), $max_results, '1', '');
+            } else {
+                // Search artists
+                $getArtists = 'select name,artist_artwork_path,uri from followed_artists where name_deburr like :query limit ' . $max_results;
+                $stmt = $db->prepare($getArtists);
+                $stmt->bindValue(':query', '%' . deburr($artist) . '%');
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            }
         }
-
-        $artists = $stmt->execute();
     }
     catch(PDOException $e) {
-        handleDbIssuePdoXml($db);
+        handleDbIssuePdoXml($e);
 
         exit;
     }
 
     // display all artists
     $noresult = true;
-    while ($artists = $stmt->fetch()) {
+    foreach ($results as $artists) {
         $noresult = false;
-        $nb_artist_tracks = getNumberOfTracksForArtist($db, $artists[0], false);
-        if (checkIfResultAlreadyThere($w->results(), '👤 ' . $artists[0] . ' (' . $nb_artist_tracks . ' tracks)') == false) {
+        $nb_artist_tracks = getNumberOfTracksForArtist($update_in_progress, $w, $db, $artists[0], false);
+        if (checkIfResultAlreadyThere($w->results(), getenv('emoji_artist').' ' . $artists[0] . ' (' . $nb_artist_tracks . ' tracks)') == false) {
             $uri = $artists[2];
 
-            $w->result(null, '', '👤 ' . $artists[0] . ' (' . $nb_artist_tracks . ' tracks)', array('Browse this artist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $artists[1], 'no', null, 'Artist▹' . $uri . '∙' . $artists[0] . '▹');
+            $w->result(null, '', getenv('emoji_artist').' ' . $artists[0] . ' (' . $nb_artist_tracks . ' tracks)', array('Browse this artist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $artists[1], 'no', null, 'Artist▹' . $uri . '∙' . $artists[0] . '▹');
         }
     }
 
     if ($noresult) {
-        $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'There is no result for your search', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
     }
 }
 
@@ -1690,33 +1607,14 @@ function secondDelimiterYourMusicArtists($w, $query, $settings, $db, $update_in_
  */
 function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $output_application = $settings->output_application;
 
     $setting_kind = $words[1];
     $the_query = $words[2];
 
     if ($setting_kind == 'MaxResults') {
-        if (mb_strlen($the_query) == 0) {
-            $w->result(null, '', 'Enter the Max Results number (must be greater than 0):', array('Recommendation is between 10 to 100', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/settings.png', 'no', null, '');
+        if (countCharacters($the_query) == 0) {
+            $w->result(null, '', 'Enter the Max Results number (must be greater than 0):', array('Recommendation is between 10 to 100', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, '');
         }
         else {
             // max results has been set
@@ -1739,14 +1637,75 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
                 )), 'Max Results will be set to <' . $the_query . '>', 'Type enter to validate the Max Results', './images/settings.png', 'yes', null, '');
             }
             else {
-                $w->result(null, '', 'The Max Results value entered is not valid', array('Please fix it', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, '', 'The Max Results value entered is not valid', array('Please fix it', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
+            }
+        }
+    } elseif ($setting_kind == 'SetVolume') {
+        if (countCharacters($the_query) == 0) {
+            $w->result(null, '', 'Enter the Volume number (must be between 0 and 100 %):', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/volume_up.png', 'no', null, '');
+        }
+        else {
+            // max results has been set
+            if (is_numeric($the_query) == true && $the_query >= 0 && $the_query <= 100) {
+                $w->result(null, serialize(array(''
+                /*track_uri*/, ''
+                /* album_uri */, ''
+                /* artist_uri */, ''
+                /* playlist_uri */, ''
+                /* spotify_command */, ''
+                /* query */, 'SET_VOLUME▹' . $the_query /* other_settings*/, ''
+                /* other_action */, ''
+                /* artist_name */, ''
+                /* track_name */, ''
+                /* album_name */, ''
+                /* track_artwork_path */, ''
+                /* artist_artwork_path */, ''
+                /* album_artwork_path */, ''
+                /* playlist_name */, '', /* playlist_artwork_path */
+                )), 'Volume will be set to <' . $the_query . '>', 'Type enter to validate the volume', './images/volume_up.png', 'yes', null, '');
+            }
+            else {
+                $w->result(null, '', 'The volume value entered is not valid', array('Please fix it', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
+            }
+        }
+    } elseif ($setting_kind == 'AutomaticRefreshLibrary') {
+        if (countCharacters($the_query) == 0) {
+            $w->result(null, '', 'Enter the frequency in minutes for automatic refresh of your library (0 to disable):', array('Set to 0 to disable', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, '');
+        }
+        else {
+            // interval has been set
+            if (is_numeric($the_query) == true) {
+                if($the_query == 0) {
+                    $text = 'Automatic refresh of your library will be disabled';
+                } else {
+                    $text = 'Automatic refresh of your library will be done every <' . $the_query . ' minutes>';
+                }
+                $w->result(null, serialize(array(''
+                /*track_uri*/, ''
+                /* album_uri */, ''
+                /* artist_uri */, ''
+                /* playlist_uri */, ''
+                /* spotify_command */, ''
+                /* query */, 'AUTOMATICREFRESHLIBRARY▹' . $the_query /* other_settings*/, ''
+                /* other_action */, ''
+                /* artist_name */, ''
+                /* track_name */, ''
+                /* album_name */, ''
+                /* track_artwork_path */, ''
+                /* artist_artwork_path */, ''
+                /* album_artwork_path */, ''
+                /* playlist_name */, '', /* playlist_artwork_path */
+                )), $text, 'Type enter to validate', './images/settings.png', 'yes', null, '');
+            }
+            else {
+                $w->result(null, '', 'The interval in minutes entered is not valid', array('Please fix it', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
     }
     elseif ($setting_kind == 'Users') {
 
         $user_id = getCurrentUser($w);
-        $w->result(null, '', 'Current user is ' . $user_id . '', array('Select one of the options below', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/info.png', 'no', null, '');
+        $w->result(null, '', 'Current user is ' . $user_id . '', array('Select one of the options below', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/info.png', 'no', null, '');
 
         $users_folder = $w->data() . '/users/';
 
@@ -1795,8 +1754,8 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
 
     }
     elseif ($setting_kind == 'RadioTracks') {
-        if (mb_strlen($the_query) == 0) {
-            $w->result(null, '', 'Enter the number of tracks to get when creating a radio Playlist:', array('Must be between 1 and 100', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/settings.png', 'no', null, '');
+        if (countCharacters($the_query) == 0) {
+            $w->result(null, '', 'Enter the number of tracks to get when creating a radio Playlist:', array('Must be between 1 and 100', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, '');
         }
         else {
             // number radio tracks has been set
@@ -1820,13 +1779,13 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
                 )), 'Number of Radio Tracks will be set to <' . $the_query . '>', 'Type enter to validate the Radio Tracks number', './images/settings.png', 'yes', null, '');
             }
             else {
-                $w->result(null, '', 'The number of tracks value entered is not valid', array('Please fix it: it must be a number between 1 and 100', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, '', 'The number of tracks value entered is not valid', array('Please fix it: it must be a number between 1 and 100', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
     }
     elseif ($setting_kind == 'VolumePercentage') {
-        if (mb_strlen($the_query) == 0) {
-            $w->result(null, '', 'Enter the percentage of volume:', array('Must be between 1 and 50', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/settings.png', 'no', null, '');
+        if (countCharacters($the_query) == 0) {
+            $w->result(null, '', 'Enter the percentage of volume:', array('Must be between 1 and 50', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, '');
         }
         else {
             // volume percent
@@ -1850,7 +1809,7 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
                 )), 'Volume Percentage will be set to <' . $the_query . '>', 'Type enter to validate the Volume Percentage number', './images/settings.png', 'yes', null, '');
             }
             else {
-                $w->result(null, '', 'The number of volume percentage entered is not valid', array('Please fix it: it must be a number between 1 and 50', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, '', 'The number of volume percentage entered is not valid', array('Please fix it: it must be a number between 1 and 50', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
     }
@@ -1872,7 +1831,7 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
             /* artist_artwork_path */, ''
             /* album_artwork_path */, ''
             /* playlist_name */, '', /* playlist_artwork_path */
-            )), 'Use Spotify Desktop', array('You will use Spotify Desktop application with AppleScript', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/spotify.png', 'yes', null, '');
+            )), 'Use Spotify Desktop', array('You will use Spotify Desktop application with AppleScript', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/spotify.png', 'yes', null, '');
         }
 
         if (isUserPremiumSubscriber($w)) {
@@ -1894,7 +1853,7 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
                 /* artist_artwork_path */, ''
                 /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), 'Use Spotify Connect', array('You will use Spotify Connect to control your devices', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/connect.png', 'yes', null, '');
+                )), 'Use Spotify Connect', array('You will use Spotify Connect to control your devices', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/connect.png', 'yes', null, '');
             }
 
             if ($output_application != 'MOPIDY') {
@@ -1914,17 +1873,17 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
                 /* artist_artwork_path */, ''
                 /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), 'Use Mopidy (This is deprecated, use at your own risk !)', array('You will use Mopidy', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/enable_mopidy.png', 'yes', null, '');
+                )), 'Use Mopidy (This is deprecated, use at your own risk !)', array('You will use Mopidy', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/enable_mopidy.png', 'yes', null, '');
             }
         }
         else {
-            $w->result(null, 'help', 'Only premium users can use Spotify Connect', array('This is a Spotify limitation', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'Only premium users can use Spotify Connect', array('This is a Spotify limitation', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         }
 
     }
     elseif ($setting_kind == 'MopidyServer') {
-        if (mb_strlen($the_query) == 0) {
-            $w->result(null, '', 'Enter the server name or IP where Mopidy server is running:', array('Example: 192.168.0.5 or myserver.mydomain.mydomainextension', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/settings.png', 'no', null, '');
+        if (countCharacters($the_query) == 0) {
+            $w->result(null, '', 'Enter the server name or IP where Mopidy server is running:', array('Example: 192.168.0.5 or myserver.mydomain.mydomainextension', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, '');
         }
         else {
             $w->result(null, serialize(array(''
@@ -1947,8 +1906,8 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
         }
     }
     elseif ($setting_kind == 'MopidyPort') {
-        if (mb_strlen($the_query) == 0) {
-            $w->result(null, '', 'Enter the TCP port number where Mopidy server is running:', array('Must be a numeric value', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/settings.png', 'no', null, '');
+        if (countCharacters($the_query) == 0) {
+            $w->result(null, '', 'Enter the TCP port number where Mopidy server is running:', array('Must be a numeric value', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, '');
         }
         else {
             // tcp port has been set
@@ -1972,7 +1931,7 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
                 )), 'Mopidy TCP port will be set to <' . $the_query . '>', 'Type enter to validate the Mopidy TCP port number', './images/settings.png', 'yes', null, '');
             }
             else {
-                $w->result(null, '', 'The TCP port value entered is not valid', array('Please fix it: it must be a numeric value', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, '', 'The TCP port value entered is not valid', array('Please fix it: it must be a numeric value', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
     }
@@ -1989,25 +1948,8 @@ function secondDelimiterSettings($w, $query, $settings, $db, $update_in_progress
  */
 function secondDelimiterFeaturedPlaylist($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
     $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     $country = $words[1];
@@ -2020,9 +1962,9 @@ function secondDelimiterFeaturedPlaylist($w, $query, $settings, $db, $update_in_
         foreach ($spotify_country_codes as $spotify_country_code) {
             if (strtoupper($spotify_country_code) != 'US' && strtoupper($spotify_country_code) != 'GB' && strtoupper($spotify_country_code) != strtoupper($country_code)) {
 
-                if (mb_strlen($search) < 1 || strpos(strtolower($spotify_country_code), strtolower($search)) !== false || strpos(strtolower(getCountryName(strtoupper($spotify_country_code))), strtolower($search)) !== false) {
+                if (countCharacters($search) < 1 || strpos(strtolower($spotify_country_code), strtolower($search)) !== false || strpos(strtolower(getCountryName(strtoupper($spotify_country_code))), strtolower($search)) !== false) {
 
-                    $w->result(null, '', getCountryName(strtoupper($spotify_country_code)), array('Browse the current featured playlists in ' . getCountryName(strtoupper($spotify_country_code)), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/star.png', 'no', null, 'Featured Playlist▹' . strtoupper($spotify_country_code) . '▹');
+                    $w->result(null, '', getCountryName(strtoupper($spotify_country_code)), array('Browse the current featured playlists in ' . getCountryName(strtoupper($spotify_country_code)), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/star.png', 'no', null, 'Featured Playlist▹' . strtoupper($spotify_country_code) . '▹');
                 }
             }
         }
@@ -2034,16 +1976,16 @@ function secondDelimiterFeaturedPlaylist($w, $query, $settings, $db, $update_in_
 
             $subtitle = 'Launch Playlist';
             $playlists = $featuredPlaylists->playlists;
-            $w->result(null, '', $featuredPlaylists->message, array('' . $playlists->total . ' playlists available', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/info.png', 'no', null, '');
+            $w->result(null, '', $featuredPlaylists->message, array('' . $playlists->total . ' playlists available', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/info.png', 'no', null, '');
             $items = $playlists->items;
             foreach ($items as $playlist) {
-                $w->result(null, '', '🎵' . escapeQuery($playlist->name), 'by ' . $playlist
-                    ->owner->id . ' ● ' . $playlist
+                $w->result(null, '', getenv('emoji_playlist') . escapeQuery($playlist->name), 'by ' . $playlist
+                    ->owner->id . ' '.getenv('emoji_separator').' ' . $playlist
                     ->tracks->total . ' tracks', getPlaylistArtwork($w, $playlist->uri, false, false, $use_artworks), 'no', null, 'Online Playlist▹' . $playlist->uri . '∙' . base64_encode($playlist->name) . '▹');
             }
         }
         catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-            $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
             exit;
         }
@@ -2061,25 +2003,8 @@ function secondDelimiterFeaturedPlaylist($w, $query, $settings, $db, $update_in_
  */
 function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
     $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
     $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     $country = $words[1];
@@ -2092,8 +2017,8 @@ function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progr
         foreach ($spotify_country_codes as $spotify_country_code) {
             if (strtoupper($spotify_country_code) != 'US' && strtoupper($spotify_country_code) != 'GB' && strtoupper($spotify_country_code) != strtoupper($country_code)) {
 
-                if (mb_strlen($search) < 1 || strpos(strtolower($spotify_country_code), strtolower($search)) !== false || strpos(strtolower(getCountryName(strtoupper($spotify_country_code))), strtolower($search)) !== false) {
-                    $w->result(null, '', getCountryName(strtoupper($spotify_country_code)), array('Browse the new album releases in ' . getCountryName(strtoupper($spotify_country_code)), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/new_releases.png', 'no', null, 'New Releases▹' . strtoupper($spotify_country_code) . '▹');
+                if (countCharacters($search) < 1 || strpos(strtolower($spotify_country_code), strtolower($search)) !== false || strpos(strtolower(getCountryName(strtoupper($spotify_country_code))), strtolower($search)) !== false) {
+                    $w->result(null, '', getCountryName(strtoupper($spotify_country_code)), array('Browse the new album releases in ' . getCountryName(strtoupper($spotify_country_code)), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/new_releases.png', 'no', null, 'New Releases▹' . strtoupper($spotify_country_code) . '▹');
                 }
             }
         }
@@ -2106,8 +2031,8 @@ function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progr
             // it displays an error in main window
             $albums = getTheNewReleases($w, $country, $max_results);
 
-            if (mb_strlen($search) < 2) {
-                $w->result(null, 'help', 'Select an album below to browse it', array('singles and compilations are also displayed', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/info.png', 'no', null, '');
+            if (countCharacters($search) < 2) {
+                $w->result(null, 'help', 'Select an album below to browse it', array('singles and compilations are also displayed', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/info.png', 'no', null, '');
             }
 
             $noresult = true;
@@ -2116,27 +2041,27 @@ function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progr
                     ->tracks
                     ->items) . ' tracks)') == false) {
                     $noresult = false;
-                    $genre = (count($album->genres) > 0) ? ' ● Genre: ' . implode('|', $album->genres) : '';
+                    $genre = (count($album->genres) > 0) ? ' '.getenv('emoji_separator').' Genre: ' . implode('|', $album->genres) : '';
                     $tracks = $album->tracks;
 
-                    if (mb_strlen($search) < 2 || strpos(strtolower($album->name), strtolower($search)) !== false || strpos(strtolower($album->artists[0]
+                    if (countCharacters($search) < 2 || strpos(strtolower($album->name), strtolower($search)) !== false || strpos(strtolower($album->artists[0]
                         ->name), strtolower($search)) !== false) {
                         $w->result(null, '', $album->name . ' (' . count($album
                             ->tracks
-                            ->items) . ' tracks)', array($album->album_type . ' by ' . $album->artists[0]->name . ' ● Release date: ' . $album->release_date . $genre, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), getTrackOrAlbumArtwork($w, $album->uri, false, false, false, $use_artworks), 'no', null, 'New Releases▹' . $country . '▹' . $album->uri . '@' . $album->name . '●');
+                            ->items) . ' tracks)', array($album->album_type . ' by ' . $album->artists[0]->name . ' '.getenv('emoji_separator').' Release date: ' . $album->release_date . $genre, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), getTrackOrAlbumArtwork($w, $album->uri, false, false, false, $use_artworks), 'no', null, 'New Releases▹' . $country . '▹' . $album->uri . '@' . $album->name . getenv('emoji_separator'));
                     }
                 }
             }
 
             if ($noresult) {
-                $w->result(null, 'help', 'There is no album for this artist', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, 'help', 'There is no album for this artist', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
         elseif (substr_count($query, '@') == 1) {
 
             // Search Album Online
             $tmp = $words[2];
-            $tmp2 = explode('●', $tmp);
+            $tmp2 = explode(getenv('emoji_separator'), $tmp);
             $data = $tmp2[0];
             $search = $tmp2[1];
             $words = explode('@', $data);
@@ -2144,7 +2069,7 @@ function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progr
             $album_name = $words[1];
 
             $album_artwork_path = getTrackOrAlbumArtwork($w, $album_uri, false, false, false, $use_artworks);
-            if (mb_strlen($search) < 2) {
+            if (countCharacters($search) < 2) {
                 $w->result(null, serialize(array(''
                 /*track_uri*/, $album_uri
                 /* album_uri */, ''
@@ -2161,12 +2086,12 @@ function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progr
                 /* artist_artwork_path */, $album_artwork_path
                 /* album_artwork_path */, ''
                 /* playlist_name */, '', /* playlist_artwork_path */
-                )), '💿 ' . escapeQuery($album_name), 'Play album', $album_artwork_path, 'yes', null, '');
+                )), getenv('emoji_album').' ' . escapeQuery($album_name), 'Play album', $album_artwork_path, 'yes', null, '');
             }
 
             if ($update_in_progress == false) {
-                if (mb_strlen($search) < 2) {
-                    $w->result(null, '', 'Add album ' . escapeQuery($album_name) . ' to...', array('This will add the album to Your Music or a playlist you will choose in next step', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/add.png', 'no', null, 'Add▹' . $album_uri . '∙' . escapeQuery($album_name) . '▹');
+                if (countCharacters($search) < 2) {
+                    $w->result(null, '', 'Add album ' . escapeQuery($album_name) . ' to...', array('This will add the album to Your Music or a playlist you will choose in next step', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/add.png', 'no', null, 'Add▹' . $album_uri . '∙' . escapeQuery($album_name) . '▹');
                 }
             }
 
@@ -2176,7 +2101,7 @@ function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progr
 
             foreach ($tracks as $track) {
 
-                if (mb_strlen($search) < 2 || strpos(strtolower($track->name), strtolower($search)) !== false || strpos(strtolower($track->artists[0]
+                if (countCharacters($search) < 2 || strpos(strtolower($track->name), strtolower($search)) !== false || strpos(strtolower($track->artists[0]
                     ->name), strtolower($search)) !== false) {
 
                     $track_artwork_path = getTrackOrAlbumArtwork($w, $track->uri, false, false, false, $use_artworks);
@@ -2195,7 +2120,7 @@ function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progr
                     /* album_artwork_path */, ''
                     /* playlist_name */, '', /* playlist_artwork_path */
                     )), escapeQuery($track->artists[0]
-                        ->name) . ' ● ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' ● ' . $album_name, 'alt' => 'Play album ' . escapeQuery($album_name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($track->artists[0]
+                        ->name) . ' '.getenv('emoji_separator').' ' . escapeQuery($track->name), array(beautifyTime($track->duration_ms / 1000) . ' '.getenv('emoji_separator').' ' . $album_name, 'alt' => 'Play album ' . escapeQuery($album_name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($track->artists[0]
                         ->name) . ' in Spotify', 'fn' => 'Add track ' . escapeQuery($track->name) . ' to ...', 'shift' => 'Add album ' . escapeQuery($album_name) . ' to ...', 'ctrl' => 'Search artist ' . escapeQuery($track->artists[0]
                         ->name) . ' online',), $track_artwork_path, 'yes', null, '');
                 }
@@ -2216,30 +2141,16 @@ function secondDelimiterNewReleases($w, $query, $settings, $db, $update_in_progr
 function secondDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
 
     $words = explode('▹', $query);
-    $kind = $words[0];
 
-    $all_playlists = $settings->all_playlists;
     $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
     $alfred_playlist_uri = $settings->alfred_playlist_uri;
     $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
-
     $is_public_playlists = $settings->is_public_playlists;
+    $fuzzy_search = $settings->fuzzy_search;
+    $max_results = $settings->max_results;
 
     if ($update_in_progress == true) {
-        $w->result(null, '', 'Cannot add tracks/albums/playlists while update is in progress', array('Please retry when update is finished', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', 'Cannot add tracks/albums/playlists while update is in progress', array('Please retry when update is finished', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
 
         echo $w->tojson();
 
@@ -2282,7 +2193,7 @@ function secondDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
         $value = $playlist_name;
     }
     elseif ($href[1] == 'local') {
-        $w->result(null, '', 'Cannot add local track to playlist using the Web API', array('This is a limitation of Spotify Web API', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', 'Cannot add local track to playlist using the Web API', array('This is a limitation of Spotify Web API', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         echo $w->tojson();
 
         return;
@@ -2290,17 +2201,23 @@ function secondDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
     $theplaylist = $words[2];
 
     try {
-        if (mb_strlen($theplaylist) < 2) {
-            $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1';
-            $stmt = $db->prepare($getPlaylists);
+        if (countCharacters($theplaylist) < 2) {
+            if($update_in_progress && file_exists($w->data() . '/create_library')) {
+                $results = getExternalResults($w, 'playlists', array('uri','name','nb_tracks','author','username','playlist_artwork_path','ownedbyuser','nb_playable_tracks','duration_playlist','collaborative','public','nb_times_played'), '', 'where ownedbyuser=1');
+            } else {
+                $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1';
+                $stmt = $db->prepare($getPlaylists);
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            }
 
-            $w->result(null, '', 'Add ' . $type . ' ' . $value . ' to Your Music or one of your playlists below..', array('Select Your Music or one of your playlists below to add the ' . $message, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/add.png', 'no', null, '');
+            $w->result(null, '', 'Add ' . $type . ' ' . $value . ' to Your Music or one of your playlists below..', array('Select Your Music or one of your playlists below to add the ' . $message, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/add.png', 'no', null, '');
 
             $privacy_status = 'private';
             if ($is_public_playlists) {
                 $privacy_status = 'public';
             }
-            $w->result(null, '', 'Create a new playlist ', array('Create a new ' . $privacy_status . ' playlist and add the ' . $message, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/create_playlist.png', 'no', null, $query . 'Enter Playlist Name▹');
+            $w->result(null, '', 'Create a new playlist ', array('Create a new ' . $privacy_status . ' playlist and add the ' . $message, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/create_playlist.png', 'no', null, $query . 'Enter Playlist Name▹');
 
             // put Alfred Playlist at beginning
             if ($is_alfred_playlist_active == true) {
@@ -2322,7 +2239,7 @@ function secondDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
                     /* artist_artwork_path */, ''
                     /* album_artwork_path */, $playlist_name
                     /* playlist_name */, '', /* playlist_artwork_path */
-                    )), '🎵 Alfred Playlist ' . ' ● ' . $alfred_playlist_name, 'Select the playlist to add the ' . $message, './images/alfred_playlist.png', 'yes', null, '');
+                    )), getenv('emoji_alfred') . ' Alfred Playlist ' . ' '.getenv('emoji_separator').' ' . $alfred_playlist_name, 'Select the playlist to add the ' . $message, './images/alfred_playlist.png', 'yes', null, '');
                 }
             }
 
@@ -2345,24 +2262,28 @@ function secondDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
             )), 'Your Music', 'Select to add the ' . $message . ' to Your Music', './images/yourmusic.png', 'yes', null, '');
         }
         else {
-            $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1 and ( name like :playlist or author like :playlist)';
-            $stmt = $db->prepare($getPlaylists);
-            $stmt->bindValue(':playlist', '%' . $theplaylist . '%');
+            if($fuzzy_search || ($update_in_progress && file_exists($w->data() . '/create_library'))) {
+                $results = getFuzzySearchResults($w, $update_in_progress, $theplaylist, 'playlists', array('uri','name','nb_tracks','author','username','playlist_artwork_path','ownedbyuser','nb_playable_tracks','duration_playlist','collaborative','public','nb_times_played'), $max_results, '2,4', '');
+            } else {
+                $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist,collaborative,public,nb_times_played from playlists where (name_deburr like :query or author like :query) order by nb_times_played desc';
+                $stmt = $db->prepare($getPlaylists);
+                $stmt->bindValue(':query', '%' . deburr($theplaylist) . '%');
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            }
         }
-
-        $playlists = $stmt->execute();
     }
     catch(PDOException $e) {
-        handleDbIssuePdoXml($db);
+        handleDbIssuePdoXml($e);
 
         exit;
     }
 
-    while ($playlist = $stmt->fetch()) {
-        if (($playlist[0] != $alfred_playlist_uri && (mb_strlen($theplaylist) < 2)) || (mb_strlen($theplaylist) >= 3)) {
+    foreach ($results as $playlist) {
+        if ($playlist[0] != $alfred_playlist_uri) {
             $added = ' ';
             if (startswith($playlist[1], 'Artist radio for')) {
-                $added = '📻 ';
+                $added = getenv('emoji_radio').' ';
             }
             $w->result(null, serialize(array($track_uri
             /*track_uri*/, $album_uri
@@ -2379,7 +2300,7 @@ function secondDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
             /* artist_artwork_path */, ''
             /* album_artwork_path */, $playlist_name
             /* playlist_name */, '', /* playlist_artwork_path */
-            )), '🎵' . $added . $playlist[1], $playlist[7] . ' tracks ● ' . $playlist[8] . ' ● Select the playlist to add the ' . $message, $playlist[5], 'yes', null, '');
+            )), getenv('emoji_playlist') . $added . $playlist[1], $playlist[7] . ' tracks '.getenv('emoji_separator').' ' . $playlist[8] . ' '.getenv('emoji_separator').' Select the playlist to add the ' . $message, $playlist[5], 'yes', null, '');
         }
     }
 }
@@ -2395,28 +2316,9 @@ function secondDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
  */
 function secondDelimiterRemove($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
 
     if ($update_in_progress == true) {
-        $w->result(null, '', 'Cannot remove tracks while update is in progress', array('Please retry when update is finished', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', 'Cannot remove tracks while update is in progress', array('Please retry when update is finished', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
 
         echo $w->tojson();
 
@@ -2434,7 +2336,7 @@ function secondDelimiterRemove($w, $query, $settings, $db, $update_in_progress) 
     $theplaylist = $words[2];
 
     if ($href[1] == 'local') {
-        $w->result(null, '', 'Cannot remove local tracks from playlists using the Web API', array('This is a limitation of Spotify Web API', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', 'Cannot remove local tracks from playlists using the Web API', array('This is a limitation of Spotify Web API', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         echo $w->tojson();
 
         return;
@@ -2446,11 +2348,12 @@ function secondDelimiterRemove($w, $query, $settings, $db, $update_in_progress) 
         $stmt = $db->prepare($getPlaylistsForTrack);
         $stmt->bindValue(':uri', '' . $track_uri . '');
         $stmt->execute();
+        $results = $stmt->fetchAll();
 
-        while ($playlistsForTrack = $stmt->fetch()) {
+        foreach ($results as $playlistsForTrack) {
             if ($playlistsForTrack[0] == '') {
                 if ($noresult == true) {
-                    $w->result(null, '', 'Remove ' . $type . ' ' . $tmp[1] . ' from Your Music or one of your playlists below..', array('Select Your Music or one of your playlists below to remove the ' . $message, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/add.png', 'no', null, '');
+                    $w->result(null, '', 'Remove ' . $type . ' ' . $tmp[1] . ' from Your Music or one of your playlists below..', array('Select Your Music or one of your playlists below to remove the ' . $message, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/add.png', 'no', null, '');
                 }
                 // Your Music
                 $w->result(null, serialize(array($track_uri
@@ -2473,27 +2376,27 @@ function secondDelimiterRemove($w, $query, $settings, $db, $update_in_progress) 
                 $noresult = false;
             }
             else {
-                if (mb_strlen($theplaylist) < 2) {
+                if (countCharacters($theplaylist) < 2) {
                     $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1 and uri=:playlist_uri';
                     $stmtGetPlaylists = $db->prepare($getPlaylists);
                     $stmtGetPlaylists->bindValue(':playlist_uri', $playlistsForTrack[0]);
                 }
                 else {
-                    $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1 and ( name like :playlist or author like :playlist) and uri=:playlist_uri';
+                    $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1 and ( name_deburr like :playlist or author like :playlist) and uri=:playlist_uri';
                     $stmtGetPlaylists = $db->prepare($getPlaylists);
                     $stmtGetPlaylists->bindValue(':playlist_uri', $playlistsForTrack[0]);
-                    $stmtGetPlaylists->bindValue(':playlist', '%' . $theplaylist . '%');
+                    $stmtGetPlaylists->bindValue(':playlist', '%' . deburr($theplaylist) . '%');
                 }
 
                 $playlists = $stmtGetPlaylists->execute();
 
                 while ($playlist = $stmtGetPlaylists->fetch()) {
                     if ($noresult == true) {
-                        $w->result(null, '', 'Remove ' . $type . ' ' . $tmp[1] . ' from Your Music or one of your playlists below..', array('Select Your Music or one of your playlists below to remove the ' . $message, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/add.png', 'no', null, '');
+                        $w->result(null, '', 'Remove ' . $type . ' ' . $tmp[1] . ' from Your Music or one of your playlists below..', array('Select Your Music or one of your playlists below to remove the ' . $message, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/add.png', 'no', null, '');
                     }
                     $added = ' ';
                     if (startswith($playlist[1], 'Artist radio for')) {
-                        $added = '📻 ';
+                        $added = getenv('emoji_radio').' ';
                     }
                     $w->result(null, serialize(array($track_uri
                     /*track_uri*/, ''
@@ -2510,20 +2413,20 @@ function secondDelimiterRemove($w, $query, $settings, $db, $update_in_progress) 
                     /* artist_artwork_path */, ''
                     /* album_artwork_path */, ''
                     /* playlist_name */, '', /* playlist_artwork_path */
-                    )), '🎵' . $added . $playlist[1], $playlist[7] . ' tracks ● ' . $playlist[8] . ' ● Select the playlist to remove the ' . $message, $playlist[5], 'yes', null, '');
+                    )), getenv('emoji_playlist') . $added . $playlist[1], $playlist[7] . ' tracks '.getenv('emoji_separator').' ' . $playlist[8] . ' '.getenv('emoji_separator').' Select the playlist to remove the ' . $message, $playlist[5], 'yes', null, '');
                     $noresult = false;
                 }
             }
         }
     }
     catch(PDOException $e) {
-        handleDbIssuePdoXml($db);
+        handleDbIssuePdoXml($e);
 
         exit;
     }
 
     if ($noresult) {
-        $w->result(null, 'help', 'The current track is not in Your Music or one of your playlists', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'The current track is not in Your Music or one of your playlists', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
     }
 }
 
@@ -2538,55 +2441,39 @@ function secondDelimiterRemove($w, $query, $settings, $db, $update_in_progress) 
  */
 function secondDelimiterAlfredPlaylist($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
     $alfred_playlist_uri = $settings->alfred_playlist_uri;
     $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
 
     $setting_kind = $words[1];
     $theplaylist = $words[2];
 
     if ($setting_kind == 'Set Alfred Playlist') {
-        $w->result(null, '', 'Set your Alfred playlist', array('Select one of your playlists below as your Alfred playlist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/settings.png', 'no', null, '');
+        $w->result(null, '', 'Set your Alfred playlist', array('Select one of your playlists below as your Alfred playlist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/settings.png', 'no', null, '');
 
         try {
-            if (mb_strlen($theplaylist) < 2) {
+            if (countCharacters($theplaylist) < 2) {
                 $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1';
                 $stmt = $db->prepare($getPlaylists);
             }
             else {
-                $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1 and ( name like :playlist or author like :playlist)';
+                $getPlaylists = 'select uri,name,nb_tracks,author,username,playlist_artwork_path,ownedbyuser,nb_playable_tracks,duration_playlist from playlists where ownedbyuser=1 and ( name_deburr like :playlist or author like :playlist)';
                 $stmt = $db->prepare($getPlaylists);
-                $stmt->bindValue(':playlist', '%' . $theplaylist . '%');
+                $stmt->bindValue(':playlist', '%' . deburr($theplaylist) . '%');
             }
 
-            $playlists = $stmt->execute();
+            $stmt->execute();
+            $results = $stmt->fetchAll();
         }
         catch(PDOException $e) {
-            handleDbIssuePdoXml($db);
+            handleDbIssuePdoXml($e);
 
             return;
         }
 
-        while ($playlist = $stmt->fetch()) {
+        foreach ($results as $playlist) {
             $added = ' ';
             if (startswith($playlist[1], 'Artist radio for')) {
-                $added = '📻 ';
+                $added = getenv('emoji_radio').' ';
             }
             $w->result(null, serialize(array(''
             /*track_uri*/, ''
@@ -2603,13 +2490,13 @@ function secondDelimiterAlfredPlaylist($w, $query, $settings, $db, $update_in_pr
             /* artist_artwork_path */, ''
             /* album_artwork_path */, ''
             /* playlist_name */, '', /* playlist_artwork_path */
-            )), '🎵' . $added . $playlist[1], $playlist[7] . ' tracks ● ' . $playlist[8] . ' ● Select the playlist to set it as your Alfred Playlist', $playlist[5], 'yes', null, '');
+            )), getenv('emoji_playlist') . $added . $playlist[1], $playlist[7] . ' tracks '.getenv('emoji_separator').' ' . $playlist[8] . ' '.getenv('emoji_separator').' Select the playlist to set it as your Alfred Playlist', $playlist[5], 'yes', null, '');
         }
     }
     elseif ($setting_kind == 'Confirm Clear Alfred Playlist') {
-        $w->result(null, '', 'Are you sure?', array('This will remove all the tracks in your current Alfred Playlist.', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', '⚠️ Are you sure? ⚠️', array('❗❗This will remove all the tracks in your current Alfred Playlist, this is NOT undoable❗❗', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
 
-        $w->result(null, '', 'No, cancel', array('Return to Alfred Playlist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/uncheck.png', 'no', null, 'Alfred Playlist▹');
+        $w->result(null, '', 'No, cancel', array('Return to Alfred Playlist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/uncheck.png', 'no', null, 'Alfred Playlist▹');
 
         $w->result(null, serialize(array(''
         /*track_uri*/, ''
@@ -2626,7 +2513,7 @@ function secondDelimiterAlfredPlaylist($w, $query, $settings, $db, $update_in_pr
         /* artist_artwork_path */, ''
         /* album_artwork_path */, ''
         /* playlist_name */, '', /* playlist_artwork_path */
-        )), 'Yes, go ahead', 'This is undoable', './images/check.png', 'yes', null, '');
+        )), 'Yes, go ahead', '❗❗This is NOT undoable❗❗', './images/check.png', 'yes', null, '');
     }
 }
 
@@ -2641,25 +2528,7 @@ function secondDelimiterAlfredPlaylist($w, $query, $settings, $db, $update_in_pr
  */
 function secondDelimiterFollowUnfollow($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     if (substr_count($query, '@') == 1) {
@@ -2680,14 +2549,14 @@ function secondDelimiterFollowUnfollow($w, $query, $settings, $db, $update_in_pr
 
                 $artist_artwork_path = getArtistArtwork($w, $artist_uri, $artist_name, false, false, false, $use_artworks);
                 if (!$isArtistFollowed[0]) {
-                    $w->result(null, '', 'Follow artist ' . $artist_name, array('You are not currently following the artist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $artist_artwork_path, 'no', null, 'Follow▹' . $artist_uri . '@' . $artist_name . '▹');
+                    $w->result(null, '', 'Follow artist ' . $artist_name, array('You are not currently following the artist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $artist_artwork_path, 'no', null, 'Follow▹' . $artist_uri . '@' . $artist_name . '▹');
                 }
                 else {
-                    $w->result(null, '', 'Unfollow artist ' . $artist_name, array('You are currently following the artist', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $artist_artwork_path, 'no', null, 'Unfollow▹' . $artist_uri . '@' . $artist_name . '▹');
+                    $w->result(null, '', 'Unfollow artist ' . $artist_name, array('You are currently following the artist', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $artist_artwork_path, 'no', null, 'Unfollow▹' . $artist_uri . '@' . $artist_name . '▹');
                 }
             }
             catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-                $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
                 echo $w->tojson();
                 exit;
             }
@@ -2743,7 +2612,7 @@ function secondDelimiterFollowUnfollow($w, $query, $settings, $db, $update_in_pr
                 }
             }
             catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-                $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
                 echo $w->tojson();
                 exit;
             }
@@ -2763,25 +2632,6 @@ function secondDelimiterFollowUnfollow($w, $query, $settings, $db, $update_in_pr
 function secondDelimiterFollowOrUnfollow($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
     $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
-    $use_artworks = $settings->use_artworks;
 
     if (substr_count($query, '@') == 1) {
 
@@ -2821,11 +2671,11 @@ function secondDelimiterFollowOrUnfollow($w, $query, $settings, $db, $update_in_
                 }
             }
             else {
-                $w->result(null, '', 'Error!', array('An error happened! try again or report to the author', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+                $w->result(null, '', 'Error!', array('An error happened! try again or report to the author', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             }
         }
         catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-            $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
             exit;
         }
@@ -2843,25 +2693,6 @@ function secondDelimiterFollowOrUnfollow($w, $query, $settings, $db, $update_in_
  */
 function secondDelimiterDisplayBiography($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     if (substr_count($query, '∙') == 1) {
@@ -2949,11 +2780,11 @@ function secondDelimiterDisplayBiography($w, $query, $settings, $db, $update_in_
             $biography_sentances = explode("\n", $wrapped);
             $artist_artwork_path = getArtistArtwork($w, $artist_uri, $artist_name, false, false, false, $use_artworks);
             for ($i = 0;$i < count($biography_sentances);++$i) {
-                $w->result(null, '', $biography_sentances[$i], array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $artist_artwork_path, 'no', null, '');
+                $w->result(null, '', $biography_sentances[$i], array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $artist_artwork_path, 'no', null, '');
             }
         }
         else {
-            $w->result(null, 'help', 'No biography found!', array('', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'No biography found!', array('', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
             exit;
         }
@@ -2971,34 +2802,15 @@ function secondDelimiterDisplayBiography($w, $query, $settings, $db, $update_in_
  */
 function secondDelimiterDisplayConfirmRemovePlaylist($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
 
     if (substr_count($query, '∙') == 1) {
         $tmp = $words[1];
         $words = explode('∙', $tmp);
         $playlist_uri = $words[0];
         $playlist_name = $words[1];
-        $w->result(null, '', 'Are you sure?', array('This will remove the playlist from your library.', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', 'Are you sure?', array('This will remove the playlist from your library.', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
 
-        $w->result(null, '', 'No, cancel', array('Return to the playlist menu', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/uncheck.png', 'no', null, 'Playlist▹' . $playlist_uri . '▹');
+        $w->result(null, '', 'No, cancel', array('Return to the playlist menu', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/uncheck.png', 'no', null, 'Playlist▹' . $playlist_uri . '▹');
 
         $w->result(null, serialize(array(''
         /*track_uri*/, ''
@@ -3048,25 +2860,8 @@ function secondDelimiterDisplayConfirmRemovePlaylist($w, $query, $settings, $db,
  */
 function secondDelimiterBrowse($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
     $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     $country = $words[1];
@@ -3079,8 +2874,8 @@ function secondDelimiterBrowse($w, $query, $settings, $db, $update_in_progress) 
         foreach ($spotify_country_codes as $spotify_country_code) {
             if (strtoupper($spotify_country_code) != 'US' && strtoupper($spotify_country_code) != 'GB' && strtoupper($spotify_country_code) != strtoupper($country_code)) {
 
-                if (mb_strlen($search) < 1 || strpos(strtolower($spotify_country_code), strtolower($search)) !== false || strpos(strtolower(getCountryName(strtoupper($spotify_country_code))), strtolower($search)) !== false) {
-                    $w->result(null, '', getCountryName(strtoupper($spotify_country_code)), array('Browse the Spotify categories in ' . getCountryName(strtoupper($spotify_country_code)), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/browse.png', 'no', null, 'Browse▹' . strtoupper($spotify_country_code) . '▹');
+                if (countCharacters($search) < 1 || strpos(strtolower($spotify_country_code), strtolower($search)) !== false || strpos(strtolower(getCountryName(strtoupper($spotify_country_code))), strtolower($search)) !== false) {
+                    $w->result(null, '', getCountryName(strtoupper($spotify_country_code)), array('Browse the Spotify categories in ' . getCountryName(strtoupper($spotify_country_code)), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/browse.png', 'no', null, 'Browse▹' . strtoupper($spotify_country_code) . '▹');
                 }
             }
         }
@@ -3091,8 +2886,6 @@ function secondDelimiterBrowse($w, $query, $settings, $db, $update_in_progress) 
             $offsetListCategories = 0;
             $limitListCategories = 50;
             do {
-                // refresh api
-                $api = getSpotifyWebAPI($w, $api);
                 $listCategories = $api->getCategoriesList(array('country' => $country, 'limit' => $limitListCategories, 'locale' => '', 'offset' => $offsetListCategories,));
                 $offsetListCategories += $limitListCategories;
             } while ($offsetListCategories < $listCategories
@@ -3102,13 +2895,13 @@ function secondDelimiterBrowse($w, $query, $settings, $db, $update_in_progress) 
             foreach ($listCategories
                 ->categories->items as $category) {
 
-                if (mb_strlen($search) < 2 || strpos(strtolower($category->name), strtolower($search)) !== false) {
+                if (countCharacters($search) < 2 || strpos(strtolower($category->name), strtolower($search)) !== false) {
                     $w->result(null, '', escapeQuery($category->name), 'Browse this category', getCategoryArtwork($w, $category->id, $category->icons[0]->url, true, false, $use_artworks), 'no', null, 'Browse▹' . $country . '▹' . $category->id . '▹');
                 }
             }
         }
         catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-            $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
 
             exit;
@@ -3127,31 +2920,14 @@ function secondDelimiterBrowse($w, $query, $settings, $db, $update_in_progress) 
  */
 function secondDelimiterPreview($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
     $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
     $is_display_rating = $settings->is_display_rating;
     $output_application = $settings->output_application;
 
     if (!file_exists('/usr/local/bin/mpg123')) {
-        $w->result(null, '', 'mpg123 is not installed, install using brew install mpg123', array('install using brew install mpg123', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', 'mpg123 is not installed, install using brew install mpg123', array('install using brew install mpg123', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         echo $w->tojson();
         exit;
     }
@@ -3186,10 +2962,10 @@ function secondDelimiterPreview($w, $query, $settings, $db, $update_in_progress)
             /* artist_artwork_path */, ''
             /* album_artwork_path */, ''
             /* playlist_name */, '', /* playlist_artwork_path */
-            )), '👁Previewing ' . $added . escapeQuery($track->name) . ' ● ' . escapeQuery($track->artists[0]
-                ->name) . ' ● ' . escapeQuery($track
+            )), '👁Previewing ' . escapeQuery($track->name) . ' '.getenv('emoji_separator').' ' . escapeQuery($track->artists[0]
+                ->name) . ' '.getenv('emoji_separator').' ' . escapeQuery($track
                 ->album
-                ->name) . ' ● ' . $popularity . ' (' . beautifyTime($track->duration_ms / 1000) . ')', array($subtitle, 'alt' => 'Play album ' . escapeQuery($track
+                ->name) . ' '.getenv('emoji_separator').' ' . $popularity . ' (' . beautifyTime($track->duration_ms / 1000) . ')', array($subtitle, 'alt' => 'Play album ' . escapeQuery($track
                 ->album
                 ->name) . ' in Spotify', 'cmd' => 'Play artist ' . escapeQuery($track->artists[0]
                 ->name) . ' in Spotify', 'fn' => 'Add track ' . escapeQuery($track->name) . ' to ...', 'shift' => 'Add album ' . escapeQuery($track
@@ -3235,7 +3011,7 @@ function secondDelimiterPreview($w, $query, $settings, $db, $update_in_progress)
             exec('curl -s ' . $track->preview_url . ' | /usr/local/bin/mpg123 - > /dev/null 2>&1 &');
         }
         else {
-            $w->result(null, '', 'The track . ' . $track->name . ' does not have a preview', array('uri=' . $track_uri, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, '', 'The track . ' . $track->name . ' does not have a preview', array('uri=' . $track_uri, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
             exit;
         }
@@ -3272,7 +3048,7 @@ function secondDelimiterPreview($w, $query, $settings, $db, $update_in_progress)
             /* playlist_name */, '', /* playlist_artwork_path */
             )), '👁Previewing ' . $episode->name, array($episode->episode_type . 'Progress: ' . floatToCircles(intval($episode
                 ->resume_point
-                ->resume_position_ms) / intval($episode->duration_ms)) . ' Duration ' . beautifyTime($episode->duration_ms / 1000) . ' ● Release date: ' . $episode->release_date . ' ● Languages: ' . implode(',', $array_languages), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), $episode_artwork_path, 'yes', null, '');
+                ->resume_position_ms) / intval($episode->duration_ms)) . ' Duration ' . beautifyTime($episode->duration_ms / 1000) . ' '.getenv('emoji_separator').' Release date: ' . $episode->release_date . ' '.getenv('emoji_separator').' Languages: ' . implode(',', $array_languages), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), $episode_artwork_path, 'yes', null, '');
 
             $w->result(null, serialize(array(''
             /*track_uri*/, ''
@@ -3313,14 +3089,14 @@ function secondDelimiterPreview($w, $query, $settings, $db, $update_in_progress)
             exec('curl -s ' . $episode->audio_preview_url . ' | /usr/local/bin/mpg123 - > /dev/null 2>&1 &');
         }
         else {
-            $w->result(null, '', 'The episode . ' . $episode->name . ' does not have a preview', array('uri=' . $episode->uri, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+            $w->result(null, '', 'The episode . ' . $episode->name . ' does not have a preview', array('uri=' . $episode->uri, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
             echo $w->tojson();
             exit;
         }
 
     }
     else {
-        $w->result(null, '', 'Only tracks and episodes can be previewed', array('uri=' . $track_uri, 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', 'Only tracks and episodes can be previewed', array('uri=' . $track_uri, 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         echo $w->tojson();
         exit;
     }

@@ -10,25 +10,6 @@
  */
 function thirdDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
-
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
 
     $is_public_playlists = $settings->is_public_playlists;
 
@@ -68,22 +49,22 @@ function thirdDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
     $the_query = $words[3];
 
     if ($update_in_progress == true) {
-        $w->result(null, '', 'Cannot add tracks/albums/playlists while update is in progress', array('Please retry when update is finished', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, '', 'Cannot add tracks/albums/playlists while update is in progress', array('Please retry when update is finished', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
 
         echo $w->tojson();
 
         return;
     }
 
-    if (mb_strlen($the_query) == 0) {
+    if (countCharacters($the_query) == 0) {
         $privacy_status = 'private';
         if ($is_public_playlists) {
             $privacy_status = 'public';
         }
-        $w->result(null, '', 'Enter the name of the new playlist: ', array('This will create a new ' . $privacy_status . ' playlist with the name entered', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/create_playlist.png', 'no', null, '');
+        $w->result(null, '', 'Enter the name of the new playlist: ', array('This will create a new ' . $privacy_status . ' playlist with the name entered', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/create_playlist.png', 'no', null, '');
 
         if ($album_name != '' || $playlist_name != '') {
-            $w->result(null, 'help', 'Or choose an alternative below', array('Some playlists names are proposed below', 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/info.png', 'no', null, '');
+            $w->result(null, 'help', 'Or choose an alternative below', array('Some playlists names are proposed below', 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/info.png', 'no', null, '');
         }
 
         if ($album_name != '') {
@@ -160,25 +141,7 @@ function thirdDelimiterAdd($w, $query, $settings, $db, $update_in_progress) {
  */
 function thirdDelimiterBrowse($w, $query, $settings, $db, $update_in_progress) {
     $words = explode('▹', $query);
-    $kind = $words[0];
 
-    $all_playlists = $settings->all_playlists;
-    $is_alfred_playlist_active = $settings->is_alfred_playlist_active;
-    $radio_number_tracks = $settings->radio_number_tracks;
-    $now_playing_notifications = $settings->now_playing_notifications;
-    $max_results = $settings->max_results;
-    $alfred_playlist_uri = $settings->alfred_playlist_uri;
-    $alfred_playlist_name = $settings->alfred_playlist_name;
-    $country_code = $settings->country_code;
-    $last_check_update_time = $settings->last_check_update_time;
-    $oauth_client_id = $settings->oauth_client_id;
-    $oauth_client_secret = $settings->oauth_client_secret;
-    $oauth_redirect_uri = $settings->oauth_redirect_uri;
-    $oauth_access_token = $settings->oauth_access_token;
-    $oauth_expires = $settings->oauth_expires;
-    $oauth_refresh_token = $settings->oauth_refresh_token;
-    $display_name = $settings->display_name;
-    $userid = $settings->userid;
     $use_artworks = $settings->use_artworks;
 
     $country = $words[1];
@@ -190,17 +153,15 @@ function thirdDelimiterBrowse($w, $query, $settings, $db, $update_in_progress) {
         $limitCategoryPlaylists = 50;
         $api = getSpotifyWebAPI($w);
         do {
-            // refresh api
-            $api = getSpotifyWebAPI($w, $api);
             $listPlaylists = $api->getCategoryPlaylists($category, array('country' => $country, 'limit' => $limitCategoryPlaylists, 'offset' => $offsetCategoryPlaylists,));
 
             $subtitle = 'Launch Playlist';
             $playlists = $listPlaylists->playlists;
             $items = $playlists->items;
             foreach ($items as $playlist) {
-                if (mb_strlen($search) < 2 || strpos(strtolower($playlist->name), strtolower($search)) !== false) {
-                    $w->result(null, '', '🎵' . escapeQuery($playlist->name), 'by ' . $playlist
-                        ->owner->id . ' ● ' . $playlist
+                if (countCharacters($search) < 2 || strpos(strtolower($playlist->name), strtolower($search)) !== false) {
+                    $w->result(null, '', getenv('emoji_playlist') . escapeQuery($playlist->name), 'by ' . $playlist
+                        ->owner->id . ' '.getenv('emoji_separator').' ' . $playlist
                         ->tracks->total . ' tracks', getPlaylistArtwork($w, $playlist->uri, false, false, $use_artworks), 'no', null, 'Online Playlist▹' . $playlist->uri . '∙' . base64_encode($playlist->name) . '▹');
                 }
             }
@@ -211,7 +172,7 @@ function thirdDelimiterBrowse($w, $query, $settings, $db, $update_in_progress) {
             ->total);
     }
     catch(SpotifyWebAPI\SpotifyWebAPIException $e) {
-        $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => 'Not Available', 'cmd' => 'Not Available', 'shift' => 'Not Available', 'fn' => 'Not Available', 'ctrl' => 'Not Available',), './images/warning.png', 'no', null, '');
+        $w->result(null, 'help', 'Exception occurred', array('' . $e->getMessage(), 'alt' => '', 'cmd' => '', 'shift' => '', 'fn' => '', 'ctrl' => '',), './images/warning.png', 'no', null, '');
         echo $w->tojson();
         exit;
     }
