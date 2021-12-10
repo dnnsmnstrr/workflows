@@ -55,6 +55,32 @@
 				<false/>
 			</dict>
 		</array>
+		<key>7BB3FC59-484E-4022-BB42-A7CE59A067C3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>39D8FDDB-BF22-451A-8244-53B635357C71</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>9B26A4A2-4E83-4C09-916B-B552048C8900</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>39D8FDDB-BF22-451A-8244-53B635357C71</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>A09E7069-AEA3-4662-9258-09274B4FAEE0</key>
 		<array/>
 		<key>B84A6D15-A95F-46E7-8C6B-3B5F236FDBD3</key>
@@ -130,63 +156,9 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Get BetterTouchTool Gestures</string>
+	<string>BetterTouchTool</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-
-  tell application "System Events"
-		set frontApp to name of first process whose frontmost is true as string
-  end tell
-  
-  return frontApp
-
-end alfred_script</string>
-				<key>cachescript</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>F7205ACB-1943-4A2F-BD23-C882EC99F219</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>11</integer>
-				<key>hotmod</key>
-				<integer>1835008</integer>
-				<key>hotstring</key>
-				<string>B</string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>B84A6D15-A95F-46E7-8C6B-3B5F236FDBD3</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -222,19 +194,54 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>inputstring</key>
-				<string>{query}</string>
-				<key>matchcasesensitive</key>
-				<true/>
-				<key>matchmode</key>
-				<integer>1</integer>
-				<key>matchstring</key>
-				<string>update presets</string>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>11</integer>
+				<key>hotmod</key>
+				<integer>1835008</integer>
+				<key>hotstring</key>
+				<string>B</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
+			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>C6BCC239-85FD-45AF-8988-7ED948009DC9</string>
+			<string>B84A6D15-A95F-46E7-8C6B-3B5F236FDBD3</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+  tell application "System Events"
+		set frontApp to name of first process whose frontmost is true as string
+  end tell
+  
+  return frontApp
+
+end alfred_script</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>F7205ACB-1943-4A2F-BD23-C882EC99F219</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -252,6 +259,25 @@ end run</string>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
 			<string>CA0C66BD-E28A-48D5-A88E-E167D6C448DF</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>update presets</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>C6BCC239-85FD-45AF-8988-7ED948009DC9</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -327,6 +353,29 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>osascript updatePresets.scpt</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A09E7069-AEA3-4662-9258-09274B4FAEE0</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -376,29 +425,6 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>osascript updatePresets.scpt</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>A09E7069-AEA3-4662-9258-09274B4FAEE0</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>inputstring</key>
 				<string>{query}</string>
 				<key>matchcasesensitive</key>
@@ -412,6 +438,65 @@ end run</string>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>FC855184-B807-48EF-8ADB-91286F2388DF</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+  tell application "BetterTouchTool"		try		trigger_named_async_without_response q	on error		display notification "Could not execute named trigger." with title "Error"	end try	  end tell
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>39D8FDDB-BF22-451A-8244-53B635357C71</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>btt</string>
+				<key>subtext</key>
+				<string>Run {query} action in BetterTouchTool</string>
+				<key>text</key>
+				<string>Named Trigger: {query}</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>7BB3FC59-484E-4022-BB42-A7CE59A067C3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<false/>
+				<key>acceptsmulti</key>
+				<integer>0</integer>
+				<key>acceptstext</key>
+				<true/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Run BTT Named Trigger</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>9B26A4A2-4E83-4C09-916B-B552048C8900</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -438,6 +523,13 @@ end run</string>
 			<key>ypos</key>
 			<integer>90</integer>
 		</dict>
+		<key>39D8FDDB-BF22-451A-8244-53B635357C71</key>
+		<dict>
+			<key>xpos</key>
+			<integer>290</integer>
+			<key>ypos</key>
+			<integer>390</integer>
+		</dict>
 		<key>68C60DE9-0C3C-4DE9-BE5B-27474F19ECC2</key>
 		<dict>
 			<key>colorindex</key>
@@ -446,6 +538,20 @@ end run</string>
 			<integer>370</integer>
 			<key>ypos</key>
 			<integer>120</integer>
+		</dict>
+		<key>7BB3FC59-484E-4022-BB42-A7CE59A067C3</key>
+		<dict>
+			<key>xpos</key>
+			<integer>45</integer>
+			<key>ypos</key>
+			<integer>390</integer>
+		</dict>
+		<key>9B26A4A2-4E83-4C09-916B-B552048C8900</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>510</integer>
 		</dict>
 		<key>A09E7069-AEA3-4662-9258-09274B4FAEE0</key>
 		<dict>
