@@ -4,19 +4,18 @@ import os
 import subprocess
 import sys
 
-from workflow import Workflow, MATCH_SUBSTRING
+from workflow import Workflow3 as Workflow, MATCH_SUBSTRING
 from workflow.background import run_in_background
 
 import brew_actions
 import helpers
 
-
 GITHUB_SLUG = 'fniephaus/alfred-homebrew'
 
 
-def execute(cmd_list):
-    new_env = os.environ.copy()
-    new_env['PATH'] = '/usr/local/bin:%s' % new_env['PATH']
+def execute(wf, cmd_list):
+    brew_arch = helpers.get_brew_arch(wf)
+    new_env = helpers.initialise_path(brew_arch)
     cmd, err = subprocess.Popen(cmd_list,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
@@ -27,27 +26,27 @@ def execute(cmd_list):
 
 
 def get_all_formulae():
-    return execute(['brew', 'search', '--formula']).splitlines()
+    return execute(wf, ['brew', 'formulae']).splitlines()
 
 
 def get_installed_formulae():
-    return execute(['brew', 'list', '--versions']).splitlines()
+    return execute(wf, ['brew', 'list', '--versions']).splitlines()
 
 
 def get_pinned_formulae():
-    return execute(['brew', 'list', '--pinned', '--versions']).splitlines()
+    return execute(wf, ['brew', 'list', '--pinned', '--versions']).splitlines()
 
 
 def get_outdated_formulae():
-    return execute(['brew', 'outdated', '--formula']).splitlines()
+    return execute(wf, ['brew', 'outdated', '--formula']).splitlines()
 
 
 def get_info():
-    return execute(['brew', 'info'])
+    return execute(wf, ['brew', 'info'])
 
 
 def get_commands(wf, query):
-    result = execute(['brew', 'commands']).splitlines()
+    result = execute(wf, ['brew', 'commands']).splitlines()
     commands = [x for x in result if ' ' not in x]
     query_filter = query.split()
     if len(query_filter) > 1:
@@ -102,7 +101,10 @@ def main(wf):
                     valid=False,
                     icon=helpers.get_icon(wf, 'cloud-download'))
 
-    if not helpers.brew_installed():
+    # Check for brew installation
+    find_brew = helpers.brew_installed()
+
+    if not (find_brew['INTEL'] or find_brew['ARM']):
         helpers.brew_installation_instructions(wf)
     else:
         # extract query
@@ -185,6 +187,11 @@ def main(wf):
                             arg='brew %s' % command,
                             valid=True,
                             icon=helpers.get_icon(wf, 'chevron-right'))
+        elif query and query.startswith('config'):
+            helpers.edit_settings(wf)
+            wf.add_item('`settings.json` has been opened.',
+                        autocomplete='',
+                        icon=helpers.get_icon(wf, 'info'))
         else:
             actions = brew_actions.ACTIONS
             if len(wf.cached_data('brew_pinned_formulae',

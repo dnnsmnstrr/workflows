@@ -19,6 +19,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>14DF3092-BD66-43B6-947E-73B26BED2915</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CBAA1ECB-A611-40A5-AD50-341AE55A1262</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>1AE8343C-5835-446F-809B-39045243938B</key>
 		<array>
 			<dict>
@@ -60,6 +73,42 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
+				<string>D216AA3B-251D-4FD6-B051-85EC30A17941</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>B7FD92E6-DC93-4DCB-B4C3-7C2F8699A0D9</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>2E90DF8A-55D0-4C14-BCFE-58B011A6418C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>0829F2D2-E1FD-43AE-B625-D0092C9BA829</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>520F3BEC-E461-4592-9A38-4BA33677FC59</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>48C37C24-4E62-4A9D-B8F2-2E4E933A9031</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
 				<string>14DF3092-BD66-43B6-947E-73B26BED2915</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -82,19 +131,46 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>D216AA3B-251D-4FD6-B051-85EC30A17941</string>
+				<string>CBAA1ECB-A611-40A5-AD50-341AE55A1262</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
-				<key>sourceoutputuid</key>
-				<string>B7FD92E6-DC93-4DCB-B4C3-7C2F8699A0D9</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
+		</array>
+		<key>2E90DF8A-55D0-4C14-BCFE-58B011A6418C</key>
+		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>CBAA1ECB-A611-40A5-AD50-341AE55A1262</string>
+				<string>0DD28B0C-4F8E-420C-B9C5-5FAA660681F7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>520F3BEC-E461-4592-9A38-4BA33677FC59</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>581C5C45-2239-4931-81FD-F7E2103F9ECD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>581C5C45-2239-4931-81FD-F7E2103F9ECD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AD72B848-73A5-4327-A1FB-3880CD81A2F4</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -108,6 +184,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>42AEBED3-2C62-4A96-8543-233371796F65</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>AD72B848-73A5-4327-A1FB-3880CD81A2F4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E9A50E0C-6B05-4162-B6FA-877E3771ACED</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -140,6 +229,27 @@
 	<string>dotfiles</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>dotfiles</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Dotfiles</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>08A89800-B42A-4D27-899F-67257795F12D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -189,7 +299,7 @@ open -na Atom $HOME/$query</string>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>{var:homepage}/dotfiles</string>
+				<string>{var:homepage}/{var:dotfiles}</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
@@ -241,11 +351,11 @@ open -na Atom $HOME/$query</string>
 						<key>matchmode</key>
 						<integer>0</integer>
 						<key>matchstring</key>
-						<string>search</string>
+						<string>github</string>
 						<key>outputlabel</key>
-						<string>search</string>
+						<string>github</string>
 						<key>uid</key>
-						<string>66977E1F-4833-454C-9162-781A0348BB0D</string>
+						<string>0829F2D2-E1FD-43AE-B625-D0092C9BA829</string>
 					</dict>
 					<dict>
 						<key>inputstring</key>
@@ -261,6 +371,34 @@ open -na Atom $HOME/$query</string>
 						<key>uid</key>
 						<string>B7FD92E6-DC93-4DCB-B4C3-7C2F8699A0D9</string>
 					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>search</string>
+						<key>outputlabel</key>
+						<string>search</string>
+						<key>uid</key>
+						<string>66977E1F-4833-454C-9162-781A0348BB0D</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>new</string>
+						<key>outputlabel</key>
+						<string>new</string>
+						<key>uid</key>
+						<string>48C37C24-4E62-4A9D-B8F2-2E4E933A9031</string>
+					</dict>
 				</array>
 				<key>elselabel</key>
 				<string>filepath</string>
@@ -275,27 +413,6 @@ open -na Atom $HOME/$query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>keyword</key>
-				<string>dotfiles</string>
-				<key>subtext</key>
-				<string></string>
-				<key>text</key>
-				<string>Dotfiles</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>08A89800-B42A-4D27-899F-67257795F12D</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -303,7 +420,7 @@ open -na Atom $HOME/$query</string>
 				<key>fixedorder</key>
 				<false/>
 				<key>items</key>
-				<string>[{"title":"Finicky Config","arg":"{var:dotfiles}\/config\/finicky.js","subtitle":"Set browser defaults"},{"title":"Shell","arg":"shell\n","subtitle":"Open dotfiles directory in terminal"},{"title":"Atom","arg":"atom","subtitle":"Open dotfiles project in Atom"},{"title":"git","arg":"{var:dotfiles}\/git\/gitconfig","subtitle":"Configure global git settings"},{"title":"Finder","arg":"{var:dotfiles}","subtitle":"Open dotfiles in Finder"},{"title":"Web","arg":"web","subtitle":"Open dotfiles website"},{"title":"Search","arg":"search","subtitle":"Search dotfiles directory"},{"title":"Extra","arg":"~\/.extra"}]</string>
+				<string>[{"title":"Finicky Config","arg":"{var:dotfiles}\/config\/finicky.js","subtitle":"Set browser defaults"},{"title":"Shell","arg":"shell\n","subtitle":"Open dotfiles directory in terminal"},{"title":"Atom","arg":"atom","subtitle":"Open dotfiles project in Atom"},{"title":"git","arg":"{var:dotfiles}\/git\/gitconfig","subtitle":"Configure global git settings"},{"title":"Finder","arg":"{var:dotfiles}","subtitle":"Open dotfiles in Finder"},{"title":"Web","arg":"web","subtitle":"Open dotfiles website"},{"title":"Search","arg":"search","subtitle":"Search dotfiles directory"},{"title":"Extra","arg":"~\/.extra"},{"title":"New","arg":"new","subtitle":"Create new dotfile"},{"title":"GitHub","arg":"github","subtitle":"Open dotfiles repo on GitHub"}]</string>
 				<key>keyword</key>
 				<string>df</string>
 				<key>runningsubtext</key>
@@ -319,6 +436,117 @@ open -na Atom $HOME/$query</string>
 			<string>alfred.workflow.input.listfilter</string>
 			<key>uid</key>
 			<string>DBA57AF4-DA3D-45D7-8FF3-25B9F4C2CADC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>path</key>
+				<string>{var:dotfiles_path}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.browseinterminal</string>
+			<key>uid</key>
+			<string>D216AA3B-251D-4FD6-B051-85EC30A17941</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>homepage</key>
+					<string>https://github.com/{var:github}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>2E90DF8A-55D0-4C14-BCFE-58B011A6418C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>openwith</key>
+				<string>/System/Volumes/Data/Applications/Atom.app</string>
+				<key>sourcefile</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>E9A50E0C-6B05-4162-B6FA-877E3771ACED</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>subtext</key>
+				<string>Enter the name you would like to give your new dotfile</string>
+				<key>text</key>
+				<string>~/{query}</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>581C5C45-2239-4931-81FD-F7E2103F9ECD</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=~/$1
+
+mkdir -p "$(dirname "$query")"
+touch $query
+echo -n $query</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>AD72B848-73A5-4327-A1FB-3880CD81A2F4</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>520F3BEC-E461-4592-9A38-4BA33677FC59</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -374,6 +602,8 @@ open -na Atom $HOME/$query</string>
 				</array>
 				<key>includesystem</key>
 				<true/>
+				<key>keyword</key>
+				<string>df</string>
 				<key>limit</key>
 				<integer>0</integer>
 				<key>runningsubtext</key>
@@ -421,19 +651,6 @@ open -na Atom $HOME/$query</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>path</key>
-				<string>{var:dotfiles_path}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.browseinterminal</string>
-			<key>uid</key>
-			<string>D216AA3B-251D-4FD6-B051-85EC30A17941</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>openwith</key>
 				<string></string>
 				<key>sourcefile</key>
@@ -454,9 +671,9 @@ open -na Atom $HOME/$query</string>
 		<key>08A89800-B42A-4D27-899F-67257795F12D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>30</integer>
+			<integer>10</integer>
 			<key>ypos</key>
-			<integer>270</integer>
+			<integer>10</integer>
 		</dict>
 		<key>0DD28B0C-4F8E-420C-B9C5-5FAA660681F7</key>
 		<dict>
@@ -468,23 +685,30 @@ open -na Atom $HOME/$query</string>
 		<key>14DF3092-BD66-43B6-947E-73B26BED2915</key>
 		<dict>
 			<key>xpos</key>
-			<integer>625</integer>
+			<integer>620</integer>
 			<key>ypos</key>
-			<integer>290</integer>
+			<integer>410</integer>
 		</dict>
 		<key>1AE8343C-5835-446F-809B-39045243938B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>590</integer>
+			<integer>580</integer>
 			<key>ypos</key>
-			<integer>320</integer>
+			<integer>440</integer>
 		</dict>
 		<key>21DBBCAD-030E-4CF0-8C78-F992ADC0F932</key>
 		<dict>
 			<key>xpos</key>
-			<integer>230</integer>
+			<integer>300</integer>
 			<key>ypos</key>
-			<integer>245</integer>
+			<integer>230</integer>
+		</dict>
+		<key>2E90DF8A-55D0-4C14-BCFE-58B011A6418C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>385</integer>
+			<key>ypos</key>
+			<integer>285</integer>
 		</dict>
 		<key>42AEBED3-2C62-4A96-8543-233371796F65</key>
 		<dict>
@@ -495,6 +719,20 @@ open -na Atom $HOME/$query</string>
 			<key>ypos</key>
 			<integer>20</integer>
 		</dict>
+		<key>520F3BEC-E461-4592-9A38-4BA33677FC59</key>
+		<dict>
+			<key>xpos</key>
+			<integer>795</integer>
+			<key>ypos</key>
+			<integer>380</integer>
+		</dict>
+		<key>581C5C45-2239-4931-81FD-F7E2103F9ECD</key>
+		<dict>
+			<key>xpos</key>
+			<integer>875</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
 		<key>8737E156-6502-4B1A-9A47-8699AC6103CB</key>
 		<dict>
 			<key>xpos</key>
@@ -502,10 +740,17 @@ open -na Atom $HOME/$query</string>
 			<key>ypos</key>
 			<integer>50</integer>
 		</dict>
+		<key>AD72B848-73A5-4327-A1FB-3880CD81A2F4</key>
+		<dict>
+			<key>xpos</key>
+			<integer>985</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
 		<key>CBAA1ECB-A611-40A5-AD50-341AE55A1262</key>
 		<dict>
 			<key>xpos</key>
-			<integer>625</integer>
+			<integer>800</integer>
 			<key>ypos</key>
 			<integer>540</integer>
 		</dict>
@@ -514,14 +759,21 @@ open -na Atom $HOME/$query</string>
 			<key>xpos</key>
 			<integer>625</integer>
 			<key>ypos</key>
-			<integer>415</integer>
+			<integer>285</integer>
 		</dict>
 		<key>DBA57AF4-DA3D-45D7-8FF3-25B9F4C2CADC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>125</integer>
+			<integer>190</integer>
 			<key>ypos</key>
-			<integer>270</integer>
+			<integer>280</integer>
+		</dict>
+		<key>E9A50E0C-6B05-4162-B6FA-877E3771ACED</key>
+		<dict>
+			<key>xpos</key>
+			<integer>1090</integer>
+			<key>ypos</key>
+			<integer>350</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -530,8 +782,10 @@ open -na Atom $HOME/$query</string>
 		<string>dotfiles</string>
 		<key>extra</key>
 		<string>.extra</string>
+		<key>github</key>
+		<string>dnnsmnstrr</string>
 		<key>homepage</key>
-		<string>https://muensterer.xyz</string>
+		<string>https://dnnsmnstrr.github.io</string>
 	</dict>
 	<key>version</key>
 	<string>1.0.0</string>

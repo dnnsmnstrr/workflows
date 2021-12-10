@@ -42,10 +42,6 @@ def load_full_state(timeout=3):
 
     data = r.json()
 
-    # Create icon for light
-    for lid, light_data in data['lights'].iteritems():
-        create_light_icon(lid, light_data)
-
     workflow.store_data('full_state', data)
 
 
@@ -96,7 +92,21 @@ def get_lights(from_cache=False):
             return None
 
     data = workflow.stored_data('full_state')
-    return data['lights']
+    lights = data['lights']
+
+    # Filter only lights that have a on/off state
+    # This prevents issues with Deconz and Homekit hue bridges which set their config on a light
+    filtered_lights = {
+        lid: light for lid, light in lights.iteritems()
+        if 'state' in lights[lid] and 'on' in lights[lid]['state']
+    }
+
+    if not from_cache:
+        # Create icon for lights
+        for lid, light_data in filtered_lights.iteritems():
+            create_light_icon(lid, light_data)
+
+    return filtered_lights
 
 
 def get_groups():
@@ -104,7 +114,7 @@ def get_groups():
 
     try:
         groups = data['groups']
-        return {id: group for id, group in groups.iteritems()}
+        return {gid: group for gid, group in groups.iteritems()}
     except TypeError:
         return None
 
@@ -119,13 +129,37 @@ def get_group_lids(group_id):
 
 
 def get_scenes(group_id):
-    data = workflow.stored_data('full_state')
-    scenes = data['scenes']
-    lids = get_group_lids(group_id)
-    return {id: scene for id, scene in scenes.iteritems() if (
-            set(scene['lights']) == set(lids) and
-            scene['name'] != 'Off') and
-            scene['version'] >= 2}
+    data = workflow.stored_data("full_state")
+
+    # check if this is deconz, scenes are stored per group
+    # can this be done elsewhere?
+    is_deconz = False
+    try:
+        if data["config"]["modelid"] == "deCONZ":
+            is_deconz = True
+    except:
+        # not sure if hue also returns config/modelid
+        pass
+
+    if is_deconz:
+        workflow.logger.debug("This is deconz")
+        # Not sure if "All lights" always has id 0
+        if group_id == "0":
+            return {}
+        scenes = data["groups"][group_id]["scenes"]
+        workflow.logger.debug(scenes)
+        # in deconz, scenes are stored a list, convert to dict
+        return {scene["id"]: scene for scene in scenes}
+    else:
+        # it's probably a hue
+        scenes = data["scenes"]
+        lids = get_group_lids(group_id)
+        return {
+            id: scene
+            for id, scene in scenes.iteritems()
+            if (set(scene["lights"]) == set(lids) and scene["name"] != "Off")
+            and scene["version"] >= 2
+        }
 
 
 def get_color_value(color):

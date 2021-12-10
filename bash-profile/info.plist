@@ -130,6 +130,54 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alignment</key>
+				<integer>0</integer>
+				<key>backgroundcolor</key>
+				<string></string>
+				<key>fadespeed</key>
+				<integer>0</integer>
+				<key>fillmode</key>
+				<integer>1</integer>
+				<key>font</key>
+				<string>System Light</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>largetypetext</key>
+				<string>{query}</string>
+				<key>textcolor</key>
+				<string></string>
+				<key>wrapat</key>
+				<integer>50</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.largetype</string>
+			<key>uid</key>
+			<string>C5145C54-5E9A-45AC-93F6-6ADB494F84A0</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>D26CAAAF-D50A-4054-9AA4-0CB85193A0EA</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -161,33 +209,6 @@ fi
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alignment</key>
-				<integer>0</integer>
-				<key>backgroundcolor</key>
-				<string></string>
-				<key>fadespeed</key>
-				<integer>0</integer>
-				<key>fillmode</key>
-				<integer>1</integer>
-				<key>font</key>
-				<string>System Light</string>
-				<key>ignoredynamicplaceholders</key>
-				<false/>
-				<key>largetypetext</key>
-				<string>{query}</string>
-				<key>textcolor</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.largetype</string>
-			<key>uid</key>
-			<string>C5145C54-5E9A-45AC-93F6-6ADB494F84A0</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>lastpathcomponent</key>
 				<false/>
 				<key>onlyshowifquerypopulated</key>
@@ -203,46 +224,6 @@ fi
 			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
 			<string>4D112991-D120-4680-B1D4-041717C6C781</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-				<key>ignoredynamicplaceholders</key>
-				<false/>
-				<key>transient</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>D26CAAAF-D50A-4054-9AA4-0CB85193A0EA</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>The bash cmd have executed!</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>4C8731E5-A3AF-41A9-96B3-FD962211CF97</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -276,6 +257,27 @@ fi
 			<string>039EEFD9-10FD-4C62-B31A-E80C5740440E</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>The bash cmd have executed!</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>4C8731E5-A3AF-41A9-96B3-FD962211CF97</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -329,33 +331,6 @@ fi
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alignment</key>
-				<integer>0</integer>
-				<key>backgroundcolor</key>
-				<string></string>
-				<key>fadespeed</key>
-				<integer>0</integer>
-				<key>fillmode</key>
-				<integer>1</integer>
-				<key>font</key>
-				<string>System Light</string>
-				<key>ignoredynamicplaceholders</key>
-				<false/>
-				<key>largetypetext</key>
-				<string>{query}</string>
-				<key>textcolor</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.largetype</string>
-			<key>uid</key>
-			<string>0648D02B-6492-488D-B4AC-284794EFA8BC</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -387,6 +362,35 @@ fi
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alignment</key>
+				<integer>0</integer>
+				<key>backgroundcolor</key>
+				<string></string>
+				<key>fadespeed</key>
+				<integer>0</integer>
+				<key>fillmode</key>
+				<integer>1</integer>
+				<key>font</key>
+				<string>System Light</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>largetypetext</key>
+				<string>{query}</string>
+				<key>textcolor</key>
+				<string></string>
+				<key>wrapat</key>
+				<integer>50</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.largetype</string>
+			<key>uid</key>
+			<string>0648D02B-6492-488D-B4AC-284794EFA8BC</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
@@ -409,7 +413,7 @@ fi
 			<key>xpos</key>
 			<integer>415</integer>
 			<key>ypos</key>
-			<integer>235</integer>
+			<integer>230</integer>
 		</dict>
 		<key>0648D02B-6492-488D-B4AC-284794EFA8BC</key>
 		<dict>
@@ -421,7 +425,7 @@ fi
 		<key>3BE844B8-D9ED-4A22-9D7F-C106304B899B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>415</integer>
 			<key>ypos</key>
 			<integer>110</integer>
 		</dict>
@@ -430,7 +434,7 @@ fi
 			<key>xpos</key>
 			<integer>660</integer>
 			<key>ypos</key>
-			<integer>235</integer>
+			<integer>230</integer>
 		</dict>
 		<key>4D112991-D120-4680-B1D4-041717C6C781</key>
 		<dict>
@@ -449,9 +453,9 @@ fi
 		<key>6E7D6402-7C69-4C14-8407-EB0F9EE45C72</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>415</integer>
 			<key>ypos</key>
-			<integer>465</integer>
+			<integer>470</integer>
 		</dict>
 		<key>90A2C1C6-1082-4C6F-BAC2-74315BA09C1F</key>
 		<dict>

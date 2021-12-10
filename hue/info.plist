@@ -189,6 +189,10 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -227,7 +231,7 @@
 			<key>uid</key>
 			<string>024CCF2C-F278-4295-B1AF-CCF8771F79AB</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -356,6 +360,8 @@ color_picker($action);</string>
 				<string>history.txt</string>
 				<key>filetext</key>
 				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
 				<key>relativepathmode</key>
 				<integer>1</integer>
 				<key>type</key>
@@ -594,8 +600,10 @@ color_picker($action);</string>
 			<integer>150</integer>
 		</dict>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>3.0.3</string>
+	<string>3.0.6</string>
 	<key>webaddress</key>
 	<string>https://github.com/benknight/hue-alfred-workflow</string>
 </dict>
