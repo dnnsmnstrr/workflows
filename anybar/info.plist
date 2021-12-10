@@ -287,7 +287,7 @@ echo -n "$query|$port";</string>
 				<key>script</key>
 				<string>set theQuery to "{query}"
 
-tell application "Alfred 4" to run trigger "SetGraphic" in workflow "xyz.muensterer.anybar" with argument theQuery</string>
+tell application "Alfred 4" to run trigger "SetGraphic" in workflow "com.customct.AnyBar" with argument theQuery</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>

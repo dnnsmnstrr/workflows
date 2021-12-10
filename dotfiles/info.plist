@@ -49,7 +49,11 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
+<<<<<<< HEAD
 				<string>5210D9E3-1832-4305-BD5F-BFFCD9BB5117</string>
+=======
+				<string>8737E156-6502-4B1A-9A47-8699AC6103CB</string>
+>>>>>>> 8523c1b0144888259d411ecc7e7af07417637e45
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -68,6 +72,16 @@
 				<string></string>
 				<key>sourceoutputuid</key>
 				<string>BE8778E0-6C8E-41C2-8B8E-AC590EF5FF2C</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>14DF3092-BD66-43B6-947E-73B26BED2915</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -106,7 +120,11 @@
 				<false/>
 			</dict>
 		</array>
+<<<<<<< HEAD
 		<key>5210D9E3-1832-4305-BD5F-BFFCD9BB5117</key>
+=======
+		<key>8737E156-6502-4B1A-9A47-8699AC6103CB</key>
+>>>>>>> 8523c1b0144888259d411ecc7e7af07417637e45
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -151,7 +169,12 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
+<<<<<<< HEAD
 				<string>open -na Atom {query}</string>
+=======
+				<string>query=$1
+open -na Atom $HOME/$query</string>
+>>>>>>> 8523c1b0144888259d411ecc7e7af07417637e45
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -179,7 +202,11 @@
 			<key>type</key>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
+<<<<<<< HEAD
 			<string>5210D9E3-1832-4305-BD5F-BFFCD9BB5117</string>
+=======
+			<string>8737E156-6502-4B1A-9A47-8699AC6103CB</string>
+>>>>>>> 8523c1b0144888259d411ecc7e7af07417637e45
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -499,10 +526,17 @@
 			<key>ypos</key>
 			<integer>20</integer>
 		</dict>
+<<<<<<< HEAD
 		<key>5210D9E3-1832-4305-BD5F-BFFCD9BB5117</key>
 		<dict>
 			<key>xpos</key>
 			<integer>530</integer>
+=======
+		<key>8737E156-6502-4B1A-9A47-8699AC6103CB</key>
+		<dict>
+			<key>xpos</key>
+			<integer>585</integer>
+>>>>>>> 8523c1b0144888259d411ecc7e7af07417637e45
 			<key>ypos</key>
 			<integer>50</integer>
 		</dict>
@@ -531,7 +565,7 @@
 	<key>variables</key>
 	<dict>
 		<key>dotfiles</key>
-		<string>~/dotfiles</string>
+		<string>dotfiles</string>
 		<key>extra</key>
 		<string>.extra</string>
 		<key>homepage</key>
