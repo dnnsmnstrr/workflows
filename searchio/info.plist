@@ -789,6 +789,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>wikipedia-de</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1133DEAA-5A8F-4E7D-9E9C-A76CB82D9F92</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>wikipedia-en</key>
 		<array>
 			<dict>
@@ -878,6 +891,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -916,7 +931,7 @@
 			<key>uid</key>
 			<string>2F2432A8-3DCF-47C7-A1F4-680C2BF00198</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -925,6 +940,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -961,7 +978,7 @@
 			<key>uid</key>
 			<string>A101898C-B574-4AFA-B342-8D5ED69E07FE</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -989,6 +1006,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1025,7 +1044,7 @@
 			<key>uid</key>
 			<string>DA65DE7D-1536-46BB-B4AA-F6E58057C5AD</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1073,9 +1092,6 @@
 			<integer>1</integer>
 		</dict>
 		<dict>
-			<key>config</key>
-			<dict>
-			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
@@ -1329,6 +1345,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1365,11 +1383,13 @@
 			<key>uid</key>
 			<string>E56FFAA5-8274-4461-AA14-4AC2AECCF9A3</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>path</key>
+				<string></string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.revealfile</string>
@@ -1646,6 +1666,8 @@ end run</string>
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>trigger</key>
@@ -1664,6 +1686,8 @@ end run</string>
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>trigger</key>
@@ -1897,6 +1921,8 @@ end run</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1933,7 +1959,7 @@ end run</string>
 			<key>uid</key>
 			<string>C8075C84-9F68-4030-AB50-226032984DFE</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -2137,6 +2163,8 @@ variables={allvars}
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>keyword</key>
@@ -2453,6 +2481,53 @@ ok=$?
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>google-images-en</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>wd</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Fetching results…</string>
+				<key>script</key>
+				<string>./search wikipedia-de "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Searchio!</string>
+				<key>title</key>
+				<string>Wikipedia (Deutsch)</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>wikipedia-de</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -3303,6 +3378,15 @@ Search suggestions from multiple search engines in different locales</string>
 			<key>ypos</key>
 			<integer>730</integer>
 		</dict>
+		<key>wikipedia-de</key>
+		<dict>
+			<key>note</key>
+			<string>Wikipedia (Deutsch)</string>
+			<key>xpos</key>
+			<integer>270</integer>
+			<key>ypos</key>
+			<integer>900</integer>
+		</dict>
 		<key>wikipedia-en</key>
 		<dict>
 			<key>note</key>
@@ -3310,7 +3394,7 @@ Search suggestions from multiple search engines in different locales</string>
 			<key>xpos</key>
 			<integer>270</integer>
 			<key>ypos</key>
-			<integer>900</integer>
+			<integer>1070</integer>
 		</dict>
 		<key>youtube-de</key>
 		<dict>
@@ -3319,7 +3403,7 @@ Search suggestions from multiple search engines in different locales</string>
 			<key>xpos</key>
 			<integer>270</integer>
 			<key>ypos</key>
-			<integer>1070</integer>
+			<integer>1240</integer>
 		</dict>
 		<key>youtube-us</key>
 		<dict>
@@ -3328,7 +3412,7 @@ Search suggestions from multiple search engines in different locales</string>
 			<key>xpos</key>
 			<integer>270</integer>
 			<key>ypos</key>
-			<integer>1240</integer>
+			<integer>1410</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
